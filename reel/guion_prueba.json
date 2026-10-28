@@ -1,0 +1,25 @@
+{
+  "titulo": "La paradoja del brillo · prueba técnica",
+  "fuente": "Fuente: visuales de prueba, sin datos reales",
+  "creditos": [
+    "Datos: ninguno; esta es una prueba técnica del reel",
+    "Imágenes: generadas con generar_prueba.py",
+    "Tipografías: Fraunces e IBM Plex (SIL Open Font License)",
+    "Voz generada con IA (Qwen3-TTS) a partir de la voz del autor"
+  ],
+  "escenas": [
+    {
+      "frase": "Visto desde el espacio, el Perú minero se encendió en solo doce años.",
+      "cifra": "12 años",
+      "etiqueta": "Una noche por año, de 2013 a 2024",
+      "visual": "escenas/prueba/encendido"
+    },
+    {
+      "frase": "Esta prueba revisa la voz clonada, los subtítulos y el aviso de inteligencia artificial.",
+      "cifra": "",
+      "etiqueta": "Prueba técnica del reel",
+      "visual": "escenas/prueba/gradiente.jpg",
+      "encaje": "cubrir"
+    }
+  ]
+}
