@@ -1,4 +1,589 @@
 {
+  "blackmarble_VNP46A4.A2013001.h09v09.002.2025087045047": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2013001.h09v09.002.2025087045047.h5",
+    "bytes": 72246658,
+    "sha256": "6d48551a5e397986cfaa6bd641ade0dfdc9555ffa858d57575cb6590acb016f3",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2013001.h10v09.002.2025087045057": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2013001.h10v09.002.2025087045057.h5",
+    "bytes": 83899594,
+    "sha256": "1f47ca0b5e47b640cbfff546a38676186727ac9be6ca378f515f55a38a694eab",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2013001.h10v10.002.2025087044932": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2013001.h10v10.002.2025087044932.h5",
+    "bytes": 79698271,
+    "sha256": "e94a852567fe31d2b91bdfd1d30572aeb654ad10e20fdb1a866867fabbc1268e",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2013001.h11v09.002.2025087045003": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2013001.h11v09.002.2025087045003.h5",
+    "bytes": 73551621,
+    "sha256": "f17bd7ce166feb5db066abf021cb3ba6ad0c0f7047635ff15cd921e154061ec2",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2013001.h11v10.002.2025087045109": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2013001.h11v10.002.2025087045109.h5",
+    "bytes": 79021451,
+    "sha256": "7202ce9d0b645de4187a02085d14a0369dae478c731e8b42006226f57ec56b5a",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2014001.h09v09.002.2025091134100": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2014001.h09v09.002.2025091134100.h5",
+    "bytes": 72674375,
+    "sha256": "02a3e6e8e352006646181421bc25330997c8d0692941dd32a52e2581a19728f0",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2014001.h10v09.002.2025091134437": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2014001.h10v09.002.2025091134437.h5",
+    "bytes": 85967872,
+    "sha256": "c138b8cc0ffe54dd8d5782353ffc4437c760825d6978f88d9fc9f21d0b2c32ff",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2014001.h10v10.002.2025091134333": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2014001.h10v10.002.2025091134333.h5",
+    "bytes": 79670847,
+    "sha256": "a59825cde7f87b2ab2eaff91232a96df3f5e7f2049bb3e2e15c19880d53633dd",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2014001.h11v09.002.2025091134125": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2014001.h11v09.002.2025091134125.h5",
+    "bytes": 73319253,
+    "sha256": "dd3406547d7dc4f3190ed716433f62d983637893d48eab57887a7fc05cf2b79d",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2014001.h11v10.002.2025091141817": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2014001.h11v10.002.2025091141817.h5",
+    "bytes": 79503451,
+    "sha256": "ffef1e54c822457c402408da7b395b3d8e1ec3f74f0eca70efdaabdf6e7689c4",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2015001.h09v09.002.2025093111802": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2015001.h09v09.002.2025093111802.h5",
+    "bytes": 73183045,
+    "sha256": "109fc1847721c98f6952da9ea42b6322be1a183d76c34f81eed6566f03b77c8a",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2015001.h10v09.002.2025093111756": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2015001.h10v09.002.2025093111756.h5",
+    "bytes": 87312381,
+    "sha256": "1d19a4ad3ca33e25d4f78978d4ed307669f4640c3720c515cfe1242383472b24",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2015001.h10v10.002.2025093111804": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2015001.h10v10.002.2025093111804.h5",
+    "bytes": 81425409,
+    "sha256": "15cffab698a960493ab426dc2482147a412a8010416db8b33e2a732a9209db32",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2015001.h11v09.002.2025099120013": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2015001.h11v09.002.2025099120013.h5",
+    "bytes": 73634982,
+    "sha256": "2258ccdcb035a3f3d42241d047490292968eba85609fd671a0597820ed6dc63b",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2015001.h11v10.002.2025099115908": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2015001.h11v10.002.2025099115908.h5",
+    "bytes": 79269481,
+    "sha256": "fec0a72e270140bc9cd17703714f9cd859e999075b4fef8c43040d1e16185744",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2016001.h09v09.002.2025102105519": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2016001.h09v09.002.2025102105519.h5",
+    "bytes": 73343159,
+    "sha256": "09f0c9556dd7917193474bcfb3e9dcc1f8591df02fecd294bcc70bbe14b769d5",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2016001.h10v09.002.2025102105418": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2016001.h10v09.002.2025102105418.h5",
+    "bytes": 86687223,
+    "sha256": "11f247a7cbc2957bcf56cb9c7954eb48ab596fdd075434fe697839bae99ecb91",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2016001.h10v10.002.2025102105500": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2016001.h10v10.002.2025102105500.h5",
+    "bytes": 80721834,
+    "sha256": "1d2a167c0dbe2d271ac305f7601ae57504c271218e219b13b7ba73729dea5fed",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2016001.h11v09.002.2025101113406": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2016001.h11v09.002.2025101113406.h5",
+    "bytes": 74779316,
+    "sha256": "7cb5eecac3e006b2cc0ccae80dc62556fe2afdb65d4909458c489221b96f1615",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2016001.h11v10.002.2025102105639": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2016001.h11v10.002.2025102105639.h5",
+    "bytes": 79442760,
+    "sha256": "0ccc15d1774155cc8e5ae068ae4435c711a291c987918b1a2a9e5854dd926794",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2017001.h09v09.002.2025105122543": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2017001.h09v09.002.2025105122543.h5",
+    "bytes": 72927672,
+    "sha256": "c96aee1a4a0e55c20f0701b322053e6e2896af506ffdef9687e5462c5eb834bd",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2017001.h10v09.002.2025106015131": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2017001.h10v09.002.2025106015131.h5",
+    "bytes": 84748565,
+    "sha256": "537bb61ffb303644342994e6f8563755714d2b20aa8c689b787d8a08477a7319",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2017001.h10v10.002.2025105122956": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2017001.h10v10.002.2025105122956.h5",
+    "bytes": 81930973,
+    "sha256": "74c5d2f5306dfc66b13fc11f6c0bb6603b915477e5c0e58e9cdcc5495ec2e803",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2017001.h11v09.002.2025105123410": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2017001.h11v09.002.2025105123410.h5",
+    "bytes": 74647163,
+    "sha256": "ecf93b0b38191791cdd8b610c096e0db3cd919eae32bc92653f882551f4ae091",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2017001.h11v10.002.2025105123005": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2017001.h11v10.002.2025105123005.h5",
+    "bytes": 80346987,
+    "sha256": "99ab8e8ce860b98800eebf7120459c83da2c162adc34be7be092be634660ec68",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2018001.h09v09.002.2025113133517": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2018001.h09v09.002.2025113133517.h5",
+    "bytes": 73364660,
+    "sha256": "7a9366bf792b58c0154b1c0e286993dc01ddcf5fb51ae3e60f17ac368887411b",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2018001.h10v09.002.2025114134217": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2018001.h10v09.002.2025114134217.h5",
+    "bytes": 86897407,
+    "sha256": "70168ac59baccdd919ce42f442021ca4d303bc41acd8be39893f5815c01e1cbd",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2018001.h10v10.002.2025113133538": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2018001.h10v10.002.2025113133538.h5",
+    "bytes": 81338171,
+    "sha256": "6a8681609fadc4994e0e7b0f926b91462f98f4c65fb4b9ca01c870db466e81ee",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2018001.h11v09.002.2025114134230": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2018001.h11v09.002.2025114134230.h5",
+    "bytes": 75321146,
+    "sha256": "6d94010a4b573ad5314dff5cda6967db37cf9609e5fa16a43a59f3509a1aeb13",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2018001.h11v10.002.2025114134229": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2018001.h11v10.002.2025114134229.h5",
+    "bytes": 81275926,
+    "sha256": "617d372b2eb9c99939e4e024cddc514167f2e138032a10a5cf8b0602d922dbeb",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2019001.h09v09.002.2025134123511": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2019001.h09v09.002.2025134123511.h5",
+    "bytes": 73798507,
+    "sha256": "253a55c46c472434a9f39bc2108ad8cba4b5dc5f7360c10b4d4a4ed604cb0db8",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2019001.h10v09.002.2025134123959": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2019001.h10v09.002.2025134123959.h5",
+    "bytes": 85213251,
+    "sha256": "30b56ad6a16b7fd93a6aa9cf0b86c60198dbe2409008fdad521f8be4622899a5",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2019001.h10v10.002.2025134123955": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2019001.h10v10.002.2025134123955.h5",
+    "bytes": 79686865,
+    "sha256": "b6d55d4c5b189a5780e4801f401e499851c2ab6c78a93d996716ff39ad747d85",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2019001.h11v09.002.2025134124410": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2019001.h11v09.002.2025134124410.h5",
+    "bytes": 73794007,
+    "sha256": "5a18a559614fc8e6c52ccf79e26f8c43f95323134398d1170277b43afeaa4b1b",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2019001.h11v10.002.2025134124409": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2019001.h11v10.002.2025134124409.h5",
+    "bytes": 77681631,
+    "sha256": "473657f8f09ac33ef601636d02b8891ae77431af0e007823b7a0c688e0f4e4ce",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2020001.h09v09.002.2025133143751": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2020001.h09v09.002.2025133143751.h5",
+    "bytes": 73681777,
+    "sha256": "da6214331fb30f5995e90aea2cf0f4d80d1eb61c9fa6dab06eca53a689f46c69",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2020001.h10v09.002.2025134211110": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2020001.h10v09.002.2025134211110.h5",
+    "bytes": 86105193,
+    "sha256": "ae3f760c5422ba1665d549a025af29359e72d0c3a4dd6f674fc7e7fd3006cced",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2020001.h10v10.002.2025134211149": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2020001.h10v10.002.2025134211149.h5",
+    "bytes": 80891003,
+    "sha256": "a05a4a6d687e8f91305f4bf5fc76cb1889fbbfcb7f4bdf986ad811740d2deb26",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2020001.h11v09.002.2025134012917": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2020001.h11v09.002.2025134012917.h5",
+    "bytes": 74462295,
+    "sha256": "79aa6f628309167567c522468e44ec4ffba1ac0e3cb6aba53099b4d2428f6c7f",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2020001.h11v10.002.2025134013013": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2020001.h11v10.002.2025134013013.h5",
+    "bytes": 79150301,
+    "sha256": "a37f5558afc88f27a4a091ede3359c88b65e7036e87da1523a7efb5a39f7bb35",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2021001.h09v09.002.2025149103943": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2021001.h09v09.002.2025149103943.h5",
+    "bytes": 73598556,
+    "sha256": "31a2711b8e0f831443b2d2e38a4870e3b5cc694418701ae32923d8522c5a7a43",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2021001.h10v09.002.2025149103932": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2021001.h10v09.002.2025149103932.h5",
+    "bytes": 85671892,
+    "sha256": "556cd955b50e4615fd13e89ad72603a172894850304e44c3bf9023cec9ad39f9",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2021001.h10v10.002.2025149103945": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2021001.h10v10.002.2025149103945.h5",
+    "bytes": 80369621,
+    "sha256": "126a49e92d884768524ebaed3542e043aec371fc464b4aca176720b42e0d5cec",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2021001.h11v09.002.2025149193029": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2021001.h11v09.002.2025149193029.h5",
+    "bytes": 75010723,
+    "sha256": "d57cde3859ca78188c7fca30eed8b47429c83673c2204292fd2f09c08037b49b",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2021001.h11v10.002.2025149104010": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2021001.h11v10.002.2025149104010.h5",
+    "bytes": 79063229,
+    "sha256": "13dad9d687083743f9a1e93cb48ef733b324d4d024e30e12af05c1c8b5340123",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2022001.h09v09.002.2025156103324": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2022001.h09v09.002.2025156103324.h5",
+    "bytes": 72423127,
+    "sha256": "73000bbb254dccb2079f109f9b5884bb278dd45fb957222a16bb5794c246aa7c",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2022001.h10v09.002.2025156103234": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2022001.h10v09.002.2025156103234.h5",
+    "bytes": 86725806,
+    "sha256": "507c2920186fca73fec04626ca63862a4bbc927e8dbd151b5fec2717daf7f16a",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2022001.h10v10.002.2025156103225": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2022001.h10v10.002.2025156103225.h5",
+    "bytes": 80192628,
+    "sha256": "fc91581e3615a5216dbe7a15caa1f10a94d70868c39cd7f430afe58bfe980875",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2022001.h11v09.002.2025156103310": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2022001.h11v09.002.2025156103310.h5",
+    "bytes": 73604940,
+    "sha256": "e9aa77e512b99598d0291e462494bc35ab2c1700559f5515243312d10a9fc23a",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2022001.h11v10.002.2025156103158": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2022001.h11v10.002.2025156103158.h5",
+    "bytes": 78130604,
+    "sha256": "65ca899c9fb75af16d674802ce136d9ecde80d28e800c51e72ddff5e1c6c2ad8",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2023001.h09v09.002.2025161112931": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2023001.h09v09.002.2025161112931.h5",
+    "bytes": 74636434,
+    "sha256": "bb5301509306a44224ce628c6d6905afdfc5d2a0a6f06b64c5692c649471afe8",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2023001.h10v09.002.2025161112647": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2023001.h10v09.002.2025161112647.h5",
+    "bytes": 88608958,
+    "sha256": "27b68f52f355515027791a85b59f2518fda15210f0f2f246b604c069f5c506f4",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2023001.h10v10.002.2025161112624": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2023001.h10v10.002.2025161112624.h5",
+    "bytes": 85201203,
+    "sha256": "ca58c09847f61543ddfea771f924edc745696adf0c1fbb8134ef3b754037420e",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2023001.h11v09.002.2025161112601": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2023001.h11v09.002.2025161112601.h5",
+    "bytes": 73493616,
+    "sha256": "c10e82fef68b2ed7bc10ca077df1c576bcfda9125d5d1df48f35f66b9faad197",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2023001.h11v10.002.2025161112826": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2023001.h11v10.002.2025161112826.h5",
+    "bytes": 81630554,
+    "sha256": "e875dd15efa73ad3901da88cd9025eb3f808947856d220f512d18bd4480ec237",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2024001.h09v09.002.2025161223915": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2024001.h09v09.002.2025161223915.h5",
+    "bytes": 73244178,
+    "sha256": "0d0f4097405987a98689458c196bc3da96971fc93d7427a15b12b91f36967215",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2024001.h10v09.002.2025161224144": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2024001.h10v09.002.2025161224144.h5",
+    "bytes": 88468265,
+    "sha256": "cfef56c23c14d5f6e7be9b7f2516487237db1f8eb5df888792a413f0101afab4",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2024001.h10v10.002.2025161224140": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2024001.h10v10.002.2025161224140.h5",
+    "bytes": 81214178,
+    "sha256": "f13d0e1a9b5fa5056dfcf1d4696a3449cd2b8132bb11727585e30364dba849a5",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2024001.h11v09.002.2025161224507": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2024001.h11v09.002.2025161224507.h5",
+    "bytes": 77103672,
+    "sha256": "493d53c8d5d4f2d879356514dea1610e981bdf6f59a51327c07216393f48de34",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2024001.h11v10.002.2025161224458": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2024001.h11v10.002.2025161224458.h5",
+    "bytes": 85772956,
+    "sha256": "07ec0fbce55049e643735f3a97dd1dcea19cb7ad5ab0876fd70f3f8650376b5f",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2025001.h09v09.002.2026076173946": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2025001.h09v09.002.2026076173946.h5",
+    "bytes": 73026701,
+    "sha256": "3dabe4e07f3524592f1afc29a82c18540cb81f15f9ace1524e3817f8abcba09b",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2025001.h10v09.002.2026076173819": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2025001.h10v09.002.2026076173819.h5",
+    "bytes": 86783764,
+    "sha256": "d806f2a2703a75c679e9975fd601e5f27a1748b2cf2e5edfc105989a44f76de5",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2025001.h10v10.002.2026076173823": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2025001.h10v10.002.2026076173823.h5",
+    "bytes": 81594611,
+    "sha256": "4e475893d4a24a862cd1b2a08e82caa9f8d391ecd56aa8b3fbd8bd40e9925e8f",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2025001.h11v09.002.2026076173922": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2025001.h11v09.002.2026076173922.h5",
+    "bytes": 73494897,
+    "sha256": "0815b007bc8390271c54150ec20e3d6b86fbe6835d1bada19affa91032f67dc2",
+    "downloaded_at": "2026-10-28"
+  },
+  "blackmarble_VNP46A4.A2025001.h11v10.002.2026076173855": {
+    "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
+    "license": "NASA Earth Science data: open, no restrictions on use (cite the DOI)",
+    "file": "blackmarble/VNP46A4.A2025001.h11v10.002.2026076173855.h5",
+    "bytes": 80713612,
+    "sha256": "fe2da545a19dbd9740a90c7f14e1885e89d2233d30e9416bc3ae71ca1ec65473",
+    "downloaded_at": "2026-10-28"
+  },
   "distritos_geocatmin": {
     "url": "https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_CARTOGRAFIA_DEMARCACION_WGS84/MapServer/2",
     "page": "https://geocatmin.ingemmet.gob.pe/geocatmin/",

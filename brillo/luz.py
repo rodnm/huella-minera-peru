@@ -39,3 +39,13 @@ def light_by_district(raster: Path, districts: gpd.GeoDataFrame, mines: gpd.GeoD
     out = pd.DataFrame({"light_sum": total, "light_outside_mines": outside})
     out["light_inside_mines"] = out["light_sum"] - out["light_outside_mines"]
     return out.reset_index()
+
+
+def write_yearly_raster(grid: xr.DataArray, path: Path) -> Path:
+    """Save one year of radiance as a GeoTIFF in WGS84 with NaN as nodata.
+
+    blackmarblepy returns lon/lat grids without a CRS, so the file would otherwise be unreferenced.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    grid.rio.write_crs("EPSG:4326").rio.write_nodata(np.nan).rio.to_raster(path, compress="deflate")
+    return path

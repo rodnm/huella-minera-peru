@@ -1,0 +1,871 @@
+{
+  "corte": {
+    "pobreza": "INEI, Mapa de Pobreza 2018",
+    "luz": "NASA Black Marble VNP46A4, 2018",
+    "mineria": "MINEM, producción en régimen general 2016-2018"
+  },
+  "resumen": {
+    "districts": 1873,
+    "mining_districts": 126,
+    "light_per_1000_mining": 19.325163170419497,
+    "light_per_1000_rest": 6.304344968118399,
+    "light_ratio": 3.065372099424836,
+    "light_outside_per_1000_mining": 9.498936479076033,
+    "light_outside_per_1000_rest": 6.04187951363152,
+    "light_outside_ratio": 1.5721823743166008,
+    "poverty_median_mining": 31.685945,
+    "poverty_median_rest": 34.49565,
+    "share_of_mining_light_on_mines": 0.4640256047601079,
+    "gaps": {
+      "light": {
+        "coef": 1.0193012159006996,
+        "t": 7.770295979830843,
+        "n": 1873,
+        "formula": "log_light ~ mining + log_area + log_pop + C(department)"
+      },
+      "poverty": {
+        "coef": -2.9476784801769935,
+        "t": -2.4835481329719755,
+        "n": 1873,
+        "formula": "poverty ~ mining + log_pop + log_area + C(department)"
+      },
+      "poverty_same_light": {
+        "coef": 1.6295637936044833,
+        "t": 1.3927212519853298,
+        "n": 1873,
+        "formula": "poverty ~ mining + log_lpc + log_pop + log_area + C(department)"
+      }
+    }
+  },
+  "robustez_sin_hidrocarburos": {
+    "excluidos": [
+      "MEGANTONI",
+      "LOBITOS",
+      "EL ALTO",
+      "PARACAS"
+    ],
+    "districts": 1869,
+    "mining_districts": 126,
+    "light_per_1000_mining": 19.325163170419497,
+    "light_per_1000_rest": 6.2954694716068005,
+    "light_ratio": 3.0696937309565113,
+    "light_outside_per_1000_mining": 9.498936479076033,
+    "light_outside_per_1000_rest": 6.040151441669824,
+    "light_outside_ratio": 1.5726321716943596,
+    "poverty_median_mining": 31.685945,
+    "poverty_median_rest": 34.565636999999995,
+    "share_of_mining_light_on_mines": 0.4640256047601079,
+    "gaps": {
+      "light": {
+        "coef": 1.0360245535308157,
+        "t": 7.928695790178686,
+        "n": 1869,
+        "formula": "log_light ~ mining + log_area + log_pop + C(department)"
+      },
+      "poverty": {
+        "coef": -2.976785810427609,
+        "t": -2.5076598387297686,
+        "n": 1869,
+        "formula": "poverty ~ mining + log_pop + log_area + C(department)"
+      },
+      "poverty_same_light": {
+        "coef": 1.709721691453314,
+        "t": 1.4603123208314375,
+        "n": 1869,
+        "formula": "poverty ~ mining + log_lpc + log_pop + log_area + C(department)"
+      }
+    }
+  },
+  "paradoja": {
+    "regla": "distrito minero, luz por habitante en el 25 % más alto del país y pobreza mayor que la mediana de su departamento",
+    "n": 20,
+    "distritos": [
+      {
+        "ubigeo": "060202",
+        "district": "CACHACHI",
+        "province": "CAJABAMBA",
+        "department": "CAJAMARCA",
+        "mine": "ACUMULACION SHAHUINDO",
+        "poverty": 76.857,
+        "light_per_1000": 20.088,
+        "share_on_mine": 0.732,
+        "population_2020": 25575.0
+      },
+      {
+        "ubigeo": "060105",
+        "district": "ENCAÑADA",
+        "province": "CAJAMARCA",
+        "department": "CAJAMARCA",
+        "mine": "ACUMULACION CHAQUICOCHA",
+        "poverty": 74.91,
+        "light_per_1000": 31.185,
+        "share_on_mine": 0.866,
+        "population_2020": 20052.0
+      },
+      {
+        "ubigeo": "050703",
+        "district": "CORONEL CASTAÑEDA",
+        "province": "PARINACOCHAS",
+        "department": "AYACUCHO",
+        "mine": "ACUMULACION PALLANCATA",
+        "poverty": 55.84,
+        "light_per_1000": 84.378,
+        "share_on_mine": 0.921,
+        "population_2020": 1934.0
+      },
+      {
+        "ubigeo": "051005",
+        "district": "CANARIA",
+        "province": "VICTOR FAJARDO",
+        "department": "AYACUCHO",
+        "mine": "CATALINA HUANCA",
+        "poverty": 50.856,
+        "light_per_1000": 31.859,
+        "share_on_mine": 0.481,
+        "population_2020": 4027.0
+      },
+      {
+        "ubigeo": "190108",
+        "district": "SAN FRANCISCO DE ASIS DE YARUSYACAN",
+        "province": "PASCO",
+        "department": "PASCO",
+        "mine": "ATACOCHA",
+        "poverty": 46.582,
+        "light_per_1000": 58.249,
+        "share_on_mine": 0.711,
+        "population_2020": 3818.0
+      },
+      {
+        "ubigeo": "090304",
+        "district": "CCOCHACCASA",
+        "province": "ANGARAES",
+        "department": "HUANCAVELICA",
+        "mine": "JULCANI",
+        "poverty": 44.442,
+        "light_per_1000": 25.514,
+        "share_on_mine": 0.836,
+        "population_2020": 3198.0
+      },
+      {
+        "ubigeo": "101007",
+        "district": "SAN MIGUEL DE CAURI",
+        "province": "LAURICOCHA",
+        "department": "HUANUCO",
+        "mine": "ACUMULACION RAURA",
+        "poverty": 43.664,
+        "light_per_1000": 17.64,
+        "share_on_mine": 0.775,
+        "population_2020": 5120.0
+      },
+      {
+        "ubigeo": "040516",
+        "district": "TAPAY",
+        "province": "CAYLLOMA",
+        "department": "AREQUIPA",
+        "mine": "TAMBOMAYO",
+        "poverty": 43.076,
+        "light_per_1000": 414.821,
+        "share_on_mine": 0.947,
+        "population_2020": 817.0
+      },
+      {
+        "ubigeo": "040603",
+        "district": "CAYARANI",
+        "province": "CONDESUYOS",
+        "department": "AREQUIPA",
+        "mine": "GRAN ARCATA",
+        "poverty": 42.889,
+        "light_per_1000": 20.675,
+        "share_on_mine": 0.815,
+        "population_2020": 3275.0
+      },
+      {
+        "ubigeo": "040505",
+        "district": "CAYLLOMA",
+        "province": "CAYLLOMA",
+        "department": "AREQUIPA",
+        "mine": "SAN CRISTOBAL",
+        "poverty": 40.762,
+        "light_per_1000": 45.889,
+        "share_on_mine": 0.385,
+        "population_2020": 3688.0
+      },
+      {
+        "ubigeo": "090106",
+        "district": "HUACHOCOLPA",
+        "province": "HUANCAVELICA",
+        "department": "HUANCAVELICA",
+        "mine": "HUACHOCOLPA UNO",
+        "poverty": 40.051,
+        "light_per_1000": 62.039,
+        "share_on_mine": 0.737,
+        "population_2020": 1807.0
+      },
+      {
+        "ubigeo": "080708",
+        "district": "VELILLE",
+        "province": "CHUMBIVILCAS",
+        "department": "CUSCO",
+        "mine": "CONSTANCIA",
+        "poverty": 38.744,
+        "light_per_1000": 65.376,
+        "share_on_mine": 0.947,
+        "population_2020": 8472.0
+      },
+      {
+        "ubigeo": "230107",
+        "district": "PALCA",
+        "province": "TACNA",
+        "department": "TACNA",
+        "mine": "FRONTERA UNO",
+        "poverty": 34.195,
+        "light_per_1000": 95.976,
+        "share_on_mine": 0.733,
+        "population_2020": 2232.0
+      },
+      {
+        "ubigeo": "110203",
+        "district": "CHAVIN",
+        "province": "CHINCHA",
+        "department": "ICA",
+        "mine": "CERRO LINDO",
+        "poverty": 30.081,
+        "light_per_1000": 74.298,
+        "share_on_mine": 0.91,
+        "population_2020": 2658.0
+      },
+      {
+        "ubigeo": "180102",
+        "district": "CARUMAS",
+        "province": "MARISCAL NIETO",
+        "department": "MOQUEGUA",
+        "mine": "ACUMULACION MARIELA",
+        "poverty": 26.461,
+        "light_per_1000": 48.344,
+        "share_on_mine": 0.393,
+        "population_2020": 2197.0
+      },
+      {
+        "ubigeo": "150705",
+        "district": "CHICLA",
+        "province": "HUAROCHIRI",
+        "department": "LIMA",
+        "mine": "ACUMULACION YAULIYACU",
+        "poverty": 24.604,
+        "light_per_1000": 103.805,
+        "share_on_mine": 0.242,
+        "population_2020": 3222.0
+      },
+      {
+        "ubigeo": "150901",
+        "district": "OYON",
+        "province": "OYON",
+        "department": "LIMA",
+        "mine": "UCHUCCHACUA",
+        "poverty": 22.084,
+        "light_per_1000": 44.229,
+        "share_on_mine": 0.494,
+        "population_2020": 11903.0
+      },
+      {
+        "ubigeo": "150610",
+        "district": "SANTA CRUZ DE ANDAMARCA",
+        "province": "HUARAL",
+        "department": "LIMA",
+        "mine": "UNIDAD SANTANDER",
+        "poverty": 18.891,
+        "light_per_1000": 134.167,
+        "share_on_mine": 0.543,
+        "population_2020": 769.0
+      },
+      {
+        "ubigeo": "151018",
+        "district": "LARAOS",
+        "province": "YAUYOS",
+        "department": "LIMA",
+        "mine": "ACUMULACION YAURICOCHA",
+        "poverty": 18.082,
+        "light_per_1000": 18.399,
+        "share_on_mine": 0.071,
+        "population_2020": 522.0
+      },
+      {
+        "ubigeo": "110305",
+        "district": "VISTA ALEGRE",
+        "province": "NASCA",
+        "department": "ICA",
+        "mine": "ACUMULACION LOS INCAS I",
+        "poverty": 3.895,
+        "light_per_1000": 21.829,
+        "share_on_mine": 0.105,
+        "population_2020": 24894.0
+      }
+    ]
+  },
+  "aperturas": [
+    {
+      "ubigeo": "060202",
+      "district": "CACHACHI",
+      "department": "CAJAMARCA",
+      "mine": "BENEFICIO SHAHUINDO",
+      "start": 2016,
+      "light_before": 28.364,
+      "light_after": 555.566,
+      "ratio": 19.587,
+      "poverty": 76.857
+    },
+    {
+      "ubigeo": "030303",
+      "district": "HUAQUIRCA",
+      "department": "APURIMAC",
+      "mine": "VALERIA",
+      "start": 2015,
+      "light_before": 20.69,
+      "light_after": 115.659,
+      "ratio": 5.59,
+      "poverty": 25.489
+    },
+    {
+      "ubigeo": "050806",
+      "district": "OYOLO",
+      "department": "AYACUCHO",
+      "mine": "INMACULADA",
+      "start": 2015,
+      "light_before": 134.883,
+      "light_after": 568.237,
+      "ratio": 4.213,
+      "poverty": 39.686
+    },
+    {
+      "ubigeo": "040516",
+      "district": "TAPAY",
+      "department": "AREQUIPA",
+      "mine": "TAMBOMAYO",
+      "start": 2017,
+      "light_before": 71.074,
+      "light_after": 266.951,
+      "ratio": 3.756,
+      "poverty": 43.076
+    },
+    {
+      "ubigeo": "020802",
+      "district": "BUENA VISTA ALTA",
+      "department": "ANCASH",
+      "mine": "HUALANYOJ",
+      "start": 2017,
+      "light_before": 32.485,
+      "light_after": 71.79,
+      "ratio": 2.21,
+      "poverty": 24.24
+    },
+    {
+      "ubigeo": "030506",
+      "district": "CHALLHUAHUACHO",
+      "department": "APURIMAC",
+      "mine": "LAS BAMBAS",
+      "start": 2015,
+      "light_before": 1844.108,
+      "light_after": 3399.806,
+      "ratio": 1.844,
+      "poverty": 39.009
+    },
+    {
+      "ubigeo": "021701",
+      "district": "RECUAY",
+      "department": "ANCASH",
+      "mine": "HUANCAPETI 2009",
+      "start": 2020,
+      "light_before": 103.053,
+      "light_after": 175.573,
+      "ratio": 1.704,
+      "poverty": 24.494
+    },
+    {
+      "ubigeo": "151002",
+      "district": "ALIS",
+      "department": "LIMA",
+      "mine": "PLANTA DE BENEFICIO YAURICOCHA CHUMPE",
+      "start": 2020,
+      "light_before": 38.318,
+      "light_after": 60.972,
+      "ratio": 1.591,
+      "poverty": 15.103
+    },
+    {
+      "ubigeo": "150509",
+      "district": "MALA",
+      "department": "LIMA",
+      "mine": "ACUMULACION CONDESTABLE I",
+      "start": 2020,
+      "light_before": 1875.283,
+      "light_after": 2936.004,
+      "ratio": 1.566,
+      "poverty": 10.343
+    },
+    {
+      "ubigeo": "120206",
+      "district": "COMAS",
+      "department": "JUNIN",
+      "mine": "PLANTA DE BENEFICIO CAMILA DE 200 TM/DIA",
+      "start": 2022,
+      "light_before": 12.641,
+      "light_after": 19.789,
+      "ratio": 1.565,
+      "poverty": 30.896
+    },
+    {
+      "ubigeo": "131104",
+      "district": "SAYAPULLO",
+      "department": "LA LIBERTAD",
+      "mine": "SANTA BARBARA-A",
+      "start": 2020,
+      "light_before": 7.689,
+      "light_after": 12.019,
+      "ratio": 1.563,
+      "poverty": 56.718
+    },
+    {
+      "ubigeo": "040608",
+      "district": "YANAQUIHUA",
+      "department": "AREQUIPA",
+      "mine": "ALPACAY",
+      "start": 2019,
+      "light_before": 72.582,
+      "light_after": 105.405,
+      "ratio": 1.452,
+      "poverty": 14.61
+    },
+    {
+      "ubigeo": "050901",
+      "district": "QUEROBAMBA",
+      "department": "AYACUCHO",
+      "mine": "EL PUMA DORADO SAC",
+      "start": 2017,
+      "light_before": 19.888,
+      "light_after": 27.132,
+      "ratio": 1.364,
+      "poverty": 32.839
+    },
+    {
+      "ubigeo": "040804",
+      "district": "HUAYNACOTAS",
+      "department": "AREQUIPA",
+      "mine": "PIERO",
+      "start": 2018,
+      "light_before": 14.135,
+      "light_after": 19.17,
+      "ratio": 1.356,
+      "poverty": 42.179
+    },
+    {
+      "ubigeo": "211004",
+      "district": "QUILCAPUNCU",
+      "department": "PUNO",
+      "mine": "SAN ISIDRO 2004",
+      "start": 2022,
+      "light_before": 72.359,
+      "light_after": 97.392,
+      "ratio": 1.346,
+      "poverty": 53.814
+    },
+    {
+      "ubigeo": "110303",
+      "district": "EL INGENIO",
+      "department": "ICA",
+      "mine": "PLANTA PILOTO TULIN",
+      "start": 2019,
+      "light_before": 45.762,
+      "light_after": 60.784,
+      "ratio": 1.328,
+      "poverty": 2.554
+    },
+    {
+      "ubigeo": "090606",
+      "district": "OCOYO",
+      "department": "HUANCAVELICA",
+      "mine": "PLANTA ANTAPITE",
+      "start": 2017,
+      "light_before": 33.587,
+      "light_after": 44.524,
+      "ratio": 1.326,
+      "poverty": 26.585
+    },
+    {
+      "ubigeo": "130801",
+      "district": "TAYABAMBA",
+      "department": "LA LIBERTAD",
+      "mine": "LA ESTRELLA",
+      "start": 2020,
+      "light_before": 101.069,
+      "light_after": 131.506,
+      "ratio": 1.301,
+      "poverty": 37.842
+    },
+    {
+      "ubigeo": "120909",
+      "district": "YANACANCHA",
+      "department": "JUNIN",
+      "mine": "YAUY 01-03",
+      "start": 2017,
+      "light_before": 2.211,
+      "light_after": 2.852,
+      "ratio": 1.29,
+      "poverty": 28.863
+    },
+    {
+      "ubigeo": "131103",
+      "district": "MARMOT",
+      "department": "LA LIBERTAD",
+      "mine": "BUMERANG",
+      "start": 2017,
+      "light_before": 13.607,
+      "light_after": 17.213,
+      "ratio": 1.265,
+      "poverty": 48.783
+    },
+    {
+      "ubigeo": "040302",
+      "district": "ACARI",
+      "department": "AREQUIPA",
+      "mine": "ACUMULACION LA PURISIMA",
+      "start": 2017,
+      "light_before": 97.574,
+      "light_after": 121.217,
+      "ratio": 1.242,
+      "poverty": 11.22
+    },
+    {
+      "ubigeo": "150811",
+      "district": "SAYAN",
+      "department": "LIMA",
+      "mine": "YETA NEGRA",
+      "start": 2019,
+      "light_before": 726.05,
+      "light_after": 896.847,
+      "ratio": 1.235,
+      "poverty": 18.325
+    },
+    {
+      "ubigeo": "040104",
+      "district": "CERRO COLORADO",
+      "department": "AREQUIPA",
+      "mine": "EL PORVENIR",
+      "start": 2018,
+      "light_before": 6722.893,
+      "light_after": 7787.129,
+      "ratio": 1.158,
+      "poverty": 9.087
+    },
+    {
+      "ubigeo": "120605",
+      "district": "PAMPA HERMOSA",
+      "department": "JUNIN",
+      "mine": "CENTURION III",
+      "start": 2016,
+      "light_before": 0.599,
+      "light_after": 0.69,
+      "ratio": 1.151,
+      "poverty": 48.846
+    },
+    {
+      "ubigeo": "020105",
+      "district": "INDEPENDENCIA",
+      "department": "ANCASH",
+      "mine": "MISQUICHILCA",
+      "start": 2020,
+      "light_before": 1694.308,
+      "light_after": 1938.15,
+      "ratio": 1.144,
+      "poverty": 11.538
+    },
+    {
+      "ubigeo": "060108",
+      "district": "LOS BAÑOS DEL INCA",
+      "department": "CAJAMARCA",
+      "mine": "CHAUPILOMA 51",
+      "start": 2018,
+      "light_before": 1123.842,
+      "light_after": 1246.85,
+      "ratio": 1.109,
+      "poverty": 36.669
+    },
+    {
+      "ubigeo": "110111",
+      "district": "SANTIAGO",
+      "department": "ICA",
+      "mine": "EL SOL NACIENTE TERCERO",
+      "start": 2019,
+      "light_before": 785.471,
+      "light_after": 854.694,
+      "ratio": 1.088,
+      "poverty": 3.083
+    },
+    {
+      "ubigeo": "030504",
+      "district": "HAQUIRA",
+      "department": "APURIMAC",
+      "mine": "UTUNSA",
+      "start": 2021,
+      "light_before": 132.191,
+      "light_after": 143.808,
+      "ratio": 1.088,
+      "poverty": 45.178
+    },
+    {
+      "ubigeo": "020701",
+      "district": "SAN LUIS",
+      "department": "ANCASH",
+      "mine": "SAN LUISINO DOS",
+      "start": 2015,
+      "light_before": 30.628,
+      "light_after": 33.009,
+      "ratio": 1.078,
+      "poverty": 35.244
+    },
+    {
+      "ubigeo": "120809",
+      "district": "SUITUCANCHA",
+      "department": "JUNIN",
+      "mine": "VERDE",
+      "start": 2018,
+      "light_before": 2.618,
+      "light_after": 2.801,
+      "ratio": 1.07,
+      "poverty": 24.414
+    },
+    {
+      "ubigeo": "120214",
+      "district": "SAN JOSE DE QUERO",
+      "department": "JUNIN",
+      "mine": "AZULCOCHA",
+      "start": 2015,
+      "light_before": 30.194,
+      "light_after": 32.094,
+      "ratio": 1.063,
+      "poverty": 33.714
+    },
+    {
+      "ubigeo": "090605",
+      "district": "LARAMARCA",
+      "department": "HUANCAVELICA",
+      "mine": "ANTAPAMPA",
+      "start": 2018,
+      "light_before": 6.714,
+      "light_after": 7.1,
+      "ratio": 1.057,
+      "poverty": 23.35
+    },
+    {
+      "ubigeo": "211208",
+      "district": "YANAHUAYA",
+      "department": "PUNO",
+      "mine": "PLANTA DE BENEFICIO BETASPATA",
+      "start": 2019,
+      "light_before": 4.015,
+      "light_after": 4.192,
+      "ratio": 1.044,
+      "poverty": 31.634
+    },
+    {
+      "ubigeo": "190206",
+      "district": "SANTA ANA DE TUSI",
+      "department": "PASCO",
+      "mine": "GOYITO NO 10",
+      "start": 2016,
+      "light_before": 11.335,
+      "light_after": 11.766,
+      "ratio": 1.038,
+      "poverty": 72.151
+    },
+    {
+      "ubigeo": "110305",
+      "district": "VISTA ALEGRE",
+      "department": "ICA",
+      "mine": "ACUMULACION LOS INCAS I",
+      "start": 2016,
+      "light_before": 565.04,
+      "light_after": 558.106,
+      "ratio": 0.988,
+      "poverty": 3.895
+    },
+    {
+      "ubigeo": "090404",
+      "district": "CAPILLAS",
+      "department": "HUANCAVELICA",
+      "mine": "COPE MINA",
+      "start": 2018,
+      "light_before": 1.51,
+      "light_after": 1.481,
+      "ratio": 0.981,
+      "poverty": 31.183
+    },
+    {
+      "ubigeo": "090615",
+      "district": "SANTO DOMINGO DE CAPILLAS",
+      "department": "HUANCAVELICA",
+      "mine": "ANTAPITE 59",
+      "start": 2017,
+      "light_before": 3.147,
+      "light_after": 3.046,
+      "ratio": 0.968,
+      "poverty": 33.541
+    },
+    {
+      "ubigeo": "060702",
+      "district": "CHUGUR",
+      "department": "CAJAMARCA",
+      "mine": "TANTAHUATAY",
+      "start": 2020,
+      "light_before": 223.437,
+      "light_after": 214.679,
+      "ratio": 0.961,
+      "poverty": 60.038
+    },
+    {
+      "ubigeo": "020401",
+      "district": "CHACAS",
+      "department": "ANCASH",
+      "mine": "FOX",
+      "start": 2017,
+      "light_before": 29.235,
+      "light_after": 27.919,
+      "ratio": 0.955,
+      "poverty": 30.404
+    },
+    {
+      "ubigeo": "080705",
+      "district": "LIVITACA",
+      "department": "CUSCO",
+      "mine": "CONSTANCIA",
+      "start": 2018,
+      "light_before": 216.418,
+      "light_after": 188.028,
+      "ratio": 0.869,
+      "poverty": 57.048
+    },
+    {
+      "ubigeo": "022001",
+      "district": "YUNGAY",
+      "department": "ANCASH",
+      "mine": "NUEVA CALIFORNIA",
+      "start": 2015,
+      "light_before": 336.082,
+      "light_after": 289.685,
+      "ratio": 0.862,
+      "poverty": 28.647
+    },
+    {
+      "ubigeo": "030406",
+      "district": "COTARUSE",
+      "department": "APURIMAC",
+      "mine": "EXPLORADOR",
+      "start": 2020,
+      "light_before": 271.479,
+      "light_after": 229.865,
+      "ratio": 0.847,
+      "poverty": 32.068
+    },
+    {
+      "ubigeo": "061307",
+      "district": "PULAN",
+      "department": "CAJAMARCA",
+      "mine": "LA ZANJA",
+      "start": 2020,
+      "light_before": 224.665,
+      "light_after": 184.683,
+      "ratio": 0.822,
+      "poverty": 57.064
+    },
+    {
+      "ubigeo": "020201",
+      "district": "AIJA",
+      "department": "ANCASH",
+      "mine": "HUANCAPETI",
+      "start": 2016,
+      "light_before": 46.074,
+      "light_after": 36.25,
+      "ratio": 0.787,
+      "poverty": 20.744
+    },
+    {
+      "ubigeo": "090102",
+      "district": "ACOBAMBILLA",
+      "department": "HUANCAVELICA",
+      "mine": "HERALDOS NEGROS",
+      "start": 2018,
+      "light_before": 3.522,
+      "light_after": 2.693,
+      "ratio": 0.765,
+      "poverty": 38.096
+    },
+    {
+      "ubigeo": "020608",
+      "district": "SAN MIGUEL DE ACO",
+      "department": "ANCASH",
+      "mine": "AREQUIPA-M",
+      "start": 2017,
+      "light_before": 7.039,
+      "light_after": 4.615,
+      "ratio": 0.656,
+      "poverty": 59.511
+    },
+    {
+      "ubigeo": "021015",
+      "district": "SAN PEDRO DE CHANA",
+      "department": "ANCASH",
+      "mine": "YANACANCHA 2",
+      "start": 2019,
+      "light_before": 2.972,
+      "light_after": 1.62,
+      "ratio": 0.545,
+      "poverty": 40.533
+    },
+    {
+      "ubigeo": "040306",
+      "district": "CAHUACHO",
+      "department": "AREQUIPA",
+      "mine": "MINERA CERRO DE ORO",
+      "start": 2015,
+      "light_before": 4.14,
+      "light_after": 2.084,
+      "ratio": 0.504,
+      "poverty": 41.516
+    },
+    {
+      "ubigeo": "090714",
+      "district": "SALCABAMBA",
+      "department": "HUANCAVELICA",
+      "mine": "JOSE FRANCISCA",
+      "start": 2017,
+      "light_before": 47.053,
+      "light_after": 16.874,
+      "ratio": 0.359,
+      "poverty": 63.567
+    }
+  ],
+  "luz_nacional": {
+    "por_anio": {
+      "2013": 566383.3036653446,
+      "2014": 564580.5638881314,
+      "2015": 570228.3680523187,
+      "2016": 627840.0165529235,
+      "2017": 595084.5212868361,
+      "2018": 651122.5530115365,
+      "2019": 652083.624151827,
+      "2020": 735111.573438205,
+      "2021": 763842.2074078026,
+      "2022": 858375.8554846969,
+      "2023": 901389.9657190957,
+      "2024": 988485.7055968267,
+      "2025": 1095775.5005911135
+    },
+    "cambio_2013_ultimo": 0.934688917381236,
+    "ultimo_anio": 2025
+  },
+  "huella": {
+    "km2_total": 3525.933969991644,
+    "km2_madre_de_dios": 2537.5343179140527,
+    "luz_madre_de_dios_ultimo_anio": 0.010587239167577818,
+    "luz_sobre_huellas_ultimo_anio": 0.043663967147199424
+  }
+}

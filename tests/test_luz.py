@@ -41,3 +41,17 @@ def test_light_sums_radiance_per_district_ignoring_gaps_and_negative_noise(raste
     assert light.loc["000002", "light_inside_mines"] == pytest.approx(2)
     assert light.loc["000002", "light_outside_mines"] == pytest.approx(14)
     assert light.loc["000001", "light_inside_mines"] == pytest.approx(0)
+
+
+def test_yearly_raster_is_written_in_wgs84_with_nan_as_nodata(tmp_path):
+    import xarray as xr
+
+    from brillo.luz import write_yearly_raster
+
+    grid = xr.DataArray(np.array([[1.0, np.nan], [0.5, 2.0]], dtype="float32"), dims=("y", "x"),
+                        coords={"y": [-9.995, -10.005], "x": [-75.005, -74.995]})
+    path = write_yearly_raster(grid, tmp_path / "vnp46a4_2020.tif")
+    with rasterio.open(path) as src:
+        assert src.crs.to_epsg() == 4326
+        assert np.isnan(src.nodata)
+        assert src.read(1, masked=True).count() == 3

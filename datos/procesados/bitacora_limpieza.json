@@ -95,6 +95,22 @@
       "rows_out": 274,
       "dropped": 578,
       "note": "3,526 km² en total; una mina en el borde se reparte entre distritos"
+    },
+    {
+      "source": "luz",
+      "step": "radiancia anual VNP46A4 por distrito (13 años)",
+      "rows_in": 13,
+      "rows_out": 24674,
+      "dropped": -24661,
+      "note": "píxeles sin dato no suman; valores negativos (ruido del sensor) pasan a 0"
+    },
+    {
+      "source": "panel",
+      "step": "panel distrito × año con luz, pobreza, huella y producción",
+      "rows_in": 24674,
+      "rows_out": 24674,
+      "dropped": 0,
+      "note": "1898 distritos × 13 años"
     }
   ]
 }

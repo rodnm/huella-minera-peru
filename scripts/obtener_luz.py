@@ -13,6 +13,7 @@ from blackmarble import BlackMarble, Product
 
 from brillo.credenciales import load_token
 from brillo.descarga import record
+from brillo.luz import write_yearly_raster
 
 ROOT = Path(__file__).resolve().parent.parent
 ORIGINALES = ROOT / "datos" / "originales"
@@ -31,10 +32,9 @@ def main() -> None:
     # One raster() call for every year: a second call in the same session fails (blackmarblepy issue #158)
     stack = bm.raster(peru, Product.VNP46A4, [datetime.date(year, 1, 1) for year in YEARS])
     variable = list(stack.data_vars)[0]
-    YEARLY.mkdir(parents=True, exist_ok=True)
     for when in stack["time"].values:
         year = str(when)[:4]
-        stack[variable].sel(time=when).rio.to_raster(YEARLY / f"vnp46a4_{year}.tif", compress="deflate")
+        write_yearly_raster(stack[variable].sel(time=when), YEARLY / f"vnp46a4_{year}.tif")
         print(f"vnp46a4_{year}.tif")
     for tile in sorted(TILES.glob("*.h5")):
         record(ORIGINALES / "MANIFEST.json", f"blackmarble_{tile.stem}", PAGE, tile, PAGE, LICENSE)
