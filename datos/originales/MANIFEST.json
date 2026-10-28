@@ -1,0 +1,137 @@
+{
+  "distritos_geocatmin": {
+    "url": "https://geocatmin.ingemmet.gob.pe/arcgis/rest/services/SERV_CARTOGRAFIA_DEMARCACION_WGS84/MapServer/2",
+    "page": "https://geocatmin.ingemmet.gob.pe/geocatmin/",
+    "license": "Servicio público de INGEMMET (GEOCATMIN); el portal no declara una licencia",
+    "file": "limites/distritos_geocatmin.geojson",
+    "bytes": 73513620,
+    "sha256": "a5cdcddc45a40daf79353a6d167cd7d18f09858df8e9367a62b6e647016401f6",
+    "downloaded_at": "2026-10-28"
+  },
+  "minas_maus_v2": {
+    "url": "https://download.pangaea.de/dataset/942325/files/global_mining_polygons_v2.gpkg",
+    "page": "https://doi.org/10.1594/PANGAEA.942325",
+    "license": "CC BY-SA 4.0",
+    "file": "maus/global_mining_polygons_v2.gpkg",
+    "bytes": 24657920,
+    "sha256": "6936e2743a21ba952b4de3e4b6f77099a0aa4479f7e2639d9d1b0787876a3ea1",
+    "downloaded_at": "2026-10-28"
+  },
+  "pobreza_inei_2018": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/3340937/Anexo%20Estad%C3%ADstico.xlsx",
+    "page": "https://www.gob.pe/institucion/inei/informes-publicaciones/3204872-mapa-de-pobreza-provincial-y-distrital-2018",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "inei/mapa_pobreza_2018_anexo_estadistico.xlsx",
+    "bytes": 553923,
+    "sha256": "fcc465d75abe7f7e20107d67fc3a947d606e2176d0c00fecb02ceafcca913f00",
+    "downloaded_at": "2026-10-28"
+  },
+  "produccion_minem_2001_2020": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/6209848/5472883-2001-2020.7z",
+    "page": "https://www.gob.pe/institucion/minem/informes-publicaciones/5472883-produccion-minera",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/produccion/5472883-2001-2020.7z",
+    "bytes": 7638518,
+    "sha256": "5ca64a3cb206220ea655473286a8ba0402b772cf293109cc3e6856f7c93842bc",
+    "downloaded_at": "2026-10-28"
+  },
+  "produccion_minem_2021": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/6209623/5472883-2021.zip",
+    "page": "https://www.gob.pe/institucion/minem/informes-publicaciones/5472883-produccion-minera",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/produccion/5472883-2021.zip",
+    "bytes": 224297,
+    "sha256": "c8e2a5a4bc7263b10ce2d294984c5dd1aefd1c12c04c516e5a5c351b20dadbcd",
+    "downloaded_at": "2026-10-28"
+  },
+  "produccion_minem_2022": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/6209624/5472883-2022.7z",
+    "page": "https://www.gob.pe/institucion/minem/informes-publicaciones/5472883-produccion-minera",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/produccion/5472883-2022.7z",
+    "bytes": 231753,
+    "sha256": "17f5e858a13c3872311fa2fab2afa17be0fbbc7d42f8ce637a8e2a84e296aef4",
+    "downloaded_at": "2026-10-28"
+  },
+  "produccion_minem_2023": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/7768910/5472883-2023.7z",
+    "page": "https://www.gob.pe/institucion/minem/informes-publicaciones/5472883-produccion-minera",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/produccion/5472883-2023.7z",
+    "bytes": 373822,
+    "sha256": "7ef76d83d29924b47afcf5a08e2202415bc387f10f2f941662604d60dd8e2f1e",
+    "downloaded_at": "2026-10-28"
+  },
+  "produccion_minem_2024": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/7768911/5472883-2024.7z",
+    "page": "https://www.gob.pe/institucion/minem/informes-publicaciones/5472883-produccion-minera",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/produccion/5472883-2024.7z",
+    "bytes": 387473,
+    "sha256": "8d2b1832b1d64813db070844858570d16dc078f75610f3c40df52da25a104682",
+    "downloaded_at": "2026-10-28"
+  },
+  "produccion_minem_2025": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/7850353/5472883-2025.zip",
+    "page": "https://www.gob.pe/institucion/minem/informes-publicaciones/5472883-produccion-minera",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/produccion/5472883-2025.zip",
+    "bytes": 493310,
+    "sha256": "a6d7c78e0e42e638b4774e774ae0f065d0e5012ad0c4107edbbf3ef6a1e3fd1d",
+    "downloaded_at": "2026-10-28"
+  },
+  "produccion_minem_2026_ene_ago": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/9679417/5472883-ene-ago-2026.zip",
+    "page": "https://www.gob.pe/institucion/minem/informes-publicaciones/5472883-produccion-minera",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/produccion/5472883-ene-ago-2026.zip",
+    "bytes": 456348,
+    "sha256": "81eb2154db1aed9931f7f204c7f841f4d4e842ab9fda89e17d206e0de4b1d94e",
+    "downloaded_at": "2026-10-28"
+  },
+  "unidades_minem_2016": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/5220174/Database.xlsx",
+    "page": "https://www.gob.pe/minem (Mapa de Principales Unidades Mineras en Producción)",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/unidades/principales_unidades_2016.xlsx",
+    "bytes": 27688,
+    "sha256": "e41e0e5dba92578e93a29261d7b01a0a01bca8ebf614646cc6a45d9fdf507f3b",
+    "downloaded_at": "2026-10-28"
+  },
+  "unidades_minem_2017": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/5220335/Database.xlsx",
+    "page": "https://www.gob.pe/minem (Mapa de Principales Unidades Mineras en Producción)",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/unidades/principales_unidades_2017.xlsx",
+    "bytes": 28341,
+    "sha256": "c47fdc728c42bf0a7feaf8c5fa655f213e3be45d0477fb1d2399077331d62e47",
+    "downloaded_at": "2026-10-28"
+  },
+  "unidades_minem_2023": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/3447307/2023_%20MAPA%20DE%20PRODUCCION.xlsx",
+    "page": "https://www.gob.pe/minem (Mapa de Principales Unidades Mineras en Producción)",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/unidades/principales_unidades_2023.xlsx",
+    "bytes": 35917,
+    "sha256": "6eec5edd78636e2dafb9767ac949c9314d5cae0443a9cbcf830cebc8b6b3d1e8",
+    "downloaded_at": "2026-10-28"
+  },
+  "unidades_minem_2024": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/6711334/5724261-2024_mapa-principales-unidades-mineras-en-produccion.xlsx",
+    "page": "https://www.gob.pe/minem (Mapa de Principales Unidades Mineras en Producción)",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/unidades/principales_unidades_2024.xlsx",
+    "bytes": 27392,
+    "sha256": "2804cfafe07b76ef600977f47b5f930b530ad0c3b319a5da70a2761140d3f713",
+    "downloaded_at": "2026-10-28"
+  },
+  "unidades_minem_2025": {
+    "url": "https://cdn.www.gob.pe/uploads/document/file/8674918/6911615-principales-unidades-mineras-en-produccion-edicion-2025.xlsx",
+    "page": "https://www.gob.pe/minem (Mapa de Principales Unidades Mineras en Producción)",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "minem/unidades/principales_unidades_2025.xlsx",
+    "bytes": 27736,
+    "sha256": "5a88676e14c0fbd13b6b230ba9ee70a2da6bb613c8d059361caf75c3b2352e6b",
+    "downloaded_at": "2026-10-28"
+  }
+}

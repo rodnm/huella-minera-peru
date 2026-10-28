@@ -20,6 +20,7 @@ dependencies = [
     "requests>=2.32",
     "shapely>=2.0",
     "statsmodels>=0.14",
+    "truststore>=0.10",
 ]
 
 [dependency-groups]
