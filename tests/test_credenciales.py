@@ -16,3 +16,8 @@ def test_dotenv_is_read_when_the_variable_is_missing(tmp_path):
 def test_missing_token_explains_how_to_set_it(tmp_path):
     with pytest.raises(SystemExit, match="urs.earthdata.nasa.gov"):
         load_token({}, tmp_path / ".env")
+
+
+def test_dotenv_written_by_windows_powershell_with_a_bom_is_read(tmp_path):
+    (tmp_path / ".env").write_bytes(b"\xef\xbb\xbfBLACKMARBLE_TOKEN=from-file\r\n")  # UTF-8 BOM, CRLF
+    assert load_token({}, tmp_path / ".env") == "from-file"
