@@ -37,6 +37,15 @@ SURFACE = {
 }
 
 
+# Shared type: an editorial serif for headlines, a sans with tabular figures for text, its condensed cut for big
+# numbers (all SIL Open Font License, on Google Fonts)
+TYPE = {
+    "display": {"family": "Fraunces", "weights": [600, 700], "use": "titulares y títulos de escena"},
+    "text": {"family": "IBM Plex Sans", "weights": [400, 500, 600], "use": "cuerpo, etiquetas y ejes"},
+    "figures": {"family": "IBM Plex Sans Condensed", "weights": [600, 700], "use": "KPIs y cifras del reel"},
+}
+
+
 def build_ramp(spec: dict) -> list[str]:
     if spec["mode"] == "single":
         return single_scale(spec["first"], spec["chroma"], spec["lightness"], spec["stops"])
@@ -53,6 +62,7 @@ def build_tokens() -> dict:
         "surface": SURFACE,
         "series": {"mining": mining, "paradox": paradox},
         "ramps": ramps,
+        "type": TYPE,
         "picker_inputs": PICKER,
     }
 
