@@ -14,6 +14,7 @@ import py7zr
 from brillo.bitacora import Bitacora
 from brillo.distritos import load_districts
 from brillo.huella import footprint_by_district, peru_mines
+from brillo.luz import light_by_district
 from brillo.minem import (DOUBLE_COUNTED_STAGES, assign_ubigeo, coordinate_agreement, district_panel,
                           read_production, read_units, scale_mining)
 from brillo.pobreza import read_poverty
@@ -126,14 +127,43 @@ def process_districts(log: Bitacora, districts) -> pd.DataFrame:
     return table
 
 
+def process_light(log: Bitacora, districts, table: pd.DataFrame, production: pd.DataFrame) -> pd.DataFrame | None:
+    """District × year panel: radiance (total, inside and outside mine footprints) joined to production."""
+    rasters = sorted((INTERMEDIOS / "luz").glob("vnp46a4_*.tif"))
+    if not rasters:
+        print("Sin rasters de luz: corre primero `uv run python -m scripts.obtener_luz` (necesita el token).")
+        return None
+    mines = peru_mines(ORIGINALES / "maus" / "global_mining_polygons_v2.gpkg")
+    years = []
+    for raster in rasters:
+        light = light_by_district(raster, districts, mines)
+        light.insert(1, "year", int(raster.stem[-4:]))
+        years.append(light)
+    light = pd.concat(years, ignore_index=True)
+    log.add("luz", f"radiancia anual VNP46A4 por distrito ({len(rasters)} años)", len(rasters), len(light),
+            "píxeles sin dato no suman; valores negativos (ruido del sensor) pasan a 0")
+    panel = light.merge(table, on="ubigeo", how="left").merge(production, on=["ubigeo", "year"], how="left")
+    tonnes = [c for c in panel.columns if c.startswith("tonnes_")]
+    panel[tonnes] = panel[tonnes].fillna(0)
+    panel["units"] = panel["units"].fillna(0).astype(int)
+    panel["mining"] = panel["units"] > 0
+    panel["light_per_km2"] = panel["light_sum"] / panel["area_km2"]
+    panel["light_per_capita"] = panel["light_sum"] / panel["population_2020"]
+    panel.to_csv(PROCESADOS / "panel_distrito_anio.csv", index=False)
+    log.add("panel", "panel distrito × año con luz, pobreza, huella y producción", len(light), len(panel),
+            f"{panel.ubigeo.nunique()} distritos × {panel.year.nunique()} años")
+    return panel
+
+
 def main() -> None:
     PROCESADOS.mkdir(parents=True, exist_ok=True)
     log = Bitacora()
     districts = load_districts(ORIGINALES / "limites" / "distritos_geocatmin.geojson")
     log.add("limites", "distritos de GEOCATMIN con UBIGEO único", len(districts), districts.ubigeo.nunique())
-    process_minem(log, districts)
+    production = process_minem(log, districts)
     validate_coordinates(log, districts)
-    process_districts(log, districts)
+    table = process_districts(log, districts)
+    process_light(log, districts, table, production)
     log.save(PROCESADOS / "bitacora_limpieza.json")
     for step in log.steps:
         print(f"[{step['source']}] {step['step']}: {step['rows_in']:,} -> {step['rows_out']:,}  {step['note']}")
