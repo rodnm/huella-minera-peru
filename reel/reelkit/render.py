@@ -177,19 +177,29 @@ def encode(renderer: Renderer, out: Path, audio: Path | None = None, gain_db: fl
     if audio is not None:
         cmd += ["-af", f"volume={gain_db:.2f}dB,alimiter=limit=0.84:level=false",
                 "-c:a", "aac", "-b:a", "192k", "-ar", "48000"]
-    cmd += ["-movflags", "+faststart", str(out)]
+    # Encode to a side file and swap it in only on success, so a failed run keeps the previous reel
+    partial = out.with_name(f"{out.stem}.part{out.suffix}")
+    cmd += ["-movflags", "+faststart", str(partial)]
     t0 = time.time()
     proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
     total = renderer.frame_count
     try:
         for k in range(total):
-            proc.stdin.write(renderer.frame(k / renderer.fps).tobytes())
+            try:
+                proc.stdin.write(renderer.frame(k / renderer.fps).tobytes())
+            except BrokenPipeError:
+                break  # ffmpeg stopped early; its stderr below says why
             if k and k % (renderer.fps * 10) == 0:
                 log(f"  {k}/{total} cuadros ({time.time() - t0:.0f} s)")
     finally:
-        proc.stdin.close()
+        try:
+            proc.stdin.close()
+        except BrokenPipeError:
+            pass
         err = proc.stderr.read().decode("utf-8", "replace")
         proc.wait()
     if proc.returncode != 0:
+        partial.unlink(missing_ok=True)
         raise RuntimeError(f"ffmpeg falló ({proc.returncode}): {err.strip()}")
+    partial.replace(out)
     return time.time() - t0

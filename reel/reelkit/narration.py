@@ -100,7 +100,8 @@ def _load(cache: Path, key: str) -> SceneAudio | None:
 
 
 def _synthesize(items: dict[int, SceneAudio | None], frases: list[str], ref_wav: Path, ref_text: str,
-                model: str, attempt: int, log) -> dict[int, SceneAudio]:
+                model: str, attempt: int, log, persist=None) -> dict[int, SceneAudio]:
+    """Synthesize each scene; ``persist`` saves it right away so a later failure does not lose the CPU work."""
     t0 = time.time()
     narrator = Narrator(ref_wav, ref_text, model)
     log(f"  Qwen3-TTS cargado en {time.time() - t0:.0f} s")
@@ -110,6 +111,8 @@ def _synthesize(items: dict[int, SceneAudio | None], frases: list[str], ref_wav:
         audio, sr = narrator.say(frases[i], seed=1234 + 101 * attempt + i)
         audio = trim_silence(audio, sr)
         out[i] = SceneAudio(frases[i], audio, sr, attempts=attempt, tts_seconds=time.time() - t)
+        if persist is not None:
+            persist(i, out[i])
         log(f"  escena {i + 1}: {len(audio) / sr:.1f} s de voz en {out[i].tts_seconds:.0f} s (intento {attempt})")
     narrator.close()
     return out
@@ -130,10 +133,15 @@ def narrate(frases: list[str], ref_wav: Path, ref_text: str, cache: Path, model:
     keys = [scene_key(f, ref_wav, ref_text, model) for f in frases]
     scenes: list[SceneAudio | None] = [_load(cache, k) for k in keys]
     missing = {i: None for i, s in enumerate(scenes) if s is None}
+    # synthesized in an earlier run that failed before Whisper could check them
+    unchecked = {i: s for i, s in enumerate(scenes) if s is not None and s.wer is None}
     log(f"  escenas en caché: {len(frases) - len(missing)} de {len(frases)}")
 
-    if missing:
-        fresh = _synthesize(missing, frases, ref_wav, ref_text, model, attempt=1, log=log)
+    if missing or unchecked:
+        fresh = dict(unchecked)
+        if missing:
+            fresh.update(_synthesize(missing, frases, ref_wav, ref_text, model, attempt=1, log=log,
+                                     persist=lambda i, item: _save(cache, keys[i], item)))
         t = time.time()
         asr = Transcriber()
         _check(fresh, asr)
