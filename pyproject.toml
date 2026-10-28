@@ -1,0 +1,33 @@
+[project]
+name = "paradoja-del-brillo"
+version = "0.1.0"
+description = "Minería, luz nocturna y pobreza en los distritos del Perú (Tarea 3, Python Intermedio)"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "blackmarblepy==2026.6.1",
+    "coloraide>=4.0",
+    "geopandas>=1.0",
+    "matplotlib>=3.9",
+    "numpy>=2.0",
+    "openpyxl>=3.1",
+    "pandas>=2.2",
+    "pillow>=11.0",
+    "py7zr>=0.22",
+    "pyarrow>=17.0",
+    "pyogrio>=0.10",
+    "rasterio>=1.4",
+    "requests>=2.32",
+    "shapely>=2.0",
+    "statsmodels>=0.14",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.3"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
