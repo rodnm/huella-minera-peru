@@ -71,6 +71,30 @@
       "rows_out": 752,
       "dropped": 30,
       "note": "coincide exacto 84.0%; a 5 km o menos 92.7% (minas en el borde entre distritos); 33 puntos a más de 25 km son coordenadas erróneas de MINEM"
+    },
+    {
+      "source": "pobreza",
+      "step": "distritos del Mapa de Pobreza 2018 (INEI)",
+      "rows_in": 1873,
+      "rows_out": 1873,
+      "dropped": 0,
+      "note": "sin filas en blanco de salto de página ni notas al pie; pobreza = punto medio del IC 95 %"
+    },
+    {
+      "source": "pobreza",
+      "step": "distritos de GEOCATMIN con pobreza 2018",
+      "rows_in": 1898,
+      "rows_out": 1873,
+      "dropped": 25,
+      "note": "25 distritos creados después del censo 2017 quedan sin pobreza: Ahuayro, Putis, Union Progreso, Rio Magdalena, Ninabamba, Patibamba, Kumpirushiato, Cielo Punco…"
+    },
+    {
+      "source": "huella",
+      "step": "polígonos mineros de Maus v2 en el Perú → área por distrito",
+      "rows_in": 852,
+      "rows_out": 274,
+      "dropped": 578,
+      "note": "3,526 km² en total; una mina en el borde se reparte entre distritos"
     }
   ]
 }

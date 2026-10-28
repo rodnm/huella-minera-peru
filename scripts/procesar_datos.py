@@ -13,8 +13,10 @@ import py7zr
 
 from brillo.bitacora import Bitacora
 from brillo.distritos import load_districts
+from brillo.huella import footprint_by_district, peru_mines
 from brillo.minem import (DOUBLE_COUNTED_STAGES, assign_ubigeo, coordinate_agreement, district_panel,
                           read_production, read_units, scale_mining)
+from brillo.pobreza import read_poverty
 
 ROOT = Path(__file__).resolve().parent.parent
 ORIGINALES = ROOT / "datos" / "originales"
@@ -103,6 +105,27 @@ def validate_coordinates(log: Bitacora, districts) -> None:
             f"{len(far)} puntos a más de 25 km son coordenadas erróneas de MINEM")
 
 
+def process_districts(log: Bitacora, districts) -> pd.DataFrame:
+    """One row per district: area, INEI 2018 poverty and population, and the mining footprint inside it."""
+    poverty = read_poverty(ORIGINALES / "inei" / "mapa_pobreza_2018_anexo_estadistico.xlsx")
+    log.add("pobreza", "distritos del Mapa de Pobreza 2018 (INEI)", len(poverty), poverty.ubigeo.nunique(),
+            "sin filas en blanco de salto de página ni notas al pie; pobreza = punto medio del IC 95 %")
+    table = districts.drop(columns="geometry").merge(
+        poverty[["ubigeo", "population_2020", "poverty", "poverty_low", "poverty_high"]], on="ubigeo", how="left")
+    missing = table[table.poverty.isna()]
+    log.add("pobreza", "distritos de GEOCATMIN con pobreza 2018", len(table), len(table) - len(missing),
+            f"{len(missing)} distritos creados después del censo 2017 quedan sin pobreza: "
+            + ", ".join(missing.district.str.title().head(8)) + ("…" if len(missing) > 8 else ""))
+    mines = peru_mines(ORIGINALES / "maus" / "global_mining_polygons_v2.gpkg")
+    footprint = footprint_by_district(mines, districts)
+    table = table.merge(footprint, on="ubigeo")
+    log.add("huella", "polígonos mineros de Maus v2 en el Perú → área por distrito", len(mines),
+            int((table.footprint_km2 > 0).sum()),
+            f"{table.footprint_km2.sum():,.0f} km² en total; una mina en el borde se reparte entre distritos")
+    table.to_csv(PROCESADOS / "distritos.csv", index=False)
+    return table
+
+
 def main() -> None:
     PROCESADOS.mkdir(parents=True, exist_ok=True)
     log = Bitacora()
@@ -110,6 +133,7 @@ def main() -> None:
     log.add("limites", "distritos de GEOCATMIN con UBIGEO único", len(districts), districts.ubigeo.nunique())
     process_minem(log, districts)
     validate_coordinates(log, districts)
+    process_districts(log, districts)
     log.save(PROCESADOS / "bitacora_limpieza.json")
     for step in log.steps:
         print(f"[{step['source']}] {step['step']}: {step['rows_in']:,} -> {step['rows_out']:,}  {step['note']}")
