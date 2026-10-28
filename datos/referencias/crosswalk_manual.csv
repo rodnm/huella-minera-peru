@@ -1,0 +1,5 @@
+region,province,district,ubigeo,reason
+ICA,NAZCA,NASCA,110301,"MINEM escribe la provincia como Nazca; el INEI y GEOCATMIN usan Nasca"
+ICA,NAZCA,NAZCA,110301,"MINEM escribe Nazca para la provincia y el distrito; el INEI usa Nasca"
+ICA,NAZCA,MARCONA,110304,"MINEM escribe la provincia como Nazca; el INEI y GEOCATMIN usan Nasca"
+ICA,NAZCA,VISTA ALEGRE,110305,"MINEM escribe la provincia como Nazca; el INEI y GEOCATMIN usan Nasca"
