@@ -127,6 +127,134 @@
       "rows_out": 24674,
       "dropped": 0,
       "note": "1898 distritos × 13 años"
+    },
+    {
+      "source": "pobreza_2013",
+      "step": "distritos del Mapa de Pobreza 2013 (INEI)",
+      "rows_in": 1854,
+      "rows_out": 1854,
+      "dropped": 0,
+      "note": "47 distritos partidos en grupos, colapsados por población; 97 estimados en conjunto con otro distrito"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2013",
+      "rows_in": 30453,
+      "rows_out": 30453,
+      "dropped": 0,
+      "note": "1125 distritos en la muestra; 30371 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2014",
+      "rows_in": 30848,
+      "rows_out": 30848,
+      "dropped": 0,
+      "note": "1161 distritos en la muestra; 30771 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2015",
+      "rows_in": 32188,
+      "rows_out": 32188,
+      "dropped": 0,
+      "note": "1216 distritos en la muestra; 32066 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2016",
+      "rows_in": 35785,
+      "rows_out": 35785,
+      "dropped": 0,
+      "note": "1256 distritos en la muestra; 35662 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2017",
+      "rows_in": 34584,
+      "rows_out": 34584,
+      "dropped": 0,
+      "note": "1262 distritos en la muestra; 34463 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2018",
+      "rows_in": 37462,
+      "rows_out": 37462,
+      "dropped": 0,
+      "note": "1316 distritos en la muestra; 37340 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2019",
+      "rows_in": 34565,
+      "rows_out": 34565,
+      "dropped": 0,
+      "note": "1259 distritos en la muestra; 34436 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2020",
+      "rows_in": 34490,
+      "rows_out": 34490,
+      "dropped": 0,
+      "note": "1217 distritos en la muestra; 34442 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2021",
+      "rows_in": 34245,
+      "rows_out": 34245,
+      "dropped": 0,
+      "note": "1255 distritos en la muestra; 34245 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2022",
+      "rows_in": 34213,
+      "rows_out": 34213,
+      "dropped": 0,
+      "note": "1253 distritos en la muestra; 34213 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2023",
+      "rows_in": 33886,
+      "rows_out": 33886,
+      "dropped": 0,
+      "note": "1263 distritos en la muestra; 33886 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2024",
+      "rows_in": 33691,
+      "rows_out": 33691,
+      "dropped": 0,
+      "note": "1271 distritos en la muestra; 33691 hogares en distritos del panel"
+    },
+    {
+      "source": "enaho",
+      "step": "hogares de Sumaria 2025",
+      "rows_in": 33702,
+      "rows_out": 33702,
+      "dropped": 0,
+      "note": "1271 distritos en la muestra; 33702 hogares en distritos del panel"
+    },
+    {
+      "source": "pobreza_estimada",
+      "step": "Fay-Herriot 2017-19",
+      "rows_in": 106611,
+      "rows_out": 1853,
+      "dropped": 104758,
+      "note": "1320 distritos con muestra; γ mediana 0.14"
+    },
+    {
+      "source": "pobreza_estimada",
+      "step": "Fay-Herriot 2023-25",
+      "rows_in": 101279,
+      "rows_out": 1873,
+      "dropped": 99406,
+      "note": "1308 distritos con muestra; γ mediana 0.19"
     }
   ]
 }

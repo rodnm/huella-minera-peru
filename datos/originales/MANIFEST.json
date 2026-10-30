@@ -593,6 +593,123 @@
     "sha256": "a5cdcddc45a40daf79353a6d167cd7d18f09858df8e9367a62b6e647016401f6",
     "downloaded_at": "2026-10-28"
   },
+  "enaho_sumaria_2013": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/404-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/404-Modulo34.zip",
+    "bytes": 5992942,
+    "sha256": "99a0da59c5e2cba7d297bd102f1154c6eb2ba74277143ad1432d51129cd35c69",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2014": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/440-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/440-Modulo34.zip",
+    "bytes": 6220975,
+    "sha256": "cdf9be5fff35be7c4f2125616a6d98f64a83e1bce2e70bca44e3805f3e513d45",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2015": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/498-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/498-Modulo34.zip",
+    "bytes": 7319906,
+    "sha256": "fa584c4985a6a7e47f969acdae72accfb66fedb32dea593e8be87d38bc85892d",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2016": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/546-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/546-Modulo34.zip",
+    "bytes": 23244661,
+    "sha256": "f6a29b8dd887ea989685b25a58e7ee33784c76300eaa6be72cfe41c708d839bb",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2017": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/603-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/603-Modulo34.zip",
+    "bytes": 22888274,
+    "sha256": "2f2095a9ac71ccf5ca093db79e16e2c70e6a096980380df1531fa9ede2b73bd4",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2018": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/634-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/634-Modulo34.zip",
+    "bytes": 23607987,
+    "sha256": "8acae4e83473292675148d8a82fe0eced92e36310d52a70063cbbac7a4920fdc",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2019": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/687-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/687-Modulo34.zip",
+    "bytes": 21858876,
+    "sha256": "cab6e2f8ebe65c4ff7f28f3908372c46dc067e835beace274a910d4e6a48f0a2",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2020": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/737-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/737-Modulo34.zip",
+    "bytes": 24463307,
+    "sha256": "a64e794251a0691b6260ae9bbae08bb1b86e0f27fde7ddbdecbabeafa7178178",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2021": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/759-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/759-Modulo34.zip",
+    "bytes": 31444705,
+    "sha256": "4b2912f1abd5f84bd4527315694e2bd19ea690e5e30710ced06a047c8a43af52",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2022": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/784-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/784-Modulo34.zip",
+    "bytes": 29416729,
+    "sha256": "562b3182224aab352876099c8fc6c8d36a7636b120e6f2752710ac29556248e0",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2023": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/906-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/906-Modulo34.zip",
+    "bytes": 17453251,
+    "sha256": "aff04bc142f725e988d12765a83eddd28b70681a64a944511f5d59d297008bd2",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2024": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/966-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/966-Modulo34.zip",
+    "bytes": 19116379,
+    "sha256": "500d0dee38263c44afc58b6835b5baeb5e9f211ea67ac9893ebd89ec4826a691",
+    "downloaded_at": "2026-10-30"
+  },
+  "enaho_sumaria_2025": {
+    "url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV/1031-Modulo34.zip",
+    "page": "https://proyectos.inei.gob.pe/microdatos/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "enaho/1031-Modulo34.zip",
+    "bytes": 18069531,
+    "sha256": "c762a7fd60ffd77fd93ee05a98f711055a0e81a109f6666a73969a9905cea123",
+    "downloaded_at": "2026-10-30"
+  },
   "mapbiomas_c4_2013": {
     "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2013.tif",
     "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
@@ -727,6 +844,15 @@
     "bytes": 24657920,
     "sha256": "6936e2743a21ba952b4de3e4b6f77099a0aa4479f7e2639d9d1b0787876a3ea1",
     "downloaded_at": "2026-10-28"
+  },
+  "pobreza_inei_2013": {
+    "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Anexo_Estadistico_MapaPobreza2013.xlsx",
+    "page": "https://www.inei.gob.pe/cifras-de-pobreza/",
+    "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
+    "file": "inei/mapa_pobreza_2013_anexo_estadistico.xlsx",
+    "bytes": 869490,
+    "sha256": "fb127c78a0f592337faa8f913e0b9de0115353b7ac9fc8fc85210190e28cb12e",
+    "downloaded_at": "2026-10-30"
   },
   "pobreza_inei_2018": {
     "url": "https://cdn.www.gob.pe/uploads/document/file/3340937/Anexo%20Estad%C3%ADstico.xlsx",

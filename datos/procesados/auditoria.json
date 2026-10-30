@@ -1,0 +1,328 @@
+{
+  "manifest": {
+    "archivos": 108,
+    "faltantes": [],
+    "hash_distinto": []
+  },
+  "panel": {
+    "filas": 24674,
+    "claves_unicas": 24674,
+    "distritos": 1898,
+    "anios": [
+      2013,
+      2025
+    ],
+    "nulos": {
+      "light_sum": 0,
+      "mining_km2": 0,
+      "poverty": 325,
+      "population_2020": 325
+    },
+    "poblacion_2020": 32623581,
+    "area_km2": 1292266
+  },
+  "minem_contra_sus_totales": {
+    "comparaciones": 56,
+    "diferencia_maxima_abs": 4.440892098500626e-16,
+    "alcance": "2013-2019; 2020-2025 no tienen esa hoja por año en este formato"
+  },
+  "luz": {
+    "por_anio": {
+      "2013": {
+        "sin_dato_pct": 0.004950154871457179,
+        "suma": 568583.3532402441,
+        "suma_1nW_o_mas": 545764.1757405996,
+        "pixeles_1nW_o_mas": 46704,
+        "pct_bajo_1nW": 4.01333900642755
+      },
+      "2014": {
+        "sin_dato_pct": 0.005552640826206901,
+        "suma": 566693.6887269253,
+        "suma_1nW_o_mas": 539523.5195528269,
+        "pixeles_1nW_o_mas": 50554,
+        "pct_bajo_1nW": 4.794507105793973
+      },
+      "2015": {
+        "sin_dato_pct": 0.003761466366140159,
+        "suma": 572317.7562982608,
+        "suma_1nW_o_mas": 546352.1435722113,
+        "pixeles_1nW_o_mas": 50660,
+        "pct_bajo_1nW": 4.536922442175224
+      },
+      "2016": {
+        "sin_dato_pct": 0.0021819761604449407,
+        "suma": 630058.5085010324,
+        "suma_1nW_o_mas": 604578.781947732,
+        "pixeles_1nW_o_mas": 51696,
+        "pct_bajo_1nW": 4.044025468986845
+      },
+      "2017": {
+        "sin_dato_pct": 0.0028821625402892124,
+        "suma": 597159.2416842738,
+        "suma_1nW_o_mas": 573456.8469187021,
+        "pixeles_1nW_o_mas": 51892,
+        "pct_bajo_1nW": 3.969191651245258
+      },
+      "2018": {
+        "sin_dato_pct": 0.0035009318992213602,
+        "suma": 653406.4165633817,
+        "suma_1nW_o_mas": 626430.217787981,
+        "pixeles_1nW_o_mas": 54519,
+        "pct_bajo_1nW": 4.128548188627086
+      },
+      "2019": {
+        "sin_dato_pct": 0.003354381261579536,
+        "suma": 654363.6038155109,
+        "suma_1nW_o_mas": 628304.2834861279,
+        "pixeles_1nW_o_mas": 56580,
+        "pct_bajo_1nW": 3.9823914682042885
+      },
+      "2020": {
+        "sin_dato_pct": 0.0023936604148164647,
+        "suma": 737467.7499272227,
+        "suma_1nW_o_mas": 712758.5172692537,
+        "pixeles_1nW_o_mas": 55674,
+        "pct_bajo_1nW": 3.35055094414738
+      },
+      "2021": {
+        "sin_dato_pct": 0.0034520816866740857,
+        "suma": 766417.9493215615,
+        "suma_1nW_o_mas": 737605.5329772234,
+        "pixeles_1nW_o_mas": 59989,
+        "pct_bajo_1nW": 3.7593608513270143
+      },
+      "2022": {
+        "sin_dato_pct": 0.002637911477552839,
+        "suma": 861200.1607001871,
+        "suma_1nW_o_mas": 814872.0788674355,
+        "pixeles_1nW_o_mas": 72583,
+        "pct_bajo_1nW": 5.379479004635254
+      },
+      "2023": {
+        "sin_dato_pct": 0.003973150620511684,
+        "suma": 904459.8038419113,
+        "suma_1nW_o_mas": 850135.6536759138,
+        "pixeles_1nW_o_mas": 79718,
+        "pct_bajo_1nW": 6.0062536704497544
+      },
+      "2024": {
+        "sin_dato_pct": 0.0033218144532146856,
+        "suma": 991640.9102060464,
+        "suma_1nW_o_mas": 942664.9541940689,
+        "pixeles_1nW_o_mas": 83274,
+        "pct_bajo_1nW": 4.938880143801361
+      },
+      "2025": {
+        "sin_dato_pct": 0.004103417853971083,
+        "suma": 1099258.9456411311,
+        "suma_1nW_o_mas": 1053802.1481221914,
+        "pixeles_1nW_o_mas": 85935,
+        "pct_bajo_1nW": 4.13522197833264
+      }
+    },
+    "cambio_primero_ultimo": 0.9333294571089212,
+    "cambio_anual_pct": {
+      "2014": -0.3,
+      "2015": 1.0,
+      "2016": 10.1,
+      "2017": -5.2,
+      "2018": 9.4,
+      "2019": 0.1,
+      "2020": 12.7,
+      "2021": 3.9,
+      "2022": 12.4,
+      "2023": 5.0,
+      "2024": 9.6,
+      "2025": 10.9
+    },
+    "cambio_anual_pixeles_iluminados_pct": {
+      "2014": 8.2,
+      "2015": 0.2,
+      "2016": 2.0,
+      "2017": 0.4,
+      "2018": 5.1,
+      "2019": 3.8,
+      "2020": -1.6,
+      "2021": 7.8,
+      "2022": 21.0,
+      "2023": 9.8,
+      "2024": 4.5,
+      "2025": 3.2
+    },
+    "aviso": "Sin segunda fuente de luz que lo confirme; los saltos de 2020 y 2022 no están explicados."
+  },
+  "brecha_de_luz": {
+    "razon_por_habitante": {
+      "mediana": 3.0653720994248355,
+      "promedio": 4.14721913891628,
+      "agregada": 1.8958565555320692
+    },
+    "area_pixeles_con_mina_km2": 3130.553301218428,
+    "area_minera_km2": 1043.0927625671163,
+    "luz_sobre_mina_segun_umbral_de_fraccion": {
+      "0": {
+        "agregado": 0.43066797139954166,
+        "distrito_mediano": 0.12954560306051427,
+        "cachachi": 0.8681360977283213
+      },
+      "0.05": {
+        "agregado": 0.3839884302102797,
+        "distrito_mediano": 0.07052684732462958,
+        "cachachi": 0.7393534002723469
+      },
+      "0.1": {
+        "agregado": 0.35687005973461355,
+        "distrito_mediano": 0.03771438672893749,
+        "cachachi": 0.672325168558502
+      },
+      "0.25": {
+        "agregado": 0.29215752089158076,
+        "distrito_mediano": 0.012653311174224436,
+        "cachachi": 0.5810460555746908
+      },
+      "0.5": {
+        "agregado": 0.20903586510171412,
+        "distrito_mediano": 0.0,
+        "cachachi": 0.3914191969073407
+      }
+    }
+  },
+  "brecha_de_pobreza": {
+    "base": {
+      "coef": -2.9476784801769935,
+      "low": -5.273924379118814,
+      "high": -0.6214325812351738,
+      "mineros": 126
+    },
+    "agrupado_por_provincia": {
+      "coef": -2.9476784801769935,
+      "low": -5.409710673055258,
+      "high": -0.4856462872987293,
+      "mineros": 126
+    },
+    "agrupado_por_departamento": {
+      "coef": -2.9476784801769935,
+      "low": -5.570230951144362,
+      "high": -0.3251260092096251,
+      "mineros": 126
+    },
+    "ponderado_por_poblacion": {
+      "coef": -3.498045744936409,
+      "low": -9.34861201911648,
+      "high": 2.3525205292436615,
+      "mineros": 126
+    },
+    "con_region_natural": {
+      "coef": -3.89840328202495,
+      "low": -6.10655670842176,
+      "high": -1.69024985562814,
+      "mineros": 126
+    },
+    "sin_lima": {
+      "coef": -2.90541615697257,
+      "low": -5.356324550787926,
+      "high": -0.45450776315721386,
+      "mineros": 119
+    },
+    "sin_provincias_con_distritos_nuevos": {
+      "coef": -3.240998631230525,
+      "low": -5.553278043553909,
+      "high": -0.9287192189071414,
+      "mineros": 122
+    },
+    "huella_de_1_km2_o_mas": {
+      "coef": -4.0990154275621835,
+      "low": -7.867285909338266,
+      "high": -0.3307449457861016,
+      "mineros": 50
+    },
+    "top_30_productores": {
+      "coef": -6.000696898937757,
+      "low": -10.30827736755313,
+      "high": -1.6931164303223838,
+      "mineros": 30
+    },
+    "misma_luz_por_habitante": {
+      "coef": 1.6295637936044833,
+      "low": -0.6637065513567582,
+      "high": 3.922834138565725,
+      "mineros": 126
+    }
+  },
+  "paradoja": {
+    "por_umbral_de_luz": {
+      "0.5": {
+        "mineros": [
+          11,
+          95
+        ],
+        "no_mineros": [
+          64,
+          841
+        ],
+        "p_fisher": 0.16706518724390632
+      },
+      "0.7": {
+        "mineros": [
+          8,
+          72
+        ],
+        "no_mineros": [
+          27,
+          490
+        ],
+        "p_fisher": 0.11051354934535337
+      },
+      "0.75": {
+        "mineros": [
+          8,
+          67
+        ],
+        "no_mineros": [
+          23,
+          401
+        ],
+        "p_fisher": 0.06621749075680253
+      },
+      "0.8": {
+        "mineros": [
+          7,
+          61
+        ],
+        "no_mineros": [
+          18,
+          314
+        ],
+        "p_fisher": 0.15412835205689351
+      },
+      "0.9": {
+        "mineros": [
+          5,
+          43
+        ],
+        "no_mineros": [
+          8,
+          145
+        ],
+        "p_fisher": 0.1780188252612839
+      }
+    },
+    "confirmados_todos_los_distritos": {
+      "mineros": 0.16666666666666666,
+      "no_mineros": 0.1631368059530624
+    }
+  },
+  "aperturas_contra_control": {
+    "aperturas": 49,
+    "razon_mediana": 1.143918279891072,
+    "control_mediano": 1.0773530228436399,
+    "exceso_mediano": 1.0499874501579558,
+    "share_exceso_mayor_1": 0.5714285714285714
+  },
+  "huella": {
+    "km2_2018_en_distritos_mineros_minem": 877.1931981856101,
+    "km2_2018_total": 1041.2627031863885,
+    "distritos_mineros_sin_huella_visible": 43,
+    "distritos_mineros": 126
+  }
+}
