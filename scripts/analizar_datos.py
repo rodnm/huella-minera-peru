@@ -61,9 +61,16 @@ def main() -> None:
 
     national = panel.groupby("year")["light_sum"].sum()
     latest = int(panel.year.max())
+    first = int(panel.year.min())
     footprint_light = panel[panel.year == latest]
-    md = panel[(panel.year == latest) & (panel.department == "MADRE DE DIOS")]
-    districts_footprint = panel.drop_duplicates("ubigeo")
+    mining_km2 = panel.groupby("year")["mining_km2"].sum()
+    by_year = panel.pivot(index="ubigeo", columns="year", values="mining_km2")
+    growth = (by_year[latest] - by_year[first]).sort_values(ascending=False).head(10).rename("km2_nuevos").reset_index()
+    growth = growth.join(names, on="ubigeo")
+    is_mdd = panel.department.eq("MADRE DE DIOS")
+    mdd_share = panel[is_mdd].groupby("year")["mining_km2"].sum() / mining_km2
+    gap = pd.read_csv(PROCESADOS / "validacion_huella.csv", dtype={"department": str})
+    gap_by_year = gap.groupby("year")[["mining_km2", "official_km2"]].sum()
 
     def records(df, columns):
         return json.loads(df[columns].round(3).to_json(orient="records", force_ascii=False))
@@ -74,11 +81,14 @@ def main() -> None:
         "resumen": summary(cs),
         "robustez_sin_hidrocarburos": {"excluidos": flares.district.tolist(), **summary(robust)},
         "paradoja": {
-            "regla": "distrito minero, luz por habitante en el 25 % más alto del país y pobreza mayor que la mediana"
-                     " de su departamento",
-            "n": int(len(paradox)),
-            "distritos": records(paradox, ["ubigeo", "district", "province", "department", "mine", "poverty",
-                                           "light_per_1000", "share_on_mine", "population_2020"]),
+            "regla": "distrito minero con luz por habitante en el 25 % más alto del país y pobreza mayor que la mediana"
+                     " de su departamento; confirmada si el límite inferior del IC 95 % también la supera",
+            "n_confirmados": int(paradox.confirmed.sum()),
+            "n_posibles": int((~paradox.confirmed).sum()),
+            "distritos": records(paradox.sort_values(["confirmed", "poverty"], ascending=False),
+                                 ["ubigeo", "district", "province", "department", "mine", "confirmed", "poverty",
+                                  "poverty_low", "poverty_high", "light_per_1000", "share_on_mine", "mining_km2",
+                                  "population_2020"]),
         },
         "aperturas": records(openings.dropna(subset=["ratio"]),
                              ["ubigeo", "district", "department", "mine", "start", "light_before", "light_after",
@@ -86,12 +96,19 @@ def main() -> None:
         "luz_nacional": {"por_anio": {int(y): float(v) for y, v in national.items()},
                          "cambio_2013_ultimo": float(national.iloc[-1] / national.iloc[0] - 1), "ultimo_anio": latest},
         "huella": {
-            "km2_total": float(districts_footprint.footprint_km2.sum()),
-            "km2_madre_de_dios": float(districts_footprint[districts_footprint.department == "MADRE DE DIOS"]
-                                       .footprint_km2.sum()),
-            "luz_madre_de_dios_ultimo_anio": float(md.light_sum.sum() / footprint_light.light_sum.sum()),
-            "luz_sobre_huellas_ultimo_anio": float(footprint_light.light_inside_mines.sum()
-                                                   / footprint_light.light_sum.sum()),
+            "fuente": "MapBiomas Perú C4, clase 30 (no distingue minería industrial, artesanal o ilegal)",
+            "km2_por_anio": {int(y): float(v) for y, v in mining_km2.items()},
+            "multiplicador_primero_ultimo": float(mining_km2[latest] / mining_km2[first]),
+            "km2_nuevos": float(mining_km2[latest] - mining_km2[first]),
+            "participacion_madre_de_dios_por_anio": {int(y): float(v) for y, v in mdd_share.items()},
+            "mayor_crecimiento": records(growth, ["ubigeo", "district", "province", "department", "km2_nuevos",
+                                                  "poverty"]),
+            "luz_sobre_huella_ultimo_anio": float(footprint_light.light_inside_mines.sum()
+                                                  / footprint_light.light_sum.sum()),
+            "luz_madre_de_dios_ultimo_anio": float(footprint_light[footprint_light.department == "MADRE DE DIOS"]
+                                                   .light_sum.sum() / footprint_light.light_sum.sum()),
+            "validacion_nacional_vs_oficial": {int(y): float(r.mining_km2 / r.official_km2 - 1)
+                                               for y, r in gap_by_year.iterrows()},
         },
     }
     path = PROCESADOS / "hallazgos.json"

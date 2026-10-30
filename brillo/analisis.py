@@ -15,10 +15,16 @@ def cross_section(panel: pd.DataFrame, year: int = 2018, mining_years: tuple[int
 
 
 def paradox_districts(cs: pd.DataFrame, quantile: float = 0.75) -> pd.DataFrame:
-    """Mining districts among the brightest per person in the country yet poorer than their department's median."""
+    """Mining districts among the brightest per person in the country yet poorer than their department's median.
+
+    INEI publishes poverty as a 95 % interval. ``confirmed`` means its lower bound is above the median, so the
+    district is poorer even at the low end; otherwise only the midpoint is above and the case is merely possible.
+    """
     bright = cs["light_per_capita"] > cs["light_per_capita"].quantile(quantile)
-    poorer = cs["poverty"] > cs.groupby("department")["poverty"].transform("median")
-    return cs[cs["mining"] & bright & poorer]
+    median = cs.groupby("department")["poverty"].transform("median")
+    out = cs[cs["mining"] & bright & (cs["poverty"] > median)].copy()
+    out["confirmed"] = out["poverty_low"] > median[out.index]
+    return out
 
 
 def mine_openings(panel: pd.DataFrame, first: int, last: int, before: int = 2, after: int = 3) -> pd.DataFrame:

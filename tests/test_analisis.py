@@ -4,16 +4,20 @@ import pytest
 from brillo.analisis import mine_openings, paradox_districts
 
 
-def test_paradox_is_a_mining_district_bright_nationally_but_poorer_than_its_department():
+def test_paradox_is_confirmed_only_when_the_whole_poverty_interval_is_above_the_department_median():
     cs = pd.DataFrame({
-        "ubigeo": ["a", "b", "c", "d", "e"],
-        "department": ["X", "X", "X", "Y", "Y"],
-        "mining": [True, True, False, True, False],
-        "light_per_capita": [9.0, 8.0, 1.0, 0.5, 2.0],
-        "poverty": [60.0, 10.0, 40.0, 70.0, 20.0],
+        "ubigeo": ["a", "b", "c", "d", "e", "f"],
+        "department": ["X", "X", "X", "X", "Y", "Y"],
+        "mining": [True, True, True, False, True, False],
+        "light_per_capita": [9.0, 9.5, 8.0, 1.0, 0.5, 2.0],
+        "poverty": [60.0, 50.0, 10.0, 40.0, 70.0, 20.0],
+        "poverty_low": [55.0, 35.0, 5.0, 30.0, 60.0, 10.0],
     })
-    # national q75 of light per capita = 8.0; department X median poverty = 40, Y = 45
-    assert list(paradox_districts(cs, quantile=0.75)["ubigeo"]) == ["a"]
+    # national q75 of light per capita = 8.75; department X median poverty = 45, Y = 45
+    paradox = paradox_districts(cs, quantile=0.75).set_index("ubigeo")
+    assert list(paradox.index) == ["a", "b"]           # "c" is less poor, "e" is not bright, "d" and "f" have no mine
+    assert bool(paradox.loc["a", "confirmed"]) is True    # 55 > 45: poorer even at the low end
+    assert bool(paradox.loc["b", "confirmed"]) is False   # 35 < 45 < 50: only the midpoint is above
 
 
 def test_mine_opening_compares_light_two_years_before_and_three_after_the_first_production():

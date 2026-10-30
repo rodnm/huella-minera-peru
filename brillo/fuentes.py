@@ -7,6 +7,9 @@ The www.gob.pe landing pages answer HTTP 418 to automated clients, so the cdn.ww
 MINEM_PRODUCTION_PAGE = "https://www.gob.pe/institucion/minem/informes-publicaciones/5472883-produccion-minera"
 MINEM_UNITS_LICENSE = "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia"
 CDN = "https://cdn.www.gob.pe/uploads/document/file"
+MAPBIOMAS_COVERAGE = ("https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/"
+                      "peru_coverage")
+MAPBIOMAS_PAGE = "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/"
 
 SOURCES = [
     {
@@ -61,6 +64,25 @@ SOURCES = [
             (2025, "8674918/6911615-principales-unidades-mineras-en-produccion-edicion-2025.xlsx"),
         ]
     ],
+    *[
+        {
+            "name": f"mapbiomas_c4_{year}",
+            "url": f"{MAPBIOMAS_COVERAGE}/peru_coverage-col4_{year}.tif",
+            "file": f"mapbiomas/peru_coverage-col4_{year}.tif",
+            "page": MAPBIOMAS_PAGE,
+            "license": "CC BY 4.0 (MapBiomas Perú)",
+            "description": f"MapBiomas Perú Colección 4, cobertura y uso del suelo {year} a 30 m; clase 30 = minería",
+        }
+        for year in range(2013, 2026)
+    ],
+    {
+        "name": "mapbiomas_c4_estadisticas_departamento",
+        "url": "https://peru.mapbiomas.org/wp-content/uploads/sites/6/2026/09/MAPBIOMAS-PERU-LULC-COL4-LIMITES-POLITICOS.xlsx",
+        "file": "mapbiomas/MAPBIOMAS-PERU-LULC-COL4-LIMITES-POLITICOS.xlsx",
+        "page": "https://peru.mapbiomas.org/descargas/estadisticas/",
+        "license": "CC BY 4.0 (MapBiomas Perú)",
+        "description": "MapBiomas Perú Colección 4, área por clase, departamento y año (para validar nuestro cálculo distrital)",
+    },
 ]
 
 # District polygons with their UBIGEO, served by INGEMMET from the INEI demarcation
