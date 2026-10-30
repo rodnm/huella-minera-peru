@@ -593,6 +593,132 @@
     "sha256": "a5cdcddc45a40daf79353a6d167cd7d18f09858df8e9367a62b6e647016401f6",
     "downloaded_at": "2026-10-28"
   },
+  "mapbiomas_c4_2013": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2013.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2013.tif",
+    "bytes": 89238309,
+    "sha256": "3e368a6d4c555fe3756a478bf126f4e1679eb0fa9abdd9059b8d25c9e984c7a8",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2014": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2014.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2014.tif",
+    "bytes": 89638211,
+    "sha256": "490de5ec6894e1a3da8452eed23a033abf693467288f64fe23758d31f5ca0c6b",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2015": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2015.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2015.tif",
+    "bytes": 90391838,
+    "sha256": "b4d6e3ffb5aa00ab016174e252c2e5defb990017a7fc9b971dfb99bb54294cbc",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2016": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2016.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2016.tif",
+    "bytes": 90639532,
+    "sha256": "9481f02a5c87fcc0ab62adec69199a47b2e6b49379a106273a1f3aa0f96fd9c0",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2017": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2017.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2017.tif",
+    "bytes": 91418181,
+    "sha256": "fcb5d7596d665d85dea069f4dc2d0c90f3ab91231cf68c0a59257a681bd5e40b",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2018": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2018.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2018.tif",
+    "bytes": 91425270,
+    "sha256": "d07f304cd16271ca4aef7882fb4e92097108516152992f4e966a35d09b3f68e4",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2019": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2019.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2019.tif",
+    "bytes": 91715578,
+    "sha256": "fbf225e5aef8692038ddcb40ed8c52b673e6da355e6666fc59b9db0d1793b702",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2020": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2020.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2020.tif",
+    "bytes": 92024697,
+    "sha256": "366e74e5f5e4bd979b8f251b05274fdcb0b25849895e2be1214ed9cc1a22aab8",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2021": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2021.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2021.tif",
+    "bytes": 92505979,
+    "sha256": "544f9eb9368180c08ef00f61c7ca52b802c596afb0d23b965c78b7efd82d0587",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2022": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2022.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2022.tif",
+    "bytes": 92789015,
+    "sha256": "1e0893a75f7d89f1ac2c6040f1dd80f89436de9d9976f05a544ea088ba0ec9e9",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2023": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2023.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2023.tif",
+    "bytes": 93268327,
+    "sha256": "d010f6dd85af9ec35336a95617cc53212e27d35dbc42cd2457c6be387e758a32",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2024": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2024.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2024.tif",
+    "bytes": 94120628,
+    "sha256": "711ca85896d61627548d440c0a884df31d97ce1a8178544544391f7b59eae3c7",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_2025": {
+    "url": "https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/peru_coverage/peru_coverage-col4_2025.tif",
+    "page": "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/peru_coverage-col4_2025.tif",
+    "bytes": 94660963,
+    "sha256": "373150be6925590b26e1a8973580f53cb3a92846e2d8010d2d6139dab9d6b130",
+    "downloaded_at": "2026-10-28"
+  },
+  "mapbiomas_c4_estadisticas_departamento": {
+    "url": "https://peru.mapbiomas.org/wp-content/uploads/sites/6/2026/09/MAPBIOMAS-PERU-LULC-COL4-LIMITES-POLITICOS.xlsx",
+    "page": "https://peru.mapbiomas.org/descargas/estadisticas/",
+    "license": "CC BY 4.0 (MapBiomas Perú)",
+    "file": "mapbiomas/MAPBIOMAS-PERU-LULC-COL4-LIMITES-POLITICOS.xlsx",
+    "bytes": 6562745,
+    "sha256": "2026ca9c06f6b9ae44db288dc7094614e73e0b28f64531916a5046f1414e0a9f",
+    "downloaded_at": "2026-10-28"
+  },
   "minas_maus_v2": {
     "url": "https://download.pangaea.de/dataset/942325/files/global_mining_polygons_v2.gpkg",
     "page": "https://doi.org/10.1594/PANGAEA.942325",

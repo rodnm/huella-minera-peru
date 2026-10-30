@@ -10,12 +10,12 @@
     "light_per_1000_mining": 19.325163170419497,
     "light_per_1000_rest": 6.304344968118399,
     "light_ratio": 3.065372099424836,
-    "light_outside_per_1000_mining": 9.498936479076033,
-    "light_outside_per_1000_rest": 6.04187951363152,
-    "light_outside_ratio": 1.5721823743166008,
+    "light_outside_per_1000_mining": 10.262449550179351,
+    "light_outside_per_1000_rest": 6.21866828907499,
+    "light_outside_ratio": 1.650264827311743,
     "poverty_median_mining": 31.685945,
     "poverty_median_rest": 34.49565,
-    "share_of_mining_light_on_mines": 0.4640256047601079,
+    "share_of_mining_light_on_mines": 0.4306679713995416,
     "gaps": {
       "light": {
         "coef": 1.0193012159006996,
@@ -49,12 +49,12 @@
     "light_per_1000_mining": 19.325163170419497,
     "light_per_1000_rest": 6.2954694716068005,
     "light_ratio": 3.0696937309565113,
-    "light_outside_per_1000_mining": 9.498936479076033,
-    "light_outside_per_1000_rest": 6.040151441669824,
-    "light_outside_ratio": 1.5726321716943596,
+    "light_outside_per_1000_mining": 10.262449550179351,
+    "light_outside_per_1000_rest": 6.177570447959953,
+    "light_outside_ratio": 1.6612436291306667,
     "poverty_median_mining": 31.685945,
     "poverty_median_rest": 34.565636999999995,
-    "share_of_mining_light_on_mines": 0.4640256047601079,
+    "share_of_mining_light_on_mines": 0.4306679713995416,
     "gaps": {
       "light": {
         "coef": 1.0360245535308157,
@@ -77,8 +77,9 @@
     }
   },
   "paradoja": {
-    "regla": "distrito minero, luz por habitante en el 25 % más alto del país y pobreza mayor que la mediana de su departamento",
-    "n": 20,
+    "regla": "distrito minero con luz por habitante en el 25 % más alto del país y pobreza mayor que la mediana de su departamento; confirmada si el límite inferior del IC 95 % también la supera",
+    "n_confirmados": 8,
+    "n_posibles": 12,
     "distritos": [
       {
         "ubigeo": "060202",
@@ -86,9 +87,13 @@
         "province": "CAJABAMBA",
         "department": "CAJAMARCA",
         "mine": "ACUMULACION SHAHUINDO",
+        "confirmed": true,
         "poverty": 76.857,
+        "poverty_low": 70.324,
+        "poverty_high": 83.389,
         "light_per_1000": 20.088,
-        "share_on_mine": 0.732,
+        "share_on_mine": 0.868,
+        "mining_km2": 4.093,
         "population_2020": 25575.0
       },
       {
@@ -97,65 +102,14 @@
         "province": "CAJAMARCA",
         "department": "CAJAMARCA",
         "mine": "ACUMULACION CHAQUICOCHA",
+        "confirmed": true,
         "poverty": 74.91,
+        "poverty_low": 67.545,
+        "poverty_high": 82.274,
         "light_per_1000": 31.185,
-        "share_on_mine": 0.866,
+        "share_on_mine": 0.861,
+        "mining_km2": 8.721,
         "population_2020": 20052.0
-      },
-      {
-        "ubigeo": "050703",
-        "district": "CORONEL CASTAÑEDA",
-        "province": "PARINACOCHAS",
-        "department": "AYACUCHO",
-        "mine": "ACUMULACION PALLANCATA",
-        "poverty": 55.84,
-        "light_per_1000": 84.378,
-        "share_on_mine": 0.921,
-        "population_2020": 1934.0
-      },
-      {
-        "ubigeo": "051005",
-        "district": "CANARIA",
-        "province": "VICTOR FAJARDO",
-        "department": "AYACUCHO",
-        "mine": "CATALINA HUANCA",
-        "poverty": 50.856,
-        "light_per_1000": 31.859,
-        "share_on_mine": 0.481,
-        "population_2020": 4027.0
-      },
-      {
-        "ubigeo": "190108",
-        "district": "SAN FRANCISCO DE ASIS DE YARUSYACAN",
-        "province": "PASCO",
-        "department": "PASCO",
-        "mine": "ATACOCHA",
-        "poverty": 46.582,
-        "light_per_1000": 58.249,
-        "share_on_mine": 0.711,
-        "population_2020": 3818.0
-      },
-      {
-        "ubigeo": "090304",
-        "district": "CCOCHACCASA",
-        "province": "ANGARAES",
-        "department": "HUANCAVELICA",
-        "mine": "JULCANI",
-        "poverty": 44.442,
-        "light_per_1000": 25.514,
-        "share_on_mine": 0.836,
-        "population_2020": 3198.0
-      },
-      {
-        "ubigeo": "101007",
-        "district": "SAN MIGUEL DE CAURI",
-        "province": "LAURICOCHA",
-        "department": "HUANUCO",
-        "mine": "ACUMULACION RAURA",
-        "poverty": 43.664,
-        "light_per_1000": 17.64,
-        "share_on_mine": 0.775,
-        "population_2020": 5120.0
       },
       {
         "ubigeo": "040516",
@@ -163,9 +117,13 @@
         "province": "CAYLLOMA",
         "department": "AREQUIPA",
         "mine": "TAMBOMAYO",
+        "confirmed": true,
         "poverty": 43.076,
+        "poverty_low": 27.598,
+        "poverty_high": 58.553,
         "light_per_1000": 414.821,
-        "share_on_mine": 0.947,
+        "share_on_mine": 0.789,
+        "mining_km2": 0.634,
         "population_2020": 817.0
       },
       {
@@ -174,9 +132,13 @@
         "province": "CONDESUYOS",
         "department": "AREQUIPA",
         "mine": "GRAN ARCATA",
+        "confirmed": true,
         "poverty": 42.889,
+        "poverty_low": 31.718,
+        "poverty_high": 54.061,
         "light_per_1000": 20.675,
-        "share_on_mine": 0.815,
+        "share_on_mine": 0.705,
+        "mining_km2": 1.416,
         "population_2020": 3275.0
       },
       {
@@ -185,32 +147,14 @@
         "province": "CAYLLOMA",
         "department": "AREQUIPA",
         "mine": "SAN CRISTOBAL",
+        "confirmed": true,
         "poverty": 40.762,
+        "poverty_low": 27.133,
+        "poverty_high": 54.391,
         "light_per_1000": 45.889,
-        "share_on_mine": 0.385,
+        "share_on_mine": 0.155,
+        "mining_km2": 0.13,
         "population_2020": 3688.0
-      },
-      {
-        "ubigeo": "090106",
-        "district": "HUACHOCOLPA",
-        "province": "HUANCAVELICA",
-        "department": "HUANCAVELICA",
-        "mine": "HUACHOCOLPA UNO",
-        "poverty": 40.051,
-        "light_per_1000": 62.039,
-        "share_on_mine": 0.737,
-        "population_2020": 1807.0
-      },
-      {
-        "ubigeo": "080708",
-        "district": "VELILLE",
-        "province": "CHUMBIVILCAS",
-        "department": "CUSCO",
-        "mine": "CONSTANCIA",
-        "poverty": 38.744,
-        "light_per_1000": 65.376,
-        "share_on_mine": 0.947,
-        "population_2020": 8472.0
       },
       {
         "ubigeo": "230107",
@@ -218,9 +162,13 @@
         "province": "TACNA",
         "department": "TACNA",
         "mine": "FRONTERA UNO",
+        "confirmed": true,
         "poverty": 34.195,
+        "poverty_low": 24.331,
+        "poverty_high": 44.059,
         "light_per_1000": 95.976,
-        "share_on_mine": 0.733,
+        "share_on_mine": 0.668,
+        "mining_km2": 2.364,
         "population_2020": 2232.0
       },
       {
@@ -229,9 +177,13 @@
         "province": "CHINCHA",
         "department": "ICA",
         "mine": "CERRO LINDO",
+        "confirmed": true,
         "poverty": 30.081,
+        "poverty_low": 16.559,
+        "poverty_high": 43.603,
         "light_per_1000": 74.298,
-        "share_on_mine": 0.91,
+        "share_on_mine": 0.875,
+        "mining_km2": 1.17,
         "population_2020": 2658.0
       },
       {
@@ -240,10 +192,119 @@
         "province": "MARISCAL NIETO",
         "department": "MOQUEGUA",
         "mine": "ACUMULACION MARIELA",
+        "confirmed": true,
         "poverty": 26.461,
+        "poverty_low": 17.651,
+        "poverty_high": 35.271,
         "light_per_1000": 48.344,
-        "share_on_mine": 0.393,
+        "share_on_mine": 0.387,
+        "mining_km2": 6.731,
         "population_2020": 2197.0
+      },
+      {
+        "ubigeo": "050703",
+        "district": "CORONEL CASTAÑEDA",
+        "province": "PARINACOCHAS",
+        "department": "AYACUCHO",
+        "mine": "ACUMULACION PALLANCATA",
+        "confirmed": false,
+        "poverty": 55.84,
+        "poverty_low": 39.245,
+        "poverty_high": 72.436,
+        "light_per_1000": 84.378,
+        "share_on_mine": 0.892,
+        "mining_km2": 1.164,
+        "population_2020": 1934.0
+      },
+      {
+        "ubigeo": "051005",
+        "district": "CANARIA",
+        "province": "VICTOR FAJARDO",
+        "department": "AYACUCHO",
+        "mine": "CATALINA HUANCA",
+        "confirmed": false,
+        "poverty": 50.856,
+        "poverty_low": 32.412,
+        "poverty_high": 69.3,
+        "light_per_1000": 31.859,
+        "share_on_mine": 0.385,
+        "mining_km2": 0.214,
+        "population_2020": 4027.0
+      },
+      {
+        "ubigeo": "190108",
+        "district": "SAN FRANCISCO DE ASIS DE YARUSYACAN",
+        "province": "PASCO",
+        "department": "PASCO",
+        "mine": "ATACOCHA",
+        "confirmed": false,
+        "poverty": 46.582,
+        "poverty_low": 34.917,
+        "poverty_high": 58.247,
+        "light_per_1000": 58.249,
+        "share_on_mine": 0.543,
+        "mining_km2": 0.77,
+        "population_2020": 3818.0
+      },
+      {
+        "ubigeo": "090304",
+        "district": "CCOCHACCASA",
+        "province": "ANGARAES",
+        "department": "HUANCAVELICA",
+        "mine": "JULCANI",
+        "confirmed": false,
+        "poverty": 44.442,
+        "poverty_low": 32.276,
+        "poverty_high": 56.607,
+        "light_per_1000": 25.514,
+        "share_on_mine": 0.553,
+        "mining_km2": 0.266,
+        "population_2020": 3198.0
+      },
+      {
+        "ubigeo": "101007",
+        "district": "SAN MIGUEL DE CAURI",
+        "province": "LAURICOCHA",
+        "department": "HUANUCO",
+        "mine": "ACUMULACION RAURA",
+        "confirmed": false,
+        "poverty": 43.664,
+        "poverty_low": 30.638,
+        "poverty_high": 56.69,
+        "light_per_1000": 17.64,
+        "share_on_mine": 0.789,
+        "mining_km2": 1.229,
+        "population_2020": 5120.0
+      },
+      {
+        "ubigeo": "090106",
+        "district": "HUACHOCOLPA",
+        "province": "HUANCAVELICA",
+        "department": "HUANCAVELICA",
+        "mine": "HUACHOCOLPA UNO",
+        "confirmed": false,
+        "poverty": 40.051,
+        "poverty_low": 29.256,
+        "poverty_high": 50.845,
+        "light_per_1000": 62.039,
+        "share_on_mine": 0.784,
+        "mining_km2": 0.433,
+        "population_2020": 1807.0
+      },
+      {
+        "ubigeo": "080708",
+        "district": "VELILLE",
+        "province": "CHUMBIVILCAS",
+        "department": "CUSCO",
+        "mine": "CONSTANCIA",
+        "confirmed": false,
+        "poverty": 38.744,
+        "poverty_low": 26.11,
+        "poverty_high": 51.379,
+        "light_per_1000": 65.376,
+        "share_on_mine": 0.93,
+        "mining_km2": 4.065,
+        "population_2020": 8472.0
       },
       {
         "ubigeo": "150705",
@@ -251,9 +312,13 @@
         "province": "HUAROCHIRI",
         "department": "LIMA",
         "mine": "ACUMULACION YAULIYACU",
+        "confirmed": false,
         "poverty": 24.604,
+        "poverty_low": 14.725,
+        "poverty_high": 34.483,
         "light_per_1000": 103.805,
-        "share_on_mine": 0.242,
+        "share_on_mine": 0.513,
+        "mining_km2": 3.183,
         "population_2020": 3222.0
       },
       {
@@ -262,9 +327,13 @@
         "province": "OYON",
         "department": "LIMA",
         "mine": "UCHUCCHACUA",
+        "confirmed": false,
         "poverty": 22.084,
+        "poverty_low": 14.836,
+        "poverty_high": 29.333,
         "light_per_1000": 44.229,
-        "share_on_mine": 0.494,
+        "share_on_mine": 0.237,
+        "mining_km2": 7.975,
         "population_2020": 11903.0
       },
       {
@@ -273,9 +342,13 @@
         "province": "HUARAL",
         "department": "LIMA",
         "mine": "UNIDAD SANTANDER",
+        "confirmed": false,
         "poverty": 18.891,
+        "poverty_low": 12.316,
+        "poverty_high": 25.465,
         "light_per_1000": 134.167,
-        "share_on_mine": 0.543,
+        "share_on_mine": 0.537,
+        "mining_km2": 0.821,
         "population_2020": 769.0
       },
       {
@@ -284,9 +357,13 @@
         "province": "YAUYOS",
         "department": "LIMA",
         "mine": "ACUMULACION YAURICOCHA",
+        "confirmed": false,
         "poverty": 18.082,
+        "poverty_low": 9.761,
+        "poverty_high": 26.402,
         "light_per_1000": 18.399,
         "share_on_mine": 0.071,
+        "mining_km2": 0.004,
         "population_2020": 522.0
       },
       {
@@ -295,9 +372,13 @@
         "province": "NASCA",
         "department": "ICA",
         "mine": "ACUMULACION LOS INCAS I",
+        "confirmed": false,
         "poverty": 3.895,
+        "poverty_low": 1.36,
+        "poverty_high": 6.431,
         "light_per_1000": 21.829,
-        "share_on_mine": 0.105,
+        "share_on_mine": 0.0,
+        "mining_km2": 0.0,
         "population_2020": 24894.0
       }
     ]
@@ -863,9 +944,137 @@
     "ultimo_anio": 2025
   },
   "huella": {
-    "km2_total": 3525.933969991644,
-    "km2_madre_de_dios": 2537.5343179140527,
+    "fuente": "MapBiomas Perú C4, clase 30 (no distingue minería industrial, artesanal o ilegal)",
+    "km2_por_anio": {
+      "2013": 726.5224590078968,
+      "2014": 779.5996183682948,
+      "2015": 840.9800440108986,
+      "2016": 899.1202886138415,
+      "2017": 977.1361306554661,
+      "2018": 1041.2627031863888,
+      "2019": 1108.8655721757352,
+      "2020": 1210.4921848470594,
+      "2021": 1292.0302136054079,
+      "2022": 1439.088477511042,
+      "2023": 1677.3600520953844,
+      "2024": 1786.1441419749767,
+      "2025": 1984.8554999188682
+    },
+    "multiplicador_primero_ultimo": 2.731994689647019,
+    "km2_nuevos": 1258.3330409109712,
+    "participacion_madre_de_dios_por_anio": {
+      "2013": 0.4622235834168868,
+      "2014": 0.4734938667268207,
+      "2015": 0.4735984415872167,
+      "2016": 0.46972031869241054,
+      "2017": 0.48391630767669136,
+      "2018": 0.4868745480725909,
+      "2019": 0.4916454806230613,
+      "2020": 0.4932821883909454,
+      "2021": 0.500533040519552,
+      "2022": 0.522908195259422,
+      "2023": 0.5643525233920251,
+      "2024": 0.5725439607325836,
+      "2025": 0.5695529220454156
+    },
+    "mayor_crecimiento": [
+      {
+        "ubigeo": "170102",
+        "district": "INAMBARI",
+        "province": "TAMBOPATA",
+        "department": "MADRE DE DIOS",
+        "km2_nuevos": 329.319,
+        "poverty": 5.689
+      },
+      {
+        "ubigeo": "170203",
+        "district": "MADRE DE DIOS",
+        "province": "MANU",
+        "department": "MADRE DE DIOS",
+        "km2_nuevos": 205.233,
+        "poverty": 1.923
+      },
+      {
+        "ubigeo": "170104",
+        "district": "LABERINTO",
+        "province": "TAMBOPATA",
+        "department": "MADRE DE DIOS",
+        "km2_nuevos": 114.782,
+        "poverty": 9.939
+      },
+      {
+        "ubigeo": "170204",
+        "district": "HUEPETUHE",
+        "province": "MANU",
+        "department": "MADRE DE DIOS",
+        "km2_nuevos": 113.681,
+        "poverty": 6.808
+      },
+      {
+        "ubigeo": "110304",
+        "district": "MARCONA",
+        "province": "NASCA",
+        "department": "ICA",
+        "km2_nuevos": 40.98,
+        "poverty": 2.243
+      },
+      {
+        "ubigeo": "170101",
+        "district": "TAMBOPATA",
+        "province": "TAMBOPATA",
+        "department": "MADRE DE DIOS",
+        "km2_nuevos": 31.626,
+        "poverty": 4.788
+      },
+      {
+        "ubigeo": "040127",
+        "district": "YARABAMBA",
+        "province": "AREQUIPA",
+        "department": "AREQUIPA",
+        "km2_nuevos": 30.245,
+        "poverty": 12.727
+      },
+      {
+        "ubigeo": "211002",
+        "district": "ANANEA",
+        "province": "SAN ANTONIO DE PUTINA",
+        "department": "PUNO",
+        "km2_nuevos": 23.398,
+        "poverty": 15.527
+      },
+      {
+        "ubigeo": "180106",
+        "district": "TORATA",
+        "province": "MARISCAL NIETO",
+        "department": "MOQUEGUA",
+        "km2_nuevos": 17.198,
+        "poverty": 6.052
+      },
+      {
+        "ubigeo": "200801",
+        "district": "SECHURA",
+        "province": "SECHURA",
+        "department": "PIURA",
+        "km2_nuevos": 16.769,
+        "poverty": 25.804
+      }
+    ],
+    "luz_sobre_huella_ultimo_anio": 0.04894136118976479,
     "luz_madre_de_dios_ultimo_anio": 0.010587239167577818,
-    "luz_sobre_huellas_ultimo_anio": 0.043663967147199424
+    "validacion_nacional_vs_oficial": {
+      "2013": 0.0015790409275031614,
+      "2014": 0.001736333428021597,
+      "2015": 0.0018991456677015517,
+      "2016": 0.0019863004822715524,
+      "2017": 0.002099967365795541,
+      "2018": 0.002050911514173581,
+      "2019": 0.002162592984695788,
+      "2020": 0.0022574985260861435,
+      "2021": 0.0023376886134121033,
+      "2022": 0.002341939269375315,
+      "2023": 0.0024463367517171264,
+      "2024": 0.002537128558882218,
+      "2025": 0.0025440637437481595
+    }
   }
 }
