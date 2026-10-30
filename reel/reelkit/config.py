@@ -21,7 +21,7 @@ TTS_MODEL = "Qwen/Qwen3-TTS-12Hz-0.6B-Base"
 ASR_MODEL = "large-v3-turbo"
 LANGUAGE = "Spanish"
 
-USER_AGENT = ("paradoja-del-brillo-reel/0.1 (course project, Python Intermedio; "
+USER_AGENT = ("huella-minera-peru-reel/0.1 (course project, Python Intermedio; "
               "downloads OFL fonts from google/fonts; python-urllib)")
 
 PHYSICAL_CORES = max(1, (os.cpu_count() or 2) // 2)

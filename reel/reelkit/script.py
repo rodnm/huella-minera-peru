@@ -3,7 +3,7 @@
 Schema (session 15 fields plus `visual`):
 
     {
-      "titulo": "La paradoja del brillo",
+      "titulo": "La huella de la minería en el Perú",
       "fuente": "Fuente: NASA Black Marble, MINEM, INEI",
       "creditos": ["Datos: ...", "Música: ...", "Voz generada con IA a partir de la voz del autor"],
       "escenas": [

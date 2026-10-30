@@ -75,14 +75,23 @@ Salidas en `salidas/`, que git ignora:
 
 Al final, el script imprime la resolución y la duración del video, la sonoridad medida y avisos si el reel no cumple los 45 a 75 s o las 5 a 7 escenas que pide la tarea.
 
+## Escenas
+
+Los visuales de `guion.json` no se versionan: se generan desde los datos del proyecto, con el entorno de la raíz.
+
+```bash
+uv run python -m scripts.construir_escenas      # mapas y gráficos
+python scripts/capturar_dashboard.py            # última escena; requiere Playwright y la página servida
+```
+
 ## Guion
 
 ```json
 {
-  "titulo": "La paradoja del brillo",
-  "fuente": "Fuente: NASA Black Marble (VNP46A4), MINEM, INEI",
+  "titulo": "La huella de la minería en el Perú",
+  "fuente": "Fuente: MapBiomas Perú (Col. 4) y Amazon Mining Watch",
   "creditos": [
-    "Datos: NASA Black Marble, MINEM e INEI (enlaces en el repositorio)",
+    "Datos: MapBiomas Perú y Amazon Mining Watch (enlaces en el repositorio)",
     "Música: «Título» de Autor (Pixabay Content License)",
     "Voz generada con IA a partir de la voz del autor"
   ],

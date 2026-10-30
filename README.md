@@ -4,7 +4,15 @@ Un atlas interactivo, distrito por distrito, del suelo minero que se ve desde el
 
 **[Abrir el dashboard](https://rodnm.github.io/huella-minera-peru/)** · **Publicación en LinkedIn:** se agrega al publicar
 
+| | |
+| :--- | :--- |
+| **Autor** | Rodrigo Andrés Norabuena Mascaraqui ([@rodnm](https://github.com/rodnm)) |
+| **Curso** | Python Intermedio · Diplomatura de especialización Ciencia de Datos para las Ciencias Sociales y la Gestión Pública 2026 |
+| **Enunciado** | [d2cml-ai/Data-Science-Python#197](https://github.com/d2cml-ai/Data-Science-Python/issues/197) |
+
 ![Mapa del Perú en 2025 con las celdas de huella minera](docs/capturas/atlas_peru.png)
+
+![Ficha del distrito de Inambari con la huella minera de 2025](docs/capturas/atlas_inambari.png)
 
 ## Tema y pregunta de investigación
 
