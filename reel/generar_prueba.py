@@ -25,7 +25,7 @@ def _rgb(hex_color: str) -> np.ndarray:
 def gradient(colors: dict) -> Image.Image:
     """Night background with a warm glow, like a city seen from space."""
     y, x = np.mgrid[0:H, 0:W].astype(np.float32)
-    bg, panel, glow = _rgb(colors["background"]), _rgb(colors["panel"]), _rgb(colors["radiance"][4])
+    bg, panel, glow = _rgb(colors["background"]), _rgb(colors["panel"]), _rgb(colors["footprint"][4])
     vertical = (y / H)[..., None]
     img = bg * (1 - vertical) + panel * vertical
     r = np.hypot((x - 0.62 * W) / W, (y - 0.45 * H) / H)
@@ -39,7 +39,7 @@ def lighting_frames(colors: dict, n: int = 10) -> list[Image.Image]:
     rng = np.random.default_rng(7)
     cols, rows = 18, 16
     order = rng.permutation(cols * rows)
-    ramp = colors["radiance"]
+    ramp = colors["footprint"]
     frames = []
     for k in range(1, n + 1):
         img = Image.new("RGB", (W, H), colors["background"])

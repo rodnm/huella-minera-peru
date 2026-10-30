@@ -43,8 +43,7 @@ def load_colors(path: Path = TOKENS_FILE) -> dict:
         "text": surface["text"],
         "text_muted": surface["text_muted"],
         "accent": series["mining"],
-        "paradox": series["paradox"],
-        "highlight": ramps["radiance"][-1],
-        "radiance": ramps["radiance"],
-        "poverty_gap": ramps["poverty_gap"],
+        "contrast": series["contrast"],
+        "highlight": ramps["footprint"][-1],
+        "footprint": ramps["footprint"],
     }
