@@ -537,6 +537,59 @@ wheels = [
 ]
 
 [[package]]
+name = "huella-minera-peru"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "blackmarblepy" },
+    { name = "coloraide" },
+    { name = "geopandas" },
+    { name = "matplotlib" },
+    { name = "numpy" },
+    { name = "openpyxl" },
+    { name = "pandas" },
+    { name = "pillow" },
+    { name = "py7zr" },
+    { name = "pyarrow" },
+    { name = "pyogrio" },
+    { name = "rasterio" },
+    { name = "requests" },
+    { name = "scipy" },
+    { name = "shapely" },
+    { name = "statsmodels" },
+    { name = "truststore" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "blackmarblepy", specifier = "==2026.6.1" },
+    { name = "coloraide", specifier = ">=4.0" },
+    { name = "geopandas", specifier = ">=1.0" },
+    { name = "matplotlib", specifier = ">=3.9" },
+    { name = "numpy", specifier = ">=2.0" },
+    { name = "openpyxl", specifier = ">=3.1" },
+    { name = "pandas", specifier = ">=2.2" },
+    { name = "pillow", specifier = ">=11.0" },
+    { name = "py7zr", specifier = ">=0.22" },
+    { name = "pyarrow", specifier = ">=17.0" },
+    { name = "pyogrio", specifier = ">=0.10" },
+    { name = "rasterio", specifier = ">=1.4" },
+    { name = "requests", specifier = ">=2.32" },
+    { name = "scipy", specifier = ">=1.13" },
+    { name = "shapely", specifier = ">=2.0" },
+    { name = "statsmodels", specifier = ">=0.14" },
+    { name = "truststore", specifier = ">=0.10" },
+]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest", specifier = ">=8.3" }]
+
+[[package]]
 name = "humanize"
 version = "4.16.0"
 source = { registry = "https://pypi.org/simple" }
@@ -840,59 +893,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/87/21/84072af3187a677c5893b170ba2c8fbe450a6ff911234916da889b698220/pandas-2.3.3-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:371a4ab48e950033bcf52b6527eccb564f52dc826c02afd9a1bc0ab731bba084", size = 13450971, upload-time = "2025-09-29T23:20:41.344Z" },
     { url = "https://files.pythonhosted.org/packages/86/41/585a168330ff063014880a80d744219dbf1dd7a1c706e75ab3425a987384/pandas-2.3.3-cp312-cp312-win_amd64.whl", hash = "sha256:a16dcec078a01eeef8ee61bf64074b4e524a2a3f4b3be9326420cabe59c4778b", size = 10992722, upload-time = "2025-09-29T23:20:54.139Z" },
 ]
-
-[[package]]
-name = "paradoja-del-brillo"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "blackmarblepy" },
-    { name = "coloraide" },
-    { name = "geopandas" },
-    { name = "matplotlib" },
-    { name = "numpy" },
-    { name = "openpyxl" },
-    { name = "pandas" },
-    { name = "pillow" },
-    { name = "py7zr" },
-    { name = "pyarrow" },
-    { name = "pyogrio" },
-    { name = "rasterio" },
-    { name = "requests" },
-    { name = "scipy" },
-    { name = "shapely" },
-    { name = "statsmodels" },
-    { name = "truststore" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "pytest" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "blackmarblepy", specifier = "==2026.6.1" },
-    { name = "coloraide", specifier = ">=4.0" },
-    { name = "geopandas", specifier = ">=1.0" },
-    { name = "matplotlib", specifier = ">=3.9" },
-    { name = "numpy", specifier = ">=2.0" },
-    { name = "openpyxl", specifier = ">=3.1" },
-    { name = "pandas", specifier = ">=2.2" },
-    { name = "pillow", specifier = ">=11.0" },
-    { name = "py7zr", specifier = ">=0.22" },
-    { name = "pyarrow", specifier = ">=17.0" },
-    { name = "pyogrio", specifier = ">=0.10" },
-    { name = "rasterio", specifier = ">=1.4" },
-    { name = "requests", specifier = ">=2.32" },
-    { name = "scipy", specifier = ">=1.13" },
-    { name = "shapely", specifier = ">=2.0" },
-    { name = "statsmodels", specifier = ">=0.14" },
-    { name = "truststore", specifier = ">=0.10" },
-]
-
-[package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = ">=8.3" }]
 
 [[package]]
 name = "parso"

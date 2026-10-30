@@ -1,10 +1,46 @@
-# Metodología y hallazgos: minería, luz nocturna y pobreza en los distritos del Perú
+# Metodología y hallazgos: la huella de la minería en el Perú, 2013–2025
 
-Este documento reúne todos los hallazgos del proyecto, incluidos los que debilitan su hipótesis inicial, con el método que produjo cada uno, su incertidumbre y lo que no permite afirmar. Toda cifra sale de `datos/procesados/hallazgos.json`, `datos/procesados/auditoria.json` o `datos/procesados/validacion_pobreza.json`, y se regenera con `uv run python -m scripts.run_all`.
+Este documento reúne todos los hallazgos del proyecto y el método que produjo cada uno, con su incertidumbre y lo que no permite afirmar. Las cifras salen de `datos/procesados/atlas.json`, `contraste_huella.json`, `hallazgos.json`, `auditoria.json` y `validacion_pobreza.json`, y se regeneran con `uv run python -m scripts.run_all`.
 
-## Síntesis
+## Qué se publica y qué no
 
-**Pregunta:** ¿los distritos con minería formal a escala brillan más de noche y son menos pobres que distritos comparables de su departamento?
+El proyecto empezó preguntando si la minería se asocia con menos pobreza. Los datos no alcanzan para responderlo: son mapas estimados, el grupo placebo falla y el resultado cambia de signo sin controles (H3). Por eso **el mensaje público es descriptivo**: dónde apareció y cuánto creció el suelo minero visible desde satélite. El análisis de luz y pobreza se conserva aquí completo, para que se pueda revisar, pero no es el titular.
+
+| Parte | Contenido | Uso |
+|---|---|---|
+| **A** | Atlas de la huella, con contraste independiente | Dashboard, reel y publicación |
+| **B** | H1 a H10: luz, pobreza y estimación distrital | Solo este documento; luz y pobreza 2018 aparecen en el mapa como contexto |
+
+## A. Hallazgos del atlas
+
+**Pregunta:** ¿dónde apareció y cuánto creció el suelo minero que se ve desde el satélite?
+
+| # | Hallazgo | Cifra | Respaldo |
+|---|---|---|---|
+| A1 | La superficie clasificada como minera casi se triplicó | 727 → 1,985 km² entre 2013 y 2025 (×2.73) | MapBiomas; nuestro cálculo difiere 0.25 % como máximo de su tabla nacional |
+| A2 | Madre de Dios explica la mayor parte del aumento | 63 % del aumento y 57 % de la huella de 2025 | Contrastado con Amazon Mining Watch |
+| A3 | El aumento está concentrado | 10 distritos explican 73 %; Inambari pasa de 88 a 417 km²; los distritos con al menos 1 ha pasan de 215 a 310 | MapBiomas; umbral de 1 ha elegido por nosotros |
+| A4 | Dos fuentes independientes coinciden en ritmo y lugar en Madre de Dios, no en nivel | 2018–2024: MapBiomas ×2.02, Amazon Mining Watch ×1.98; 96–98 % de la superficie de MapBiomas cae en celdas con cicatrices | Ver M9 |
+
+### Qué tan fuerte es el contraste
+
+- **Ritmo:** casi idéntico en el periodo. Año a año no: de 2022 a 2023, MapBiomas sube 194 km² y Amazon Mining Watch, 118 km². Conviene leer la tendencia y no un año suelto.
+- **Lugar:** el solapamiento se mide en celdas de 500 m, una vara generosa. Dice que apuntan a las mismas zonas, no que coincidan píxel a píxel.
+- **Nivel:** en 2024, 1,023 km² de MapBiomas contra 1,520 km² de Amazon Mining Watch. Esta última acumula cicatrices desde 2018 e informa que su máscara acumulada mide cerca de 1.7 veces lo anotado a mano. MapBiomas clasifica el suelo de cada año. En 2019, Maus et al. da 2,538 km² en Madre de Dios, con otra definición de área minera.
+- **Orden de magnitud externo:** [MAAP #195](https://www.maapprogram.org/?p=24977) estima 23,881 ha (239 km²) de deforestación por minería aurífera en el sur de la Amazonía peruana en 2021–2023. Mide pérdida de bosque, no suelo minero total, y su zona de estudio es otra. Sirve como referencia, no como validación: en el mismo tramo, 2020 a 2023, MapBiomas suma 350 km² en Madre de Dios y Amazon Mining Watch, 360 km².
+- **Cobertura:** Amazon Mining Watch solo cubre la cuenca amazónica. El 37 % del aumento, fuera de Madre de Dios, se apoya sobre todo en MapBiomas.
+
+### Lo que el atlas no afirma
+
+- Que la huella sea minería legal, informal o ilegal: la clase 30 no las distingue, e incluye extracción no metálica como la de Sechura.
+- Un área exacta: las fuentes difieren hasta en tres veces según su definición.
+- Una relación causal con la luz o la pobreza: son capas de contexto.
+
+---
+
+## B. Análisis de luz y pobreza
+
+**Pregunta inicial:** ¿los distritos con minería formal a escala brillan más de noche y son menos pobres que distritos comparables de su departamento?
 
 | # | Hallazgo | Confianza |
 |---|---|---|
@@ -23,7 +59,7 @@ Este documento reúne todos los hallazgos del proyecto, incluidos los que debili
 
 ---
 
-## 1. Hallazgos
+## 1. Hallazgos de la parte B
 
 ### H1. Los distritos mineros brillan más
 
@@ -69,7 +105,7 @@ Cambio del mapa 2013 al de 2018, contra distritos sin mina en toda la serie, con
 - **Precisión:** con 31 aperturas, el intervalo no descarta efectos de hasta ±4 puntos. Esto es ausencia de evidencia, no evidencia de que no haya efecto.
 - **Límites:** los mapas usan bases distintas (SISFOH y censo), el de 2018 usa el de 2013 como insumo, y ambos son estimaciones.
 
-### H4. Destinos opuestos con aperturas parecidas
+### H4. Destinos distintos tras abrir una mina
 
 | Distrito | Mina (inicio) | Mapa 2013 | Mapa 2018 | Estimación propia 2023–25 |
 |---|---|---|---|---|
@@ -79,6 +115,7 @@ Cambio del mapa 2013 al de 2018, contra distritos sin mina en toda la serie, con
 | **Cachachi** | Shahuindo (2016) | **83.7 (79.6–87.9)** | **76.9 (70.3–83.4)** | **63.5 (50.7–75.5)** |
 
 - De las 31 aperturas, **6 tienen una caída confirmada** (el intervalo de 2018 queda completamente por debajo del de 2013): Huaquirca, Challhuahuacho, Oyolo, Ocoyo, Laramarca y Marmot. En 5 la pobreza subió.
+- **No son aperturas comparables en escala:** en 2023, Las Bambas produjo cerca de 300 mil toneladas de cobre en Challhuahuacho, y Shahuindo, cerca de 4 toneladas de oro en Cachachi.
 - **No permite afirmar por qué.** Son hipótesis sin verificar: el tamaño de la operación, el canon, la migración de trabajadores, que cambia quién vive en el distrito, y el cambio de base entre mapas.
 
 ### H5. La huella minera casi se triplicó
@@ -197,6 +234,18 @@ NASA Black Marble VNP46A4, Colección 2, 500 m, variable `NearNadir_Composite_Sn
 
 MapBiomas publica el área solo por departamento, así que el cálculo distrital es propio. La máscara de clase 30 a 30 m se promedia sobre la grilla de luz (`rasterio.warp.reproject`, promedio), por franjas. El área de cada píxel es `R²·Δλ·|sin φ₁ − sin φ₂|`, con el radio authálico, y se suma fracción × área por distrito.
 
+### M9. Contraste con Amazon Mining Watch
+
+`scripts/contrastar_huella.py` compara la huella con una fuente construida aparte: imágenes Sentinel-2 y un modelo propio de Earth Genome (`amazon_basin_mining_scar_masks.tif`, 10 m, versión del 16 de octubre de 2026, CC BY 4.0).
+
+1. **Extensión por año:** cada píxel guarda el año en que se confirmó la cicatriz, así que la extensión de un año es todo lo confirmado hasta entonces. Los códigos trimestrales son provisionales y quedan fuera. Una cicatriz se confirma al verla otra vez el año siguiente, por eso **2024 es el último año comparable**.
+2. **Misma grilla:** los píxeles se agrupan en la grilla de 500 m y el área se calcula igual que en M4.
+3. **Comparación:** se reportan la razón 2018–2024, el solapamiento por celda en Madre de Dios y la diferencia de nivel.
+
+### M10. Cifras y datos del atlas
+
+`brillo/atlas.py` calcula los hallazgos A1 a A3 desde el panel, y `scripts/construir_web.py` escribe los archivos de `web/data`. La página no tiene cifras escritas a mano: las calcula con esos archivos. El script falla si el redondeo cambia el conteo de distritos respecto de `atlas.json`. Una celda se dibuja si en algún año al menos 1 % de ella es minería, unas 0.2 ha, para no mostrar píxeles sueltos. Las pruebas del navegador comprueban que cada control cambie lo que se muestra.
+
 ### M5. Pobreza oficial
 
 INEI, mapas 2013 y 2018, método Elbers-Lanjouw-Lanjouw. El INEI publica un **intervalo**, no un valor puntual: se usa el punto medio y se conserva el intervalo. El dato `Poverty.csv` del curso coincide exactamente con ese punto medio en los 1,873 distritos. En 2013, los distritos partidos en grupos se colapsan por población y los límites negativos pasan a 0. 25 distritos creados después de 2017 no tienen dato en 2018.
@@ -231,10 +280,11 @@ La ENAHO no representa a los distritos: en 2024 cubre 1,271, con mediana de 14 h
 
 | Comprobación | Resultado |
 |---|---|
-| Hashes del `MANIFEST` | 108 de 108 |
+| Hashes del `MANIFEST` | 109 de 109 |
 | Panel | 24,674 filas, claves únicas, sin nulos en luz ni huella |
 | Suma de MINEM contra sus totales (8 metales, 2013–2019) | Diferencia prácticamente nula en 56 comparaciones |
 | Huella contra la tabla oficial de MapBiomas | 0.25 % nacional, 4.8 % departamental |
+| **Huella contra Amazon Mining Watch, Madre de Dios, 2018–2024** | **×2.02 contra ×1.98; 96–98 % en las mismas celdas; distinto nivel** |
 | Pobreza nacional contra el INEI, 2016–2025 | Coincide en los 10 años |
 | Regla gasto contra línea, 2013–2025 | 100 % en los 13 años |
 | Referencia con Stata 17 (`docs/referencia_stata.do`, 2024) | Tasas departamentales idénticas; razón de errores estándar de 0.92 a 1.01 |
@@ -244,7 +294,7 @@ La ENAHO no representa a los distritos: en 2024 cubre 1,271, con mediana de 14 h
 **Sin verificar:**
 
 - MINEM 2020–2025 contra totales propios, y pobreza 2013–2015 contra el informe del INEI que las publica.
-- La validación de MapBiomas prueba nuestro cálculo, no que su clasificación sea correcta en terreno.
+- La validación de MapBiomas prueba nuestro cálculo, no que su clasificación sea correcta en terreno. Fuera de la Amazonía no hay una segunda fuente anual.
 - La luz no tiene una segunda fuente.
 - La lista `datos/referencias/hidrocarburos.csv` identifica los casos atípicos en los datos, pero su atribución a instalaciones de gas y petróleo es conocimiento general, **sin fuente citada**. Excluirlos no cambia las brechas.
 - Las Sumarias de años distintos pueden repetir hogares de la parte panel de la ENAHO, lo que hace que el n efectivo de la ventana sea algo optimista.
@@ -263,6 +313,9 @@ La ENAHO no representa a los distritos: en 2024 cubre 1,271, con mediana de 14 h
 | "20 distritos-paradoja" | 8 confirmados y 12 posibles | El intervalo cruza la mediana en 12 |
 | "Tapay ya no se puede afirmar" | Tapay sí se confirma | Error propio al leer la tabla |
 | "El Perú minero se encendió" | No se sostiene como afirmación general | H8 |
+| "Con aperturas parecidas, destinos opuestos" | Las operaciones no son comparables en escala | H4 |
+| "La mina enciende el distrito" | La apertura típica casi no cambia la luz | H8 |
+| "Los distritos mineros brillan tres veces más que sus vecinos" | Es la mediana de una de tres medidas, dentro del departamento, e incluye la luz de la operación | H1 |
 
 ---
 
@@ -272,6 +325,7 @@ La ENAHO no representa a los distritos: en 2024 cubre 1,271, con mediana de 14 h
 |---|---|---|
 | NASA Black Marble VNP46A4 v2 ([DOI](https://doi.org/10.5067/VIIRS/VNP46A4.002)); Román et al. (2018), *Remote Sensing of Environment* 210 | Luz | Datos abiertos de NASA |
 | MapBiomas Perú, [Colección 4](https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/) | Huella anual | CC BY 4.0 |
+| Earth Genome, [Amazon Mining Watch](https://source.coop/earthgenome/amazon-mining-watch) | Contraste independiente de la huella | CC BY 4.0 |
 | Maus et al. (2022), *Scientific Data* 9, 433 ([PANGAEA](https://doi.org/10.1594/PANGAEA.942325)) | Validación de la huella | CC BY-SA 4.0 |
 | MINEM, [Producción Minera](https://www.gob.pe/institucion/minem/informes-publicaciones/5472883-produccion-minera) y Principales Unidades | Producción | Información pública |
 | INEI, [Mapa de Pobreza 2018](https://www.gob.pe/institucion/inei/informes-publicaciones/3204872-mapa-de-pobreza-provincial-y-distrital-2018) y [2013](https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Anexo_Estadistico_MapaPobreza2013.xlsx) | Pobreza oficial | Información pública |
