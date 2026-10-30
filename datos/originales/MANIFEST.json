@@ -1,4 +1,13 @@
 {
+  "amazon_mining_watch_cicatrices": {
+    "url": "https://data.source.coop/earthgenome/amazon-mining-watch/amazon_basin_mining_scar_masks.tif",
+    "page": "https://source.coop/earthgenome/amazon-mining-watch",
+    "license": "CC BY 4.0 (Earth Genome, Amazon Mining Watch)",
+    "file": "amw/amazon_basin_mining_scar_masks.tif",
+    "bytes": 64909016,
+    "sha256": "ab17e3289d4e65959cc238dbd2a453736450f6942412b414f2a409e9633a7404",
+    "downloaded_at": "2026-10-30"
+  },
   "blackmarble_VNP46A4.A2013001.h09v09.002.2025087045047": {
     "url": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
     "page": "https://doi.org/10.5067/VIIRS/VNP46A4.002",
