@@ -98,7 +98,7 @@ def legend(draw, y=28, x=28):
         y += 38
 
 
-def year_label(draw, year, value, place="", position=(28, 790)):
+def year_label(draw, year, value, place="", position=(28, 740)):
     text = f"{place}: {number(value)} km²" if place else f"{number(value)} km²"
     width = max(draw.textlength(str(year), font=font(112, True)), draw.textlength(text, font=font(30)))
     draw.rectangle((position[0] - 14, position[1] + 8, position[0] + width + 14, SIZE[1]), fill=rgb(SURFACE["background"]))
