@@ -10,6 +10,10 @@ CDN = "https://cdn.www.gob.pe/uploads/document/file"
 MAPBIOMAS_COVERAGE = ("https://storage.googleapis.com/mapbiomas-public/initiatives/peru/collection4/lulc/coverage/"
                       "peru_coverage")
 MAPBIOMAS_PAGE = "https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/"
+ENAHO_DOWNLOAD = "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/CSV"
+ENAHO_CODES = {2013: 404, 2014: 440, 2015: 498, 2016: 546, 2017: 603, 2018: 634, 2019: 687, 2020: 737, 2021: 759,
+               2022: 784, 2023: 906, 2024: 966, 2025: 1031}
+INEI_LICENSE = "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia"
 
 SOURCES = [
     {
@@ -20,6 +24,25 @@ SOURCES = [
         "license": "Información pública del Estado peruano (Ley 27806); el portal no declara una licencia",
         "description": "INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2018: IC 95 % por distrito y población 2020",
     },
+    {
+        "name": "pobreza_inei_2013",
+        "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Anexo_Estadistico_MapaPobreza2013.xlsx",
+        "file": "inei/mapa_pobreza_2013_anexo_estadistico.xlsx",
+        "page": "https://www.inei.gob.pe/cifras-de-pobreza/",
+        "license": INEI_LICENSE,
+        "description": "INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2013: IC 95 % por distrito y población 2015",
+    },
+    *[
+        {
+            "name": f"enaho_sumaria_{year}",
+            "url": f"{ENAHO_DOWNLOAD}/{code}-Modulo34.zip",
+            "file": f"enaho/{code}-Modulo34.zip",
+            "page": "https://proyectos.inei.gob.pe/microdatos/",
+            "license": INEI_LICENSE,
+            "description": f"INEI, ENAHO {year}, módulo 34 (Sumaria): pobreza, gasto y factor de expansión del hogar",
+        }
+        for year, code in ENAHO_CODES.items()
+    ],
     {
         "name": "minas_maus_v2",
         "url": "https://download.pangaea.de/dataset/942325/files/global_mining_polygons_v2.gpkg",

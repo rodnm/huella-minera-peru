@@ -57,14 +57,18 @@ def record(manifest: Path, name: str, url: str, path: Path, page: str, license: 
            downloaded_at: str | None = None) -> dict:
     """Add or replace one source in the manifest, with its size and SHA-256."""
     entries = json.loads(manifest.read_text(encoding="utf-8")) if manifest.exists() else {}
+    digest = sha256(path)
+    previous = entries.get(name, {})
     entries[name] = {
         "url": url,
         "page": page,
         "license": license,
         "file": path.relative_to(manifest.parent).as_posix(),
         "bytes": path.stat().st_size,
-        "sha256": sha256(path),
-        "downloaded_at": downloaded_at or date.today().isoformat(),
+        "sha256": digest,
+        # a re-run over the same file keeps the date it was really downloaded
+        "downloaded_at": (previous["downloaded_at"] if previous.get("sha256") == digest
+                          else downloaded_at or date.today().isoformat()),
     }
     manifest.parent.mkdir(parents=True, exist_ok=True)
     manifest.write_text(json.dumps(dict(sorted(entries.items())), indent=2, ensure_ascii=False) + "\n",

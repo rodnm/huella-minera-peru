@@ -1,7 +1,8 @@
+import numpy as np
 import pandas as pd
 import pytest
 
-from brillo.analisis import mine_openings, paradox_districts
+from brillo.analisis import mine_openings, mining_groups, paradox_districts, poverty_change_effects
 
 
 def test_paradox_is_confirmed_only_when_the_whole_poverty_interval_is_above_the_department_median():
@@ -35,3 +36,27 @@ def test_mine_opening_compares_light_two_years_before_and_three_after_the_first_
     assert row["light_before"] == 10                   # mean of 2014-2015
     assert row["light_after"] == 60                    # mean of 2017-2019
     assert row["ratio"] == pytest.approx(6)
+
+
+def test_mining_groups_separate_established_opened_and_later_mines():
+    panel = pd.DataFrame({
+        "ubigeo": ["old"] * 3 + ["new"] * 3 + ["late"] * 3 + ["none"] * 3,
+        "year": [2013, 2016, 2021] * 4,
+        "mining": [True, True, True, False, True, True, False, False, True, False, False, False],
+    })
+    groups = mining_groups(panel, before=2014, after=2018)
+    assert groups.to_dict() == {"late": "abre_despues", "new": "abre_entre_mapas", "none": "sin_mina", "old": "establecida"}
+
+
+def test_poverty_change_recovers_a_planted_effect_against_districts_without_mine():
+    rng = np.random.default_rng(3)
+    n = 400
+    d = pd.DataFrame({"group": np.repeat(["sin_mina", "abre_entre_mapas"], [300, 100]),
+                      "department": rng.choice(["A", "B", "C"], n), "province": rng.choice(list("abcdefghij"), n),
+                      "start": rng.uniform(10, 80, n), "log_pop": rng.normal(8, 1, n), "log_area": rng.normal(5, 1, n),
+                      "region": rng.choice(["COSTA", "SIERRA"], n)})
+    d["change"] = -0.2 * d["start"] + np.where(d["group"] == "abre_entre_mapas", -5.0, 0.0) + rng.normal(0, 2, n)
+    effects = poverty_change_effects(d)
+    assert effects["abre_entre_mapas"]["coef"] == pytest.approx(-5, abs=1)
+    assert effects["abre_entre_mapas"]["low"] < effects["abre_entre_mapas"]["coef"] < effects["abre_entre_mapas"]["high"]
+    assert effects["abre_entre_mapas"]["n"] == 100

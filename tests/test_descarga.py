@@ -57,6 +57,19 @@ def test_record_writes_url_date_and_hash_to_manifest(tmp_path):
                      "downloaded_at": "2026-10-28"}
 
 
+def test_record_keeps_the_download_date_when_the_file_did_not_change(tmp_path):
+    f = tmp_path / "originales" / "a.bin"
+    f.parent.mkdir()
+    f.write_bytes(b"data")
+    manifest = tmp_path / "originales" / "MANIFEST.json"
+    record(manifest, "a", "u", f, "p", "l", downloaded_at="2026-10-27")
+    record(manifest, "a", "u", f, "p", "l", downloaded_at="2026-10-30")
+    assert json.loads(manifest.read_text(encoding="utf-8"))["a"]["downloaded_at"] == "2026-10-27"
+    f.write_bytes(b"new data")
+    record(manifest, "a", "u", f, "p", "l", downloaded_at="2026-10-31")
+    assert json.loads(manifest.read_text(encoding="utf-8"))["a"]["downloaded_at"] == "2026-10-31"
+
+
 def test_fetch_arcgis_layer_queries_all_object_ids_in_batches(tmp_path):
     def routes(url, params):
         if params.get("returnIdsOnly") == "true":

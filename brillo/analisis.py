@@ -56,3 +56,37 @@ def gaps(cs: pd.DataFrame) -> dict:
         out[name] = {"coef": float(fit.params["mining[T.True]"]), "t": float(fit.tvalues["mining[T.True]"]),
                      "n": int(fit.nobs), "formula": formula}
     return out
+
+
+def mining_groups(panel: pd.DataFrame, before: int = 2014, after: int = 2018) -> pd.Series:
+    """Classify districts by when production starts, relative to the 2013 and 2018 poverty maps.
+
+    establecida: already producing up to ``before``. abre_entre_mapas: first production after ``before`` and up to
+    ``after``. abre_despues: first production after ``after``, which should show no effect on a 2013-2018 change and
+    so works as a placebo. sin_mina: no production in the whole series.
+    """
+    first = panel[panel["mining"]].groupby("ubigeo")["year"].min()
+    groups = pd.Series("sin_mina", index=sorted(panel["ubigeo"].unique()), name="group")
+    groups[first[first <= before].index] = "establecida"
+    groups[first[(first > before) & (first <= after)].index] = "abre_entre_mapas"
+    groups[first[first > after].index] = "abre_despues"
+    return groups
+
+
+def poverty_change_effects(d: pd.DataFrame, reference: str = "sin_mina") -> dict:
+    """Change in poverty of each group against districts without a mine, in percentage points.
+
+    Controls: starting poverty (poorer districts fall more anyway), population, area, natural region and department;
+    errors are clustered by province. This is an association between two estimated maps, not a causal effect.
+    """
+    fit = smf.ols(f"change ~ C(group, Treatment('{reference}')) + start + log_pop + log_area + C(region) + C(department)",
+                  d).fit(cov_type="cluster", cov_kwds={"groups": pd.factorize(d["province"])[0]})
+    out = {}
+    for group in d["group"].unique():
+        if group == reference:
+            continue
+        key = f"C(group, Treatment('{reference}'))[T.{group}]"
+        low, high = fit.conf_int().loc[key]
+        out[group] = {"coef": float(fit.params[key]), "low": float(low), "high": float(high),
+                      "t": float(fit.tvalues[key]), "n": int((d["group"] == group).sum())}
+    return out
