@@ -6,8 +6,8 @@ import rasterio
 from rasterio.transform import from_origin
 from shapely.geometry import box
 
-from brillo.mapbiomas import (maus_agreement, mining_fraction, mining_km2_by_district, official_gap,
-                             pixel_area_km2, read_official_mining)
+from brillo.mapbiomas import (maus_agreement, mining_fraction, mining_km2_by_district, official_gap, overlap_share,
+                             pixel_area_km2, read_official_mining, scar_fractions)
 
 
 def write(path, values, transform, dtype):
@@ -76,3 +76,46 @@ def test_maus_agreement_reports_the_share_of_mapbiomas_mining_on_maus_pixels(tmp
     path = write(tmp_path / "frac.tif", frac, transform, "float32")
     mines = gpd.GeoDataFrame(geometry=[box(-74.998, -9.968, -74.992, -9.962)], crs="EPSG:4326")   # inside pixel (0, 0)
     assert maus_agreement(mines, path) == pytest.approx(0.5, abs=0.01)
+
+
+def test_scar_fractions_accumulate_annual_onsets_and_leave_out_quarterly_codes(tmp_path):
+    like = write(tmp_path / "like.tif", np.zeros((2, 2)), from_origin(0, 2, 1, 1), "float32")
+    onset = np.zeros((4, 4))
+    onset[0, 0] = 2018  # coarse pixel (0, 0)
+    onset[0, 1] = 2020  # coarse pixel (0, 0)
+    onset[3, 3] = 20251  # quarterly and provisional: not an annual onset
+    onset[2, 2] = 2020  # coarse pixel (1, 1)
+    mask = write(tmp_path / "mask.tif", onset, from_origin(0, 2, 0.5, 0.5), "uint16")
+
+    paths = scar_fractions(mask, like, tmp_path / "amw", years=[2018, 2020])
+
+    with rasterio.open(paths[2018]) as src:
+        first = src.read(1)
+    with rasterio.open(paths[2020]) as src:
+        second = src.read(1)
+    assert first.tolist() == [[0.25, 0], [0, 0]]
+    assert second.tolist() == [[0.5, 0], [0, 0.25]]
+
+
+def test_scar_fractions_ignore_pixels_outside_the_grid(tmp_path):
+    like = write(tmp_path / "like.tif", np.zeros((1, 1)), from_origin(0, 1, 1, 1), "float32")
+    mask = write(tmp_path / "mask.tif", np.full((2, 4), 2018), from_origin(-1, 1, 0.5, 0.5), "uint16")
+
+    paths = scar_fractions(mask, like, tmp_path / "amw", years=[2018])
+
+    with rasterio.open(paths[2018]) as src:
+        assert src.read(1).tolist() == [[1.0]]
+
+
+def test_overlap_share_weights_by_area_and_counts_any_touched_pixel(tmp_path):
+    transform = from_origin(0, 2, 1, 1)
+    a = write(tmp_path / "a.tif", np.array([[0.6, 0.0], [0.2, 0.2]]), transform, "float32")
+    b = write(tmp_path / "b.tif", np.array([[0.1, 0.9], [0.0, 0.3]]), transform, "float32")
+    assert overlap_share(a, b) == pytest.approx(0.8, rel=1e-2)
+
+
+def test_overlap_share_can_be_limited_to_a_region(tmp_path):
+    transform = from_origin(0, 1, 1, 1)
+    a = write(tmp_path / "a.tif", np.array([[0.5, 0.5]]), transform, "float32")
+    b = write(tmp_path / "b.tif", np.array([[0.1, 0.0]]), transform, "float32")
+    assert overlap_share(a, b, within=box(1, 0, 2, 1)) == 0

@@ -13,7 +13,7 @@ import rasterio
 from rasterio.features import geometry_mask
 from rasterio.transform import Affine
 from rasterio.warp import Resampling, reproject
-from rasterio.windows import Window, from_bounds
+from rasterio.windows import Window, from_bounds, intersect, intersection
 
 from brillo.luz import zonal_sum
 
@@ -51,11 +51,50 @@ def mining_fraction(coverage: Path, like: Path, out: Path, code: int = MINING, s
             mask = (src.read(1, window=window, boundless=True, fill_value=0) == code).astype("float32")
             reproject(mask, fraction[r0:r0 + n], src_transform=src.window_transform(window), src_crs=src.crs,
                       dst_transform=strip_grid, dst_crs=crs, resampling=Resampling.average)
+    return write_fraction(out, fraction, grid, crs)
+
+
+def write_fraction(out: Path, fraction: np.ndarray, grid: Affine, crs) -> Path:
     out.parent.mkdir(parents=True, exist_ok=True)
-    with rasterio.open(out, "w", driver="GTiff", height=rows, width=cols, count=1, dtype="float32", crs=crs,
-                       transform=grid, compress="deflate") as dst:
+    with rasterio.open(out, "w", driver="GTiff", height=fraction.shape[0], width=fraction.shape[1], count=1,
+                       dtype="float32", crs=crs, transform=grid, compress="deflate") as dst:
         dst.write(fraction, 1)
     return out
+
+
+def scar_fractions(mask: Path, like: Path, out_dir: Path, years: list[int]) -> dict[int, Path]:
+    """Share of each pixel of the ``like`` grid with an Amazon Mining Watch scar confirmed by each year.
+
+    The 10 m mask stores the year each scar was confirmed, so a year's extent is every onset up to it; the provisional
+    quarterly codes (20251 for Q1 2025) are larger than any year and stay out. Scars are sparse, so only their pixels
+    are binned into the coarse grid, block by block, instead of holding a 10 m mask in memory.
+    """
+    with rasterio.open(like) as ref:
+        grid, (rows, cols), crs, bounds = ref.transform, (ref.height, ref.width), ref.crs, ref.bounds
+    fractions = {year: np.zeros((rows, cols), dtype="float64") for year in years}
+    with rasterio.open(mask) as src:
+        share = abs(src.res[0] * src.res[1] / (grid.a * grid.e))
+        area = from_bounds(*bounds, src.transform).round_offsets(op="floor").round_lengths(op="ceil")
+        for _, block in src.block_windows(1):
+            if not intersect(block, area):
+                continue
+            window = intersection(block, area)
+            onset = src.read(1, window=window)
+            fine_rows, fine_cols = np.nonzero(onset)
+            if fine_rows.size == 0:
+                continue
+            transform = src.window_transform(window)
+            x = transform.c + (fine_cols + 0.5) * transform.a
+            y = transform.f + (fine_rows + 0.5) * transform.e
+            coarse_rows = np.floor((y - grid.f) / grid.e).astype(int)
+            coarse_cols = np.floor((x - grid.c) / grid.a).astype(int)
+            inside = (coarse_rows >= 0) & (coarse_rows < rows) & (coarse_cols >= 0) & (coarse_cols < cols)
+            values = onset[fine_rows, fine_cols]
+            for year, fraction in fractions.items():
+                keep = inside & (values <= year)
+                np.add.at(fraction, (coarse_rows[keep], coarse_cols[keep]), share)
+    return {year: write_fraction(out_dir / f"amw_frac_{year}.tif", fraction.astype("float32"), grid, crs)
+            for year, fraction in fractions.items()}
 
 
 def mining_km2_by_district(fraction_path: Path, districts: gpd.GeoDataFrame) -> pd.DataFrame:
@@ -101,3 +140,15 @@ def maus_agreement(mines: gpd.GeoDataFrame, fraction_path: Path) -> float:
                             all_touched=True)
     area = fraction * pixel_area_km2(transform, fraction.shape)
     return float(area[on_maus].sum() / area.sum())
+
+
+def overlap_share(a_path: Path, b_path: Path, within=None) -> float:
+    """Share of the area of ``a`` on pixels of the same grid where ``b`` is present, optionally inside a region."""
+    with rasterio.open(a_path) as src:
+        a, transform = src.read(1).astype("float64"), src.transform
+    with rasterio.open(b_path) as src:
+        b = src.read(1)
+    area = a * pixel_area_km2(transform, a.shape)
+    if within is not None:
+        area = area * geometry_mask([within], out_shape=a.shape, transform=transform, invert=True)
+    return float(area[b > 0].sum() / area.sum())

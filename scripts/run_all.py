@@ -3,9 +3,11 @@
 Run from the repository root: uv run python -m scripts.run_all
 Files already downloaded are kept. Night lights need a NASA Earthdata token (see brillo/credenciales.py).
 """
-from scripts import analizar_datos, auditar_datos, estimar_pobreza, obtener_datos, obtener_luz, procesar_datos
+from scripts import (analizar_datos, auditar_datos, contrastar_huella, estimar_pobreza, obtener_datos, obtener_luz,
+                     procesar_datos)
 
-STAGES = [obtener_datos, obtener_luz, procesar_datos, estimar_pobreza, analizar_datos, auditar_datos]
+STAGES = [obtener_datos, obtener_luz, procesar_datos, contrastar_huella, estimar_pobreza, analizar_datos,
+          auditar_datos]
 
 
 def main() -> None:

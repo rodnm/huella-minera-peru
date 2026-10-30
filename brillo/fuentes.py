@@ -106,6 +106,14 @@ SOURCES = [
         "license": "CC BY 4.0 (MapBiomas Perú)",
         "description": "MapBiomas Perú Colección 4, área por clase, departamento y año (para validar nuestro cálculo distrital)",
     },
+    {
+        "name": "amazon_mining_watch_cicatrices",
+        "url": "https://data.source.coop/earthgenome/amazon-mining-watch/amazon_basin_mining_scar_masks.tif",
+        "file": "amw/amazon_basin_mining_scar_masks.tif",
+        "page": "https://source.coop/earthgenome/amazon-mining-watch",
+        "license": "CC BY 4.0 (Earth Genome, Amazon Mining Watch)",
+        "description": "Amazon Mining Watch: cicatrices mineras a 10 m con el año de confirmación, solo cuenca amazónica (contraste independiente)",
+    },
 ]
 
 # District polygons with their UBIGEO, served by INGEMMET from the INEI demarcation
