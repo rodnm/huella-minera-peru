@@ -1,0 +1,116 @@
+{
+  "2017-19": {
+    "anios": [
+      2017,
+      2018,
+      2019
+    ],
+    "predictor_oficial": "poverty_2013",
+    "sigma2": 0.0034078695360464663,
+    "distritos_estimados": 1853,
+    "distritos_con_muestra": 1320,
+    "hogares_por_distrito_mediana": 42.0,
+    "gamma_mediana": 0.1423892706552668,
+    "gamma_p10": 0.07329796696745372,
+    "gamma_p90": 0.4116918933335171,
+    "ancho_intervalo_mediano_pp": 22.481892356924064
+  },
+  "validacion_contra_mapa_2018": {
+    "modelo": {
+      "mae": 7.056034169010833,
+      "mae_population_weighted": 3.1576176301312002,
+      "correlation": 0.838922006181731,
+      "inside_inei_interval": 0.7301672962763087,
+      "n": 1853
+    },
+    "linea_base_mapa_2013_mas_cambio_departamental": {
+      "mae": 8.403839248253108,
+      "mae_population_weighted": 4.286912077176798,
+      "correlation": 0.8197913266465428,
+      "inside_inei_interval": 0.6351861845655693,
+      "n": 1853
+    },
+    "mapa_2013_sin_cambios": {
+      "mae": 11.819282876017647,
+      "mae_population_weighted": 5.747140339624007,
+      "correlation": 0.8276146598683589,
+      "inside_inei_interval": 0.46735024284943333,
+      "n": 1853
+    },
+    "modelo_distritos_con_muestra": {
+      "mae": 5.985497820572494,
+      "mae_population_weighted": 2.920807200426534,
+      "correlation": 0.8879102762688004,
+      "inside_inei_interval": 0.7651515151515151,
+      "n": 1320
+    },
+    "linea_base_distritos_con_muestra": {
+      "mae": 7.627801400931068,
+      "mae_population_weighted": 4.067216960758324,
+      "correlation": 0.8583405069244411,
+      "inside_inei_interval": 0.646969696969697,
+      "n": 1320
+    },
+    "modelo_distritos_sin_muestra": {
+      "mae": 9.707268652948184,
+      "mae_population_weighted": 8.710134438828995,
+      "correlation": 0.6672392055265132,
+      "inside_inei_interval": 0.6435272045028143,
+      "n": 533
+    },
+    "linea_base_distritos_sin_muestra": {
+      "mae": 10.325734104660414,
+      "mae_population_weighted": 9.43812449727052,
+      "correlation": 0.6887285988706059,
+      "inside_inei_interval": 0.6060037523452158,
+      "n": 533
+    },
+    "acepta_modelo": true
+  },
+  "2023-25": {
+    "anios": [
+      2023,
+      2024,
+      2025
+    ],
+    "predictor_oficial": "poverty",
+    "sigma2": 0.004776067529013168,
+    "distritos_estimados": 1873,
+    "distritos_con_muestra": 1308,
+    "hogares_por_distrito_mediana": 39.0,
+    "gamma_mediana": 0.1870418890428662,
+    "gamma_p10": 0.10069771690662484,
+    "gamma_p90": 0.4759356427210615,
+    "ancho_intervalo_mediano_pp": 25.24340626935443
+  },
+  "pobreza_nacional_por_anio": {
+    "2013": 0.23911744656437936,
+    "2014": 0.22727381421763906,
+    "2015": 0.21771648080707462,
+    "2016": 0.20742382536503573,
+    "2017": 0.21699987027831227,
+    "2018": 0.2048797260811494,
+    "2019": 0.20193379926918803,
+    "2020": 0.30133153077386143,
+    "2021": 0.2587304654015798,
+    "2022": 0.2752410158838346,
+    "2023": 0.2904592772992453,
+    "2024": 0.2757946816356908,
+    "2025": 0.25666702168626254
+  },
+  "regla_gasto_contra_linea": {
+    "2013": 1.0,
+    "2014": 1.0,
+    "2015": 1.0,
+    "2016": 1.0,
+    "2017": 1.0,
+    "2018": 1.0,
+    "2019": 1.0,
+    "2020": 1.0,
+    "2021": 1.0,
+    "2022": 1.0,
+    "2023": 1.0,
+    "2024": 1.0,
+    "2025": 1.0
+  }
+}

@@ -12,7 +12,7 @@ def load_token(environ: Mapping[str, str], dotenv: Path) -> str:
     if environ.get(NAME):
         return environ[NAME]
     if dotenv.exists():
-        for line in dotenv.read_text(encoding="utf-8").splitlines():
+        for line in dotenv.read_text(encoding="utf-8-sig").splitlines():  # utf-8-sig: PowerShell 5 adds a BOM
             key, sep, value = line.partition("=")
             if sep and key.strip() == NAME and value.strip():
                 return value.strip().strip("'\"")

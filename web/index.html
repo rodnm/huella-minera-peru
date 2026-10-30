@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La huella de la minería en el Perú, 2013–2025</title>
+<meta name="description" content="Atlas por distrito del suelo minero visible desde satélite en el Perú, con cada cifra contrastada y sus límites a la vista.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<form class="controls" id="controls" aria-label="Filtros del atlas">
+  <button type="button" id="play" class="play">Pausar</button>
+  <label class="year-control">
+    <span>Año <output id="year-output">2013</output></span>
+    <input type="range" id="year" min="2013" max="2025" step="1" value="2013">
+  </label>
+  <label>
+    <span>Departamento</span>
+    <select id="department"><option value="">Todo el Perú</option></select>
+  </label>
+  <label>
+    <span>Mostrar en el mapa</span>
+    <select id="indicator">
+      <option value="huella">Huella minera</option>
+      <option value="nueva">Huella nueva desde 2013</option>
+      <option value="luz">Luz nocturna por km²</option>
+      <option value="pobreza">Pobreza monetaria 2018 (INEI)</option>
+    </select>
+  </label>
+  <label class="search">
+    <span>Buscar distrito</span>
+    <input type="search" id="search" list="district-list" placeholder="Por ejemplo, Inambari" autocomplete="off">
+    <datalist id="district-list"></datalist>
+  </label>
+</form>
+
+<header class="hero">
+  <div class="intro">
+    <h1>La huella de la minería en el Perú, 2013–2025</h1>
+    <p class="question">¿Dónde apareció y cuánto creció el suelo minero que se ve desde el satélite?</p>
+    <p class="lead">La minería deja suelo expuesto, y eso se ve desde el espacio. Este atlas suma, distrito por distrito y año por año, lo que MapBiomas clasifica como minería. Una segunda fuente, independiente, ayuda a comprobarlo.</p>
+  </div>
+  <div class="stats">
+    <h2 class="scope" id="scope-name">Todo el Perú</h2>
+    <dl class="kpis">
+      <div><dt id="kpi-area-label">Huella en 2013</dt><dd id="kpi-area">–</dd></div>
+      <div><dt>Frente a 2013</dt><dd id="kpi-change">–</dd></div>
+      <div><dt>Distritos con huella</dt><dd id="kpi-districts">–</dd></div>
+      <div><dt>Del aumento, en sus 10 distritos que más crecieron</dt><dd id="kpi-top">–</dd></div>
+    </dl>
+    <p class="coverage">Cubre 13 años y todos los distritos del país. Fuente: MapBiomas Perú, Colección 4, clase 30, con imágenes Landsat de 30 m.</p>
+  </div>
+  <div class="map" id="map" role="img" aria-label="Mapa del Perú por distrito. La tabla de distritos, más abajo, contiene los mismos datos.">
+    <div class="big-year" id="big-year" aria-hidden="true">2013</div>
+    <div class="zoom">
+      <button type="button" id="zoom-in" aria-label="Acercar el mapa">+</button>
+      <button type="button" id="zoom-out" aria-label="Alejar el mapa">−</button>
+    </div>
+    <div class="legend" id="legend"></div>
+    <aside class="card" id="card" hidden></aside>
+  </div>
+</header>
+
+<main>
+  <section class="findings" aria-labelledby="findings-title">
+    <h2 id="findings-title">Lo que muestran los datos</h2>
+    <ol id="findings"></ol>
+  </section>
+
+  <section class="charts" aria-label="Gráficos del atlas">
+    <figure class="wide">
+      <figcaption><h3 id="trend-title">Huella minera por año</h3><p>Kilómetros cuadrados clasificados como minería cada año. Fuente: MapBiomas Perú.</p></figcaption>
+      <div id="trend" class="chart"></div>
+    </figure>
+    <figure>
+      <figcaption><h3 id="rank-title">Distritos con mayor huella</h3><p id="rank-note"></p></figcaption>
+      <div id="rank" class="bars"></div>
+      <details class="table-view">
+        <summary>Ver todos los distritos en una tabla</summary>
+        <div class="table-scroll"><table id="table"></table></div>
+      </details>
+      <button type="button" id="download" class="link-button">Descargar estos distritos en CSV</button>
+    </figure>
+    <figure>
+      <figcaption><h3>Huella por departamento</h3><p>El círculo vacío marca 2013 y el lleno, el año elegido. Selecciona un departamento para filtrar el atlas.</p></figcaption>
+      <div id="departments" class="bars"></div>
+    </figure>
+  </section>
+
+  <section class="contrast" aria-labelledby="contrast-title">
+    <div>
+      <h2 id="contrast-title">¿Se puede confiar en esta tendencia?</h2>
+      <div id="contrast-text"></div>
+    </div>
+    <figure>
+      <figcaption><h3>Madre de Dios: dos fuentes, el mismo ritmo y distinto nivel</h3><p>Kilómetros cuadrados, 2018 a 2024, último año con cicatrices confirmadas.</p></figcaption>
+      <div id="contrast" class="chart"></div>
+    </figure>
+  </section>
+
+  <section class="notes">
+    <div>
+      <h2>Cómo se hizo</h2>
+      <ol class="steps">
+        <li>Se descargan los 13 mapas anuales de MapBiomas Perú y se conservan sus huellas digitales para comprobar que son los mismos archivos.</li>
+        <li>Cada mapa de 30 m se promedia sobre una grilla de 500 m, y esa fracción se multiplica por el área real de cada celda.</li>
+        <li>La superficie se suma por distrito con los límites oficiales de GEOCATMIN.</li>
+        <li>Las sumas se comparan con la tabla oficial de MapBiomas y con Amazon Mining Watch.</li>
+      </ol>
+      <p id="method-check"></p>
+    </div>
+    <div>
+      <h2>Lo que estos datos no dicen</h2>
+      <ul class="limits">
+        <li><strong>No distinguen minería legal, informal o ilegal.</strong> La clase incluye además la extracción no metálica, como los fosfatos de Sechura.</li>
+        <li><strong>El área exacta está en discusión.</strong> En 2019, los polígonos de Maus y su equipo suman unas tres veces más que MapBiomas, y el grupo de clases sin vegetación de MapBiomas, donde está la minería, tiene 74 % de exactitud de productor.</li>
+        <li><strong>Fuera de la Amazonía no hay contraste.</strong> Amazon Mining Watch solo cubre esa cuenca, de modo que el crecimiento en los Andes y la costa se apoya en una sola fuente.</li>
+        <li><strong>Mejor leer la tendencia que un año suelto.</strong> Las dos fuentes coinciden en el periodo, no en cada salto anual.</li>
+        <li><strong>La luz y la pobreza son contexto.</strong> Verlas junto a la huella no significa que una cause la otra, y este atlas no lo afirma. La pobreza es la estimación del INEI para 2018, con su intervalo. La luz nacional tiene saltos que aún no están explicados.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Fuentes</h2>
+      <ul class="sources">
+        <li><a href="https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/">MapBiomas Perú, Colección 4</a>: cobertura anual, CC BY 4.0.</li>
+        <li><a href="https://source.coop/earthgenome/amazon-mining-watch">Amazon Mining Watch</a>, de Earth Genome: cicatrices mineras a 10 m, CC BY 4.0.</li>
+        <li><a href="https://doi.org/10.1594/PANGAEA.942325">Maus y otros, polígonos mineros v2</a>: CC BY-SA.</li>
+        <li><a href="https://doi.org/10.5067/VIIRS/VNP46A4.002">NASA Black Marble, VNP46A4</a>: luz nocturna anual.</li>
+        <li><a href="https://www.gob.pe/institucion/inei/informes-publicaciones/3204872-mapa-de-pobreza-provincial-y-distrital-2018">INEI, Mapa de Pobreza 2018</a>: estimación distrital con intervalo de 95 %.</li>
+        <li><a href="https://geocatmin.ingemmet.gob.pe/geocatmin/">GEOCATMIN, INGEMMET</a>: límites distritales.</li>
+      </ul>
+      <p><a href="https://github.com/rodnm/huella-minera-peru">Código, datos y metodología completa en GitHub</a>.</p>
+    </div>
+  </section>
+</main>
+
+<div class="load-error" id="load-error" role="alert" hidden>No se pudieron cargar los datos del atlas. Revisa tu conexión y recarga la página.</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://unpkg.com/deck.gl@9.0.38/dist.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

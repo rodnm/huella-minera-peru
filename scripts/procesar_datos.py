@@ -10,11 +10,13 @@ from pathlib import Path
 
 import pandas as pd
 import py7zr
+import rasterio
 
 from brillo.bitacora import Bitacora
 from brillo.distritos import load_districts
 from brillo.huella import footprint_by_district, peru_mines
 from brillo.luz import light_by_district
+from brillo.mapbiomas import maus_agreement, mining_fraction, mining_km2_by_district, official_gap, read_official_mining
 from brillo.minem import (DOUBLE_COUNTED_STAGES, assign_ubigeo, coordinate_agreement, district_panel,
                           read_production, read_units, scale_mining)
 from brillo.pobreza import read_poverty
@@ -118,31 +120,71 @@ def process_districts(log: Bitacora, districts) -> pd.DataFrame:
             f"{len(missing)} distritos creados después del censo 2017 quedan sin pobreza: "
             + ", ".join(missing.district.str.title().head(8)) + ("…" if len(missing) > 8 else ""))
     mines = peru_mines(ORIGINALES / "maus" / "global_mining_polygons_v2.gpkg")
-    footprint = footprint_by_district(mines, districts)
+    footprint = footprint_by_district(mines, districts).rename(columns={"footprint_km2": "maus_2019_km2"})
     table = table.merge(footprint, on="ubigeo")
-    log.add("huella", "polígonos mineros de Maus v2 en el Perú → área por distrito", len(mines),
-            int((table.footprint_km2 > 0).sum()),
-            f"{table.footprint_km2.sum():,.0f} km² en total; una mina en el borde se reparte entre distritos")
+    log.add("huella", "polígonos mineros de Maus v2 en el Perú → área por distrito (solo para validar)", len(mines),
+            int((table.maus_2019_km2 > 0).sum()),
+            f"{table.maus_2019_km2.sum():,.0f} km² en total; una mina en el borde se reparte entre distritos")
     table.to_csv(PROCESADOS / "distritos.csv", index=False)
     return table
 
 
-def process_light(log: Bitacora, districts, table: pd.DataFrame, production: pd.DataFrame) -> pd.DataFrame | None:
-    """District × year panel: radiance (total, inside and outside mine footprints) joined to production."""
+def fraction_path(year: int) -> Path:
+    return INTERMEDIOS / "huella" / f"mineria_frac_{year}.tif"
+
+
+def process_footprint(log: Bitacora, districts) -> pd.DataFrame:
+    """Mining area per district and year (MapBiomas class 30), checked against MapBiomas' own department table."""
+    mapbiomas = ORIGINALES / "mapbiomas"
+    years = []
+    for year in YEARS:
+        if not fraction_path(year).exists():
+            mining_fraction(mapbiomas / f"peru_coverage-col4_{year}.tif", INTERMEDIOS / "luz" / f"vnp46a4_{year}.tif",
+                            fraction_path(year))
+        km2 = mining_km2_by_district(fraction_path(year), districts)
+        km2.insert(1, "year", year)
+        years.append(km2)
+    footprint = pd.concat(years, ignore_index=True)
+    base = footprint[footprint.year == YEARS.start].set_index("ubigeo")["mining_km2"]
+    footprint["mining_km2_change_vs_first"] = footprint["mining_km2"] - footprint["ubigeo"].map(base)
+
+    official = read_official_mining(mapbiomas / "MAPBIOMAS-PERU-LULC-COL4-LIMITES-POLITICOS.xlsx")
+    gap = official_gap(footprint, official)
+    gap.to_csv(PROCESADOS / "validacion_huella.csv", index=False)
+    national = gap.groupby("year")[["mining_km2", "official_km2"]].sum()
+    national_gap = (national.mining_km2 / national.official_km2 - 1).abs().max()
+    big = gap[gap.official_km2 >= 20]
+    assert national_gap < 0.01, f"national mining area is {national_gap:.1%} off the official table"
+    assert big.gap.abs().max() < 0.06, f"a department is {big.gap.abs().max():.1%} off the official table"
+    log.add("huella", f"MapBiomas C4, clase 30: km² mineros por distrito ({len(years)} años)", len(years),
+            len(footprint), f"contra la tabla oficial por departamento: diferencia nacional máxima {national_gap:.2%}, "
+            f"departamental máxima {big.gap.abs().max():.1%} (departamentos con 20 km² o más)")
+    mines = peru_mines(ORIGINALES / "maus" / "global_mining_polygons_v2.gpkg")
+    share = maus_agreement(mines, fraction_path(2019))
+    log.add("huella", "concordancia con Maus et al. v2 (2019)", len(mines), len(mines),
+            f"{share:.1%} del área minera de MapBiomas 2019 cae en píxeles que tocan un polígono de Maus")
+    return footprint
+
+
+def process_light(log: Bitacora, districts, table: pd.DataFrame, production: pd.DataFrame,
+                  footprint: pd.DataFrame) -> pd.DataFrame | None:
+    """District × year panel: radiance (on and off that year's mining pixels), footprint and production."""
     rasters = sorted((INTERMEDIOS / "luz").glob("vnp46a4_*.tif"))
     if not rasters:
         print("Sin rasters de luz: corre primero `uv run python -m scripts.obtener_luz` (necesita el token).")
         return None
-    mines = peru_mines(ORIGINALES / "maus" / "global_mining_polygons_v2.gpkg")
     years = []
     for raster in rasters:
-        light = light_by_district(raster, districts, mines)
-        light.insert(1, "year", int(raster.stem[-4:]))
+        year = int(raster.stem[-4:])
+        with rasterio.open(fraction_path(year)) as src:
+            light = light_by_district(raster, districts, src.read(1))
+        light.insert(1, "year", year)
         years.append(light)
     light = pd.concat(years, ignore_index=True)
     log.add("luz", f"radiancia anual VNP46A4 por distrito ({len(rasters)} años)", len(rasters), len(light),
             "píxeles sin dato no suman; valores negativos (ruido del sensor) pasan a 0")
-    panel = light.merge(table, on="ubigeo", how="left").merge(production, on=["ubigeo", "year"], how="left")
+    panel = (light.merge(table, on="ubigeo", how="left").merge(production, on=["ubigeo", "year"], how="left")
+             .merge(footprint, on=["ubigeo", "year"], how="left"))
     tonnes = [c for c in panel.columns if c.startswith("tonnes_")]
     panel[tonnes] = panel[tonnes].fillna(0)
     panel["units"] = panel["units"].fillna(0).astype(int)
@@ -163,7 +205,8 @@ def main() -> None:
     production = process_minem(log, districts)
     validate_coordinates(log, districts)
     table = process_districts(log, districts)
-    process_light(log, districts, table, production)
+    footprint = process_footprint(log, districts)
+    process_light(log, districts, table, production, footprint)
     log.save(PROCESADOS / "bitacora_limpieza.json")
     for step in log.steps:
         print(f"[{step['source']}] {step['step']}: {step['rows_in']:,} -> {step['rows_out']:,}  {step['note']}")
