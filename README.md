@@ -1,6 +1,6 @@
 # La huella de la minería en el Perú, 2013–2025
 
-Un atlas interactivo, distrito por distrito, del suelo minero que se ve desde el satélite. Cada cifra sale de datos públicos que este repositorio descarga y limpia, y la tendencia principal se contrasta con una segunda fuente independiente.
+Un atlas interactivo, distrito por distrito, del suelo minero que se ve desde el satélite. Cada cifra sale de datos públicos que este repositorio descarga y limpia. Una segunda fuente independiente contrasta el 41 % del aumento, y el proyecto publica también dónde discrepan.
 
 **[Abrir el dashboard](https://rodnm.github.io/huella-minera-peru/)** · **Publicación en LinkedIn:** se agrega al publicar
 
@@ -48,7 +48,7 @@ La URL, la fecha de descarga y el SHA-256 de cada archivo están en [`datos/orig
 
 1. El mapa de 30 m de cada año se promedia sobre una grilla de 500 m. Esa fracción, multiplicada por el área real de cada celda, se suma por distrito.
 2. El resultado se compara con la tabla oficial de MapBiomas: la diferencia nacional es de 0.25 % como máximo.
-3. La tendencia se contrasta con Amazon Mining Watch, que usa otro satélite y otro modelo.
+3. La tendencia en Madre de Dios, entre 2018 y 2024, se contrasta con Amazon Mining Watch, que usa otro satélite y otro modelo.
 4. Las pruebas de [`tests/test_web_data.py`](tests/test_web_data.py) corren antes de cada despliegue y lo detienen si los archivos publicados no coinciden con el panel.
 
 ## Tres hallazgos principales
