@@ -48,7 +48,7 @@ def official_totals(path: Path) -> dict:
     totals = table.groupby("year")[["mining_km2", "official_km2"]].sum()
     gap = totals["mining_km2"] / totals["official_km2"] - 1
     return {"official_km2": {str(y): round(float(v), 1) for y, v in totals["official_km2"].items()},
-            "max_national_gap": round(float(gap.abs().max()), 4)}
+            "max_national_gap": float(gap.abs().max())}
 
 
 def main() -> None:
@@ -58,6 +58,12 @@ def main() -> None:
     atlas = describe(panel)
     atlas["validation"] = official_totals(PROCESADOS / "validacion_huella.csv")
     atlas["contrast"] = json.loads((PROCESADOS / "contraste_huella.json").read_text(encoding="utf-8"))
+    madre = atlas["contrast"]["madre_de_dios"]
+    covered = madre["periods"]["gain_km2"]["mapbiomas"] / atlas["increase_km2"]
+    atlas["contrast"]["share_of_increase_contrasted"] = covered
+    names = panel.assign(code=panel["ubigeo"].str[:2]).drop_duplicates("code").set_index("code")["department"]
+    for row in atlas["contrast"]["other_departments"]:
+        row["name"] = names[row["department"]]
     (PROCESADOS / "atlas.json").write_text(json.dumps(atlas, ensure_ascii=False, indent=2), encoding="utf-8")
     write_json(DATA / "atlas.json", atlas)
     payload = panel_payload(panel)

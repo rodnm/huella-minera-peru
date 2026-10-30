@@ -49,7 +49,7 @@ La URL, la fecha de descarga y el SHA-256 de cada archivo están en [`datos/orig
 1. El mapa de 30 m de cada año se promedia sobre una grilla de 500 m. Esa fracción, multiplicada por el área real de cada celda, se suma por distrito.
 2. El resultado se compara con la tabla oficial de MapBiomas: la diferencia nacional es de 0.25 % como máximo.
 3. La tendencia se contrasta con Amazon Mining Watch, que usa otro satélite y otro modelo.
-4. Una prueba automática impide publicar datos si el conteo del navegador difiere de `atlas.json`.
+4. Las pruebas de [`tests/test_web_data.py`](tests/test_web_data.py) corren antes de cada despliegue y lo detienen si los archivos publicados no coinciden con el panel.
 
 ## Tres hallazgos principales
 
@@ -57,14 +57,23 @@ La URL, la fecha de descarga y el SHA-256 de cada archivo están en [`datos/orig
 2. **Madre de Dios explica el 63 % del aumento** y reúne el 57 % de la huella de 2025.
 3. **El aumento está concentrado:** 10 distritos explican el 73 %. Inambari pasa de 88 a 417 km².
 
-**El contraste:** en Madre de Dios, entre 2018 y 2024, MapBiomas se multiplica por 2.02 y Amazon Mining Watch por 1.98, y entre 96 % y 98 % de la superficie de MapBiomas cae en celdas donde la otra fuente detecta cicatrices. El nivel difiere: 1,023 contra 1,520 km² en 2024.
+**El contraste:** Amazon Mining Watch se compara en Madre de Dios entre 2018 y 2024, un tramo que equivale al 41 % del aumento nacional.
+
+| | MapBiomas | Amazon Mining Watch |
+|---|---|---|
+| Periodo completo, 2018–2024 | ×2.02 | ×1.98 |
+| 2018–2021 | ×1.28 | ×1.52 |
+| 2021–2024 | ×1.58 | ×1.30 |
+| Área en 2024 | 1,023 km² | 1,520 km² |
+
+Coinciden en la dirección y en el lugar: entre 96 % y 98 % de la superficie de MapBiomas cae en celdas con cicatrices. No coinciden en el nivel ni en el calendario, y fuera de Madre de Dios discrepan más.
 
 ## Limitaciones
 
 - **No distingue minería legal, informal o ilegal,** e incluye extracción no metálica.
 - **El área exacta está en discusión.** Maus et al. suma unas tres veces más en 2019, y el grupo de clases sin vegetación de MapBiomas, donde está la minería, tiene 74 % de exactitud de productor.
-- **Fuera de la Amazonía no hay contraste anual.** El 37 % del aumento, fuera de Madre de Dios, se apoya sobre todo en MapBiomas.
-- **Las dos fuentes coinciden en el periodo, no en cada año.** Conviene leer la tendencia.
+- **El 59 % del aumento no tiene contraste.** Se apoya sobre todo en MapBiomas.
+- **Las fuentes no coinciden año a año ni fuera de Madre de Dios.** Este atlas no sirve para fechar un salto.
 - **La luz y la pobreza son contexto.** Este trabajo no afirma que la minería reduzca o aumente la pobreza: los datos no alcanzan para saberlo, y la [metodología](docs/metodologia_y_hallazgos.md) explica por qué.
 
 ## Enlaces

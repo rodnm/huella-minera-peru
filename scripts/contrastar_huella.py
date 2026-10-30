@@ -10,8 +10,9 @@ from pathlib import Path
 
 import pandas as pd
 
+from brillo.atlas import contrast_periods, other_departments
 from brillo.distritos import load_districts
-from brillo.mapbiomas import mining_km2_by_district, overlap_share, scar_fractions
+from brillo.mapbiomas import mining_km2_by_district, overlap_share, presence_share, scar_fractions
 
 ROOT = Path(__file__).resolve().parent.parent
 ORIGINALES = ROOT / "datos" / "originales"
@@ -19,6 +20,8 @@ INTERMEDIOS = ROOT / "datos" / "intermedios"
 PROCESADOS = ROOT / "datos" / "procesados"
 YEARS = list(range(2018, 2026))
 LAST_CONFIRMED = 2024  # a scar is confirmed when seen again the next year, so 2025 onsets cannot be annual yet
+MIDDLE = 2021
+MIN_OTHER_KM2 = 5  # below this, a department's ratio mostly reflects a tiny starting area
 MADRE_DE_DIOS = "17"
 
 
@@ -50,11 +53,14 @@ def main() -> None:
             "amw_km2": madre["amw_km2"].round(1).to_dict(),
             "mapbiomas_on_amw": {y: round(overlap_share(mapbiomas[y], fractions[y], region), 3) for y in YEARS},
             "amw_on_mapbiomas": {y: round(overlap_share(fractions[y], mapbiomas[y], region), 3) for y in YEARS},
+            "cells_with_scars_share": round(presence_share(fractions[LAST_CONFIRMED], region), 4),
+            "periods": contrast_periods(by_department, MADRE_DE_DIOS, (YEARS[0], MIDDLE, LAST_CONFIRMED)),
             "last_confirmed_year": LAST_CONFIRMED,
             "ratio_to_last_confirmed": {
                 column: round(madre.loc[LAST_CONFIRMED, f"{column}_km2"] / madre.loc[YEARS[0], f"{column}_km2"], 2)
                 for column in ("mapbiomas", "amw")},
         },
+        "other_departments": other_departments(by_department, MADRE_DE_DIOS, YEARS[0], LAST_CONFIRMED, MIN_OTHER_KM2),
         "district_gain_spearman": {
             "madre_de_dios": round(gain[gain.index.str[:2] == MADRE_DE_DIOS].corr(method="spearman").iloc[0, 1], 3),
             "districts_with_scars": round(gain[last["amw_km2"] > 0.1].corr(method="spearman").iloc[0, 1], 3),

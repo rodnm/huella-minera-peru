@@ -6,7 +6,7 @@ import rasterio
 from rasterio.transform import from_origin
 from shapely.geometry import box
 
-from brillo.mapbiomas import (maus_agreement, mining_fraction, mining_km2_by_district, official_gap, overlap_share,
+from brillo.mapbiomas import (maus_agreement, mining_fraction, mining_km2_by_district, official_gap, overlap_share, presence_share,
                              pixel_area_km2, read_official_mining, scar_fractions)
 
 
@@ -112,6 +112,11 @@ def test_overlap_share_weights_by_area_and_counts_any_touched_pixel(tmp_path):
     a = write(tmp_path / "a.tif", np.array([[0.6, 0.0], [0.2, 0.2]]), transform, "float32")
     b = write(tmp_path / "b.tif", np.array([[0.1, 0.9], [0.0, 0.3]]), transform, "float32")
     assert overlap_share(a, b) == pytest.approx(0.8, rel=1e-2)
+
+
+def test_presence_share_is_the_share_of_the_region_with_the_raster(tmp_path):
+    a = write(tmp_path / "a.tif", np.array([[0.5, 0.0, 0.0, 0.2]]), from_origin(0, 0.5, 1, 1), "float32")
+    assert presence_share(a, box(0, -0.5, 3, 0.5)) == pytest.approx(1 / 3, rel=1e-3)
 
 
 def test_overlap_share_can_be_limited_to_a_region(tmp_path):
