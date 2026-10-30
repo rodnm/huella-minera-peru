@@ -18,6 +18,7 @@ dependencies = [
     "pyogrio>=0.10",
     "rasterio>=1.4",
     "requests>=2.32",
+    "scipy>=1.13",
     "shapely>=2.0",
     "statsmodels>=0.14",
     "truststore>=0.10",
