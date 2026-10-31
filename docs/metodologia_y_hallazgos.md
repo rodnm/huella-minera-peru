@@ -254,7 +254,7 @@ MapBiomas publica el área solo por departamento, así que el cálculo distrital
 
 ### M10. Cifras y datos del atlas
 
-`brillo/atlas.py` calcula los hallazgos A1 a A3 desde el panel, y `scripts/construir_web.py` escribe los archivos de `web/data`. La página no tiene cifras escritas a mano: las calcula con esos archivos. El script falla si el redondeo cambia el conteo de distritos respecto de `atlas.json`. Una celda se dibuja si en algún año al menos 1 % de ella es minería, unas 0.2 ha, para no mostrar píxeles sueltos. `tests/test_web_data.py` corre antes de cada despliegue y compara los archivos publicados con el panel. `scripts/probar_web.py`, que necesita Playwright y se corre a mano, comprueba en el navegador que cada control cambie lo que se muestra.
+`brillo/atlas.py` calcula los hallazgos A1 a A3 desde el panel, y `scripts/construir_atlas.py` escribe los archivos de `datos/atlas`. La app de Streamlit (`dashboard/`) no tiene cifras escritas a mano: las calcula con esos archivos. El script falla si el redondeo cambia el conteo de distritos respecto de `atlas.json`. Una celda se dibuja si en algún año al menos 1 % de ella es minería, unas 0.2 ha, para no mostrar píxeles sueltos. `tests/test_atlas_publicado.py` compara los archivos publicados con el panel y `tests/test_app.py` ejecuta la app. Corren en cada cambio. `scripts/probar_app.py`, que necesita Playwright y se corre a mano, comprueba en el navegador que cada control cambie lo que se muestra.
 
 ### M5. Pobreza oficial
 

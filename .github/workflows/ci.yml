@@ -1,0 +1,20 @@
+# Run the tests on every push and pull request. They compare the published files with the panel and run the app,
+# so a wrong figure cannot reach main unnoticed. Streamlit Community Cloud deploys main by itself.
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
+      - name: Run the tests
+        run: uv run pytest -q

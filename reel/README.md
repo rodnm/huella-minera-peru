@@ -81,7 +81,7 @@ Los visuales de `guion.json` no se versionan: se generan desde los datos del pro
 
 ```bash
 uv run python -m scripts.construir_escenas      # mapas y gráficos
-python scripts/capturar_dashboard.py            # última escena; requiere Playwright y la página servida
+python scripts/capturar_dashboard.py            # última escena; requiere Playwright y la app corriendo
 ```
 
 ## Guion

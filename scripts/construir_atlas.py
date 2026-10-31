@@ -1,6 +1,6 @@
-"""Write the files the public atlas reads into web/data and web/assets/tokens.css.
+"""Write the files the Streamlit app reads into datos/atlas, and its theme into .streamlit/config.toml.
 
-Run from the repository root, after the contrast step: uv run python -m scripts.construir_web
+Run from the repository root, after the contrast step: uv run python -m scripts.construir_atlas
 """
 import json
 from pathlib import Path
@@ -15,9 +15,8 @@ ROOT = Path(__file__).resolve().parent.parent
 ORIGINALES = ROOT / "datos" / "originales"
 INTERMEDIOS = ROOT / "datos" / "intermedios"
 PROCESADOS = ROOT / "datos" / "procesados"
-WEB = ROOT / "web"
-DATA = WEB / "data"
-SIMPLIFY_DEGREES = 0.004  # about 400 m: invisible at national zoom, and it divides the file size by ten
+DATA = ROOT / "datos" / "atlas"
+SIMPLIFY_DEGREES = 0.01  # about 1 km: light enough to resend on every year change, and every district keeps its shape
 MIN_PIXEL_SHARE = 0.01  # about 0.2 ha of a 21 ha pixel: fewer than three 30 m pixels are classification specks
 
 
@@ -35,12 +34,23 @@ def district_geometries(path: Path) -> tuple[dict, dict]:
     return features, json.loads(outlines.boundary.to_frame("geometry").to_json(drop_id=True))
 
 
-def tokens_css(tokens: dict) -> str:
-    lines = [f"  --{name.replace('_', '-')}: {value};" for name, value in tokens["surface"].items()]
-    lines += [f"  --{name}: {value};" for name, value in tokens["series"].items()]
-    for name, ramp in tokens["ramps"].items():
-        lines += [f"  --{name}-{step}: {value};" for step, value in enumerate(ramp)]
-    return ":root {\n" + "\n".join(lines) + "\n}\n"
+def streamlit_config(tokens: dict) -> str:
+    """App theme from the design tokens, so that the app, the charts and the reel share one palette."""
+    surface = tokens["surface"]
+    return f"""[theme]
+base = "dark"
+primaryColor = "{tokens['ramps']['footprint'][4]}"
+backgroundColor = "{surface['background']}"
+secondaryBackgroundColor = "{surface['panel']}"
+textColor = "{surface['text']}"
+borderColor = "{surface['grid']}"
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false
+"""
 
 
 def official_totals(path: Path) -> dict:
@@ -84,8 +94,9 @@ def main() -> None:
 
     tokens = json.loads((ROOT / "design" / "tokens.json").read_text(encoding="utf-8"))
     write_json(DATA / "tokens.json", {key: tokens[key] for key in ("surface", "series", "ramps")})
-    (WEB / "assets").mkdir(exist_ok=True)
-    (WEB / "assets" / "tokens.css").write_text(tokens_css(tokens), encoding="utf-8")
+    config = ROOT / ".streamlit" / "config.toml"
+    config.parent.mkdir(exist_ok=True)
+    config.write_text(streamlit_config(tokens), encoding="utf-8")
 
     for path in sorted(DATA.iterdir()):
         print(f"{path.name:<22} {path.stat().st_size / 1e6:6.2f} MB")
