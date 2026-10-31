@@ -1,6 +1,6 @@
 # Reel: guion → voz clonada → video 9:16
 
-Herramientas para la Parte 3 de la Tarea 3. Convierten un guion (`guion.json`) y un visual por escena en un video vertical de 1080 × 1920 con:
+Estas herramientas convierten un guion (`guion.json`) y un visual por escena en un video vertical de 1080 × 1920 con:
 
 - narración generada con IA a partir de la voz del autor (Qwen3-TTS);
 - subtítulos karaoke sincronizados y un archivo `.srt`;

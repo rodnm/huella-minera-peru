@@ -1,7 +1,7 @@
 [project]
 name = "paradoja-del-brillo-reel"
 version = "0.1.0"
-description = "Reel vertical 9:16 con voz clonada por IA, subtítulos karaoke y música (Tarea 3, Parte 3)"
+description = "Reel vertical 9:16 con voz clonada por IA, subtítulos karaoke y música"
 requires-python = ">=3.12,<3.13"
 # Separate environment from the repository root: qwen-tts pins transformers==4.57.3.
 dependencies = [

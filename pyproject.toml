@@ -1,7 +1,7 @@
 [project]
 name = "huella-minera-peru"
 version = "0.1.0"
-description = "Atlas por distrito de la huella minera en el Perú, 2013-2025 (Tarea 3, Python Intermedio)"
+description = "Atlas por distrito de la huella minera en el Perú, 2013-2025"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [

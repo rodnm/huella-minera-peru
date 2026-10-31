@@ -7,8 +7,6 @@ Un atlas interactivo, distrito por distrito, del suelo minero que se ve desde el
 | | |
 | :--- | :--- |
 | **Autor** | Rodrigo Andrés Norabuena Mascaraqui ([@rodnm](https://github.com/rodnm)) |
-| **Curso** | Python Intermedio · Diplomatura de especialización Ciencia de Datos para las Ciencias Sociales y la Gestión Pública 2026 |
-| **Enunciado** | [d2cml-ai/Data-Science-Python#197](https://github.com/d2cml-ai/Data-Science-Python/issues/197) |
 
 ![Mapa del Perú en 2025 con las celdas de huella minera](docs/capturas/atlas_peru.png)
 
@@ -97,3 +95,7 @@ Solo para abrir el dashboard no hace falta descargar nada, porque sus datos est�
 ## Uso de inteligencia artificial
 
 Usé Claude Code (Anthropic) como asistente para escribir código, documentar y revisar el análisis. Las decisiones de tema, alcance y mensaje fueron mías, y las cifras se comprueban con las pruebas y validaciones del repositorio. La narración del reel se generó con Qwen3-TTS a partir de una grabación de mi propia voz, y el video lo indica de forma visible.
+
+## Contexto
+
+El proyecto nació como trabajo final del curso Python Intermedio, de la Diplomatura de especialización en Ciencia de Datos para las Ciencias Sociales y la Gestión Pública (2026). El código del reel adapta el flujo de la sesión 15 de ese curso, como se indica en [`reel/recursos/CREDITOS.md`](reel/recursos/CREDITOS.md).
