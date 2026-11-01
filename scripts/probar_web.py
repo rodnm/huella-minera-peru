@@ -15,6 +15,15 @@ OUT.mkdir(exist_ok=True)
 FAILS = []
 
 
+ALL_ERRORS = []
+
+
+def watch_errors(page):
+    page.on("console", lambda m: ALL_ERRORS.append(m.text) if m.type == "error" else None)
+    page.on("pageerror", lambda e: ALL_ERRORS.append(str(e)))
+    return page
+
+
 def check(name, ok, detail=""):
     print(("PASS " if ok else "FAIL ") + name + (f"  [{detail}]" if detail else ""))
     if not ok:
@@ -112,7 +121,7 @@ def farthest_view_is_the_start(page, label):
 with sync_playwright() as p:
     browser = p.chromium.launch(args=["--use-angle=swiftshader", "--enable-webgl", "--ignore-gpu-blocklist", "--enable-unsafe-swiftshader"])
     context = browser.new_context(viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
-    page = context.new_page()
+    page = watch_errors(context.new_page())
     errors = []
     page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)
     page.on("pageerror", lambda e: errors.append(str(e)))
@@ -161,6 +170,36 @@ with sync_playwright() as p:
     page.select_option("#department", "")
     set_range(page, 2025)
     page.wait_for_timeout(700)
+
+    # The legend's numbers sit on the boundaries between its colors
+    page.select_option("#indicator", "nueva")
+    page.wait_for_timeout(300)
+    tick = page.locator("#legend .legend-ticks span", has_text="20").first.get_attribute("style") or ""
+    check("the legend puts 20 km2 on its fifth boundary", tick.startswith("left:71.4"), tick)
+    page.select_option("#indicator", "huella")
+
+    # Asking for the same place again recenters the map, and a row keeps the keyboard's place
+    page.evaluate("selectDepartment('MADRE DE DIOS')")
+    page.wait_for_timeout(900)
+    wanted = page.evaluate("[viewState.longitude, viewState.latitude, viewState.zoom]")
+    box = page.locator("#map").bounding_box()
+    page.mouse.move(box["x"] + box["width"] / 2, box["y"] + 400)
+    page.mouse.down()
+    page.mouse.move(box["x"] + box["width"] / 2 + 150, box["y"] + 490, steps=8)
+    page.mouse.up()
+    page.wait_for_timeout(500)
+    page.evaluate("selectDepartment('MADRE DE DIOS')")
+    page.wait_for_timeout(900)
+    again = page.evaluate("[viewState.longitude, viewState.latitude, viewState.zoom]")
+    check("the same department recenters the map again", max(abs(a - b) for a, b in zip(again, wanted)) < 1e-6, str(again))
+    page.evaluate("selectDepartment('')")
+    page.wait_for_timeout(900)
+    page.locator("#departments .bar").nth(2).focus()
+    page.keyboard.press("Enter")
+    page.wait_for_timeout(1000)
+    check("a row chosen with the keyboard keeps the focus", page.evaluate("document.activeElement.classList.contains('bar')"), page.evaluate("document.activeElement.tagName"))
+    page.select_option("#department", "")
+    page.wait_for_timeout(1000)
 
     # Department control
     trend_all = text(page, "#trend-title")
@@ -230,14 +269,14 @@ with sync_playwright() as p:
     check("no console errors at 1440", not errors, "; ".join(errors)[:300])
     page.evaluate("window.scrollTo(0, 0)")
     farthest_view_is_the_start(page, "1440")
-    narrow = browser.new_context(viewport={"width": 1024, "height": 800}, reduced_motion="reduce").new_page()
+    narrow = watch_errors(browser.new_context(viewport={"width": 1024, "height": 800}, reduced_motion="reduce").new_page())
     narrow.goto(URL)
     narrow.wait_for_function("document.querySelectorAll('#findings li').length === 3", timeout=60000)
     farthest_view_is_the_start(narrow, "1024")
 
     # First visit: the map plays once by itself
     moving = browser.new_context(viewport={"width": 1440, "height": 900})
-    first = moving.new_page()
+    first = watch_errors(moving.new_page())
     first.add_init_script(WATCH)
     first.goto(URL)
     first.wait_for_function("document.querySelectorAll('#findings li').length === 3", timeout=60000)
@@ -251,9 +290,22 @@ with sync_playwright() as p:
     first.wait_for_timeout(300)
     check("a department with few districts does not claim a top ten", "100 %" not in text(first, "#kpi-top"), text(first, "#kpi-top"))
 
+    # A click on a row during the animation stops it and is never lost
+    playing = watch_errors(browser.new_context(viewport={"width": 1440, "height": 900}).new_page())
+    playing.goto(URL)
+    playing.wait_for_function("document.querySelectorAll('#rank .bar').length > 0 && state.playing", timeout=60000)
+    playing.evaluate("document.getElementById('rank').scrollIntoView({block: 'center'})")
+    row = playing.evaluate("(() => { const r = document.querySelector('#rank .bar').getBoundingClientRect(); return {x: r.x, y: r.y, height: r.height}; })()")
+    playing.mouse.move(row["x"] + 30, row["y"] + row["height"] / 2)
+    playing.mouse.down()
+    playing.wait_for_timeout(800)  # longer than a year of the animation, so the row would have been rebuilt
+    playing.mouse.up()
+    playing.wait_for_timeout(300)
+    check("a slow click on a row selects it and stops the animation", playing.evaluate("state.district !== null && !state.playing"), playing.evaluate("String(state.district)"))
+
     # Mobile
     mobile = browser.new_context(viewport={"width": 390, "height": 844}, device_scale_factor=2, reduced_motion="reduce", has_touch=True)
-    phone = mobile.new_page()
+    phone = watch_errors(mobile.new_page())
     phone_errors = []
     phone.on("console", lambda m: phone_errors.append(m.text) if m.type == "error" else None)
     phone.on("pageerror", lambda e: phone_errors.append(str(e)))
@@ -270,7 +322,7 @@ with sync_playwright() as p:
     phone.locator("#map").screenshot(path=OUT / "9_phone_map.png")
 
     touch = browser.new_context(viewport={"width": 390, "height": 844}, reduced_motion="reduce", has_touch=True, is_mobile=True)
-    swiped = touch.new_page()
+    swiped = watch_errors(touch.new_page())
     swiped.goto(URL)
     swiped.wait_for_function("document.querySelectorAll('#findings li').length === 3", timeout=60000)
     swiped.wait_for_timeout(2000)
@@ -287,6 +339,7 @@ with sync_playwright() as p:
     cdp.send("Input.dispatchTouchEvent", {"type": "touchEnd", "touchPoints": []})
     swiped.wait_for_timeout(700)
     check("390: a swipe on the map moves the page and not the map", swiped.evaluate("scrollY") > before + 100 and swiped.evaluate("viewState.latitude") == view, f'{before} to {swiped.evaluate("scrollY")}')
+    check("no console errors on any page", not ALL_ERRORS, "; ".join(ALL_ERRORS)[:300])
     browser.close()
 
 print(f"\n{len(FAILS)} failed: {FAILS}")

@@ -120,7 +120,8 @@ a:hover { text-decoration-color: currentColor; }
 .legend-dot { width: 0.65rem; height: 0.65rem; border-radius: 50%; flex: none; }
 .legend-steps { display: flex; gap: 2px; margin: 0.25rem 0 0.1rem; }
 .legend-steps span { flex: 1; height: 0.6rem; min-width: 1.9rem; }
-.legend-ticks { display: flex; justify-content: space-between; color: var(--text); }
+.legend-ticks { position: relative; height: 1.15rem; color: var(--text); }
+.legend-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
 .legend p { margin-top: 0.3rem; }
 
 .card {
@@ -377,7 +378,7 @@ const titleCase = (text) => text.toLowerCase().split(" ")
 
 const state = { year: 2013, department: "", indicator: "huella", district: null, playing: false };
 const data = {};
-let deckgl, viewState, timer, home, hovered = null;
+let deckgl, viewState, timer, home, hovered = null, flights = 0;
 
 const INDICATORS = {
   huella: {
@@ -445,9 +446,9 @@ function buildScales() {
   const lightValues = data.panel.districts.flatMap((d) => d.l).filter((v) => v > 0);
   const quantiles = [0.15, 0.3, 0.45, 0.6, 0.75, 0.9].map((q) => d3.quantile(lightValues.sort(d3.ascending), q));
   return {
-    nueva: { thresholds: [0.1, 0.5, 1, 5, 20, 100], ramp: footprint, ticks: ["0.1", "1", "20", "100"] },
-    luz: { thresholds: quantiles, ramp: light, ticks: quantiles.filter((_, i) => i % 2 === 0).map((v) => fmt2.format(v)) },
-    pobreza: { thresholds: [10, 20, 30, 40, 50, 60], ramp: poverty, ticks: ["10 %", "30 %", "50 %", "60 %"] },
+    nueva: { thresholds: [0.1, 0.5, 1, 5, 20, 100], ramp: footprint, label: String, every: 1 },
+    luz: { thresholds: quantiles, ramp: light, label: (v) => fmt2.format(v), every: 2 },
+    pobreza: { thresholds: [10, 20, 30, 40, 50, 60], ramp: poverty, label: (v) => `${v} %`, every: 2 },
   };
 }
 
@@ -547,7 +548,8 @@ function keepInFrame(view) {
 function flyTo(bounds) {
   const { longitude, latitude, zoom } = fit(bounds);
   viewState = keepInFrame({ longitude, latitude, zoom, transitionDuration: REDUCED_MOTION ? 0 : 700, transitionInterpolator: new deck.LinearInterpolator(["longitude", "latitude", "zoom"]) });
-  deckgl.setProps({ initialViewState: { ...viewState } });
+  // deck.gl ignores a view state equal to the last one it was given, even if the map has moved since
+  deckgl.setProps({ initialViewState: { ...viewState, flight: ++flights } });
 }
 
 function boundsOf(features) {
@@ -599,7 +601,7 @@ function renderLegend() {
   const scale = data.scales[state.indicator], spec = INDICATORS[state.indicator];
   el.innerHTML = `<strong>${spec.label} (${spec.unit})</strong>
     <div class="legend-steps">${scale.ramp.map((c) => `<span style="background:${c}"></span>`).join("")}</div>
-    <div class="legend-ticks">${scale.ticks.map((t) => `<span>${t}</span>`).join("")}</div>
+    <div class="legend-ticks">${scale.thresholds.map((v, i) => (i % scale.every ? "" : `<span style="left:${((i + 1) / scale.ramp.length * 100).toFixed(1)}%">${scale.label(v)}</span>`)).join("")}</div>
     ${state.indicator === "pobreza" ? "<p>Es de 2018: no cambia con el año elegido.</p>" : ""}
     ${state.indicator === "luz" ? "<p>Es contexto: no mide minería.</p>" : ""}`;
 }
@@ -795,7 +797,7 @@ function renderRank() {
     const whisker = state.indicator === "pobreza" && d.pov
       ? `<span class="bar-whisker" style="left:${d.pov[1] / max * 100}%;width:${(d.pov[2] - d.pov[1]) / max * 100}%"></span>` : "";
     const button = document.createElement("button");
-    button.type = "button"; button.className = "bar";
+    button.type = "button"; button.className = "bar"; button.dataset.row = d.u;
     button.setAttribute("aria-pressed", String(state.district === d.u));
     button.innerHTML = `<span class="bar-name">${titleCase(d.n)}${state.department ? "" : `<small>${titleCase(d.d)}</small>`}</span>
       <span class="bar-track"><span class="bar-fill" style="width:${value / max * 100}%;background:${color}"></span>${whisker}</span>
@@ -813,7 +815,7 @@ function renderDepartments() {
   const max = d3.max(rows, (r) => Math.max(r.now, r.base));
   host.replaceChildren(...rows.map((r) => {
     const button = document.createElement("button");
-    button.type = "button"; button.className = "bar";
+    button.type = "button"; button.className = "bar"; button.dataset.row = r.name;
     button.setAttribute("aria-pressed", String(state.department === r.name));
     const a = r.base / max * 100, b = r.now / max * 100;
     button.innerHTML = `<span class="bar-name">${titleCase(r.name)}</span>
@@ -829,11 +831,13 @@ function renderDepartments() {
 /* ---------- state ---------- */
 
 function refresh() {
+  const focused = document.activeElement && document.activeElement.dataset.row;  // the rows are rebuilt below
   $("year").value = state.year;
   $("year-output").textContent = state.year;
   $("big-year").textContent = state.year;
   deckgl.setProps({ layers: layers() });
   renderLegend(); renderCard(); renderKpis(); renderTrend(); renderRank(); renderDepartments();
+  if (focused) [...document.querySelectorAll("[data-row]")].find((row) => row.dataset.row === focused)?.focus({ preventScroll: true });
 }
 
 function stop() {
@@ -897,6 +901,11 @@ function initControls() {
   $("indicator").addEventListener("change", (event) => { state.indicator = event.target.value; refresh(); });
   $("search").addEventListener("change", search);
   $("play").addEventListener("click", () => (state.playing ? stop() : play()));
+  // These are rebuilt on every year: stopping first means a press and its release land on the same element
+  for (const id of ["rank", "departments", "card"]) {
+    $(id).addEventListener("pointerdown", stop);
+    $(id).addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") stop(); });
+  }
   let resize;
   addEventListener("resize", () => {
     clearTimeout(resize);
