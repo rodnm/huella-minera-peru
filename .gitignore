@@ -21,3 +21,5 @@ reel/salidas/
 reel/escenas/atlas/
 *.wav
 *.m4a
+# Written by scripts/preparar_web.py from datos/atlas
+web/data/
