@@ -33,7 +33,7 @@ def test_the_prepared_footprint_decodes_to_the_committed_bytes(tmp_path, monkeyp
     from scripts import preparar_web
 
     monkeypatch.setattr(preparar_web, "TARGET", tmp_path / "data")
-    preparar_web.ROOT = tmp_path.parent
+    monkeypatch.setattr(preparar_web, "ROOT", tmp_path.parent)
     preparar_web.main()
 
     text = (tmp_path / "data" / "huella.txt").read_text(encoding="ascii")

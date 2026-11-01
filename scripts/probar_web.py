@@ -146,9 +146,21 @@ with sync_playwright() as p:
     # Play control
     set_range(page, 2023)
     page.click("#play")
-    page.wait_for_timeout(1900)
+    page.wait_for_function("document.getElementById('play').textContent === 'Reproducir'", timeout=30000)
     check("play advances the year", page.input_value("#year") == "2025", page.input_value("#year"))
     check("play stops and offers replay", text(page, "#play") == "Reproducir", text(page, "#play"))
+
+    # The figures must never outlive their selection, or claim more than the sum allows
+    page.select_option("#indicator", "nueva")
+    set_range(page, 2013)
+    check("an empty ranking still updates the table", "2013" in page.locator("#table th").nth(2).text_content(), page.locator("#table th").nth(2).text_content())
+    page.select_option("#indicator", "huella")
+    page.select_option("#department", "CAJAMARCA")
+    set_range(page, 2021)
+    check("the top ten never claims all of a net increase with losses", "perdieron" in text(page, "#kpi-top"), text(page, "#kpi-top"))
+    page.select_option("#department", "")
+    set_range(page, 2025)
+    page.wait_for_timeout(700)
 
     # Department control
     trend_all = text(page, "#trend-title")

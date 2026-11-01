@@ -638,12 +638,15 @@ function renderKpis() {
     : `×${fmt1.format(area / base)} <small>${change >= 0 ? "+" : "−"}${km2(Math.abs(change))} km²</small>`;
   $("kpi-districts").innerHTML = `${fmt0.format(count(i))} <small>${fmt0.format(count(0))} en 2013</small>`;
   const gains = rows.map((d) => (d.m[i] || 0) - (d.m[0] || 0)).filter((g) => g > 0).sort(d3.descending);
-  const total = change, top = d3.sum(gains.slice(0, 10));
+  const total = change, top = d3.sum(gains.slice(0, 10)), share = top / total;
   $("kpi-top").innerHTML = i === 0 || total <= 0
     ? "– <small>sin aumento que repartir</small>"
     : gains.length <= 10
     ? `– <small>solo ${fmt0.format(gains.length)} distritos con aumento</small>`
-    : `${pct(Math.min(top / total, 1))} <small>de ${km2(total)} km²</small>`;
+    : share > 1
+    // Ten districts gained more than the net increase, because others lost footprint: no share of it can be stated
+    ? "– <small>hay distritos que perdieron huella</small>"
+    : `${share >= 0.995 ? "más de 99 %" : pct(share)} <small>de ${km2(total)} km²</small>`;
 }
 
 function renderFindings() {
@@ -780,7 +783,10 @@ function renderRank() {
   const spec = INDICATORS[state.indicator], rows = rankedRows(), top = rows.slice(0, 10);
   $("rank-title").textContent = spec.title(scopeName());
   $("rank-note").textContent = spec.note(state.year);
-  const host = $("rank");
+  const host = $("rank"), table = $("table"), i = yearIndex();
+  table.innerHTML = `<thead><tr><th scope="col">Distrito</th><th scope="col">Departamento</th><th scope="col">Huella ${state.year} (km²)</th><th scope="col">Huella 2013 (km²)</th></tr></thead>
+    <tbody>${scopeDistricts().filter((d) => (d.m[i] || 0) >= VISIBLE_KM2).sort((a, b) => b.m[i] - a.m[i])
+    .map((d) => `<tr><td>${titleCase(d.n)}</td><td style="text-align:left">${titleCase(d.d)}</td><td>${km2(d.m[i] || 0)}</td><td>${km2(d.m[0] || 0)}</td></tr>`).join("")}</tbody>`;
   host.replaceChildren();
   if (!top.length) { host.innerHTML = `<p class="empty">${scopeName()} no tiene distritos con este dato en ${state.year}. Prueba otro año o departamento.</p>`; return; }
   const color = { huella: data.tokens.ramps.footprint[4], nueva: data.tokens.ramps.footprint[4], luz: data.tokens.ramps.light[3], pobreza: data.tokens.ramps.poverty[3] }[state.indicator];
@@ -797,10 +803,6 @@ function renderRank() {
     button.addEventListener("click", () => selectDistrict(d.u));
     host.append(button);
   });
-  const table = $("table"), i = yearIndex();
-  table.innerHTML = `<thead><tr><th scope="col">Distrito</th><th scope="col">Departamento</th><th scope="col">Huella ${state.year} (km²)</th><th scope="col">Huella 2013 (km²)</th></tr></thead>
-    <tbody>${scopeDistricts().filter((d) => (d.m[i] || 0) >= VISIBLE_KM2).sort((a, b) => b.m[i] - a.m[i])
-    .map((d) => `<tr><td>${titleCase(d.n)}</td><td style="text-align:left">${titleCase(d.d)}</td><td>${km2(d.m[i] || 0)}</td><td>${km2(d.m[0] || 0)}</td></tr>`).join("")}</tbody>`;
 }
 
 function renderDepartments() {
