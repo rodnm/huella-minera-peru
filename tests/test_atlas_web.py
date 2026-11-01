@@ -43,3 +43,7 @@ def test_the_prepared_footprint_decodes_to_the_committed_bytes(tmp_path, monkeyp
 
 def test_no_control_depends_on_a_download_the_frame_blocks():
     assert ".download =" not in PAGE and "<a download" not in PAGE
+
+
+def test_the_author_is_named_under_the_title():
+    assert re.search(r'</h1>\s*<p class="byline">Por Rodrigo Norabuena</p>', PAGE)
