@@ -62,16 +62,20 @@ def _inside(inner, outer) -> bool:
 
 
 def wrap(draw: ImageDraw.ImageDraw, text: str, font, width: float) -> list[str]:
-    """Greedy word wrap measured with the real font."""
-    lines, current = [], ""
-    for word in text.split():
-        candidate = f"{current} {word}".strip()
-        if not current or draw.textlength(candidate, font=font) <= width:
-            current = candidate
-        else:
+    """Greedy word wrap measured with the real font; a line break in the text always starts a new line."""
+    lines = []
+    for paragraph in text.split("\n"):
+        current = ""
+        for word in paragraph.split():
+            candidate = f"{current} {word}".strip()
+            if not current or draw.textlength(candidate, font=font) <= width:
+                current = candidate
+            else:
+                lines.append(current)
+                current = word
+        if current:
             lines.append(current)
-            current = word
-    return lines + ([current] if current else [])
+    return lines
 
 
 def _truncate(draw, line: str, font, width: float) -> str:
@@ -177,7 +181,7 @@ def base_layer(title: str, source: str, author: str, fonts: Fonts, colors: dict)
     draw.ellipse((bx0 + 22, cy - 7, bx0 + 36, cy + 7), fill=colors["accent"])
     draw.text((bx0 + 52, cy), AI_NOTICE, font=font, fill=colors["text"], anchor="lm")
 
-    footer = f"{source} · {author}" if author else source
+    footer = f"{source}\n{author}" if author else source
     fit_text(draw, footer, lambda s: fonts("text", s), ZONES["footer"],
              max_size=28, min_size=20, max_lines=2).draw(draw, colors["text_muted"])
     return img
