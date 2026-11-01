@@ -17,23 +17,33 @@ El proyecto empezó preguntando si la minería se asocia con menos pobreza. Los 
 
 | # | Hallazgo | Cifra | Respaldo |
 |---|---|---|---|
-| A1 | La superficie clasificada como minera casi se triplicó | 727 → 1,985 km² entre 2013 y 2025 (×2.73) | MapBiomas; nuestro cálculo difiere 0.25 % como máximo de su tabla nacional |
-| A2 | Madre de Dios explica la mayor parte del aumento | 63 % del aumento y 57 % de la huella de 2025 | Contrastado con Amazon Mining Watch |
+| A1 | La superficie clasificada como minera casi se triplicó | 727 → 1,985 km² entre 2013 y 2025 (×2.73) | MapBiomas; nuestra suma difiere 0.25 % como máximo de su tabla nacional |
+| A2 | Madre de Dios explica la mayor parte del aumento | 63 % del aumento y 57 % de la huella de 2025 | MapBiomas; solo el tramo 2018–2024 tiene segunda fuente |
 | A3 | El aumento está concentrado | 10 distritos explican 73 %; Inambari pasa de 88 a 417 km²; los distritos con al menos 1 ha pasan de 215 a 310 | MapBiomas; umbral de 1 ha elegido por nosotros |
-| A4 | Dos fuentes independientes coinciden en ritmo y lugar en Madre de Dios, no en nivel | 2018–2024: MapBiomas ×2.02, Amazon Mining Watch ×1.98; 96–98 % de la superficie de MapBiomas cae en celdas con cicatrices | Ver M9 |
+| A4 | En Madre de Dios, dos fuentes independientes coinciden en dirección y lugar, no en nivel ni calendario | 2018–2024: MapBiomas ×2.02, Amazon Mining Watch ×1.98; 96–98 % de la superficie de MapBiomas cae en celdas con cicatrices | Ver M9 |
 
 ### Qué tan fuerte es el contraste
 
-- **Ritmo:** casi idéntico en el periodo. Año a año no: de 2022 a 2023, MapBiomas sube 194 km² y Amazon Mining Watch, 118 km². Conviene leer la tendencia y no un año suelto.
-- **Lugar:** el solapamiento se mide en celdas de 500 m, una vara generosa. Dice que apuntan a las mismas zonas, no que coincidan píxel a píxel.
-- **Nivel:** en 2024, 1,023 km² de MapBiomas contra 1,520 km² de Amazon Mining Watch. Esta última acumula cicatrices desde 2018 e informa que su máscara acumulada mide cerca de 1.7 veces lo anotado a mano. MapBiomas clasifica el suelo de cada año. En 2019, Maus et al. da 2,538 km² en Madre de Dios, con otra definición de área minera.
-- **Orden de magnitud externo:** [MAAP #195](https://www.maapprogram.org/?p=24977) estima 23,881 ha (239 km²) de deforestación por minería aurífera en el sur de la Amazonía peruana en 2021–2023. Mide pérdida de bosque, no suelo minero total, y su zona de estudio es otra. Sirve como referencia, no como validación: en el mismo tramo, 2020 a 2023, MapBiomas suma 350 km² en Madre de Dios y Amazon Mining Watch, 360 km².
-- **Cobertura:** Amazon Mining Watch solo cubre la cuenca amazónica. El 37 % del aumento, fuera de Madre de Dios, se apoya sobre todo en MapBiomas.
+Las cifras salen de `datos/procesados/contraste_huella.json`.
+
+| Madre de Dios | MapBiomas | Amazon Mining Watch |
+|---|---|---|
+| 2018 a 2024 | ×2.02 (+516 km²) | ×1.98 (+751 km²) |
+| 2018 a 2021 | ×1.28 | ×1.52 |
+| 2021 a 2024 | ×1.58 | ×1.30 |
+| Aumentos anuales | correlación −0.60 con 6 pares | |
+
+- **Cobertura:** el contraste abarca Madre de Dios de 2018 a 2024, un tramo que equivale al **41 % del aumento nacional**. El **59 %** restante se apoya sobre todo en MapBiomas.
+- **Dirección:** las dos suben y se duplican en el periodo. Esa coincidencia depende de los extremos elegidos: en los subperiodos difieren, y sus aumentos anuales no van juntos. Por eso no sirve para fechar saltos.
+- **Lugar:** 96–98 % de la superficie de MapBiomas cae en celdas de 500 m con cicatrices, que son una pequeña parte de las celdas del departamento (`cells_with_scars_share`). Es una vara generosa: indica las mismas zonas, no coincidencia píxel a píxel.
+- **Nivel:** en 2024, 1,023 km² de MapBiomas contra 1,520 km² de Amazon Mining Watch. Esta última acumula cicatrices e informa que su máscara acumulada mide cerca de 1.7 veces lo anotado a mano. MapBiomas clasifica el suelo de cada año. En 2019, Maus et al. da 2,538 km² en Madre de Dios, 4.7 veces los 545 km² de MapBiomas.
+- **Fuera de Madre de Dios discrepan más:** de 2018 a 2024, Puno ×1.39 y ×3.60, Cusco ×1.57 y ×4.65, Loreto ×0.41 y ×6.42, Huánuco ×6.73 y ×103 (MapBiomas y Amazon Mining Watch). Amazon Mining Watch cubre solo la parte amazónica de varios departamentos y parte de áreas pequeñas, lo que puede explicar parte de la diferencia, pero no se comprobó. La correlación de rangos del aumento distrital es 0.87 en 18 distritos con cicatrices.
+- **Orden de magnitud externo:** [MAAP #195](https://www.maapprogram.org/?p=24977) estima 23,881 ha (239 km²) de deforestación por minería aurífera en el sur de la Amazonía peruana en 2021–2023. Mide pérdida de bosque en otra zona de estudio, así que da una escala, no una validación.
 
 ### Lo que el atlas no afirma
 
 - Que la huella sea minería legal, informal o ilegal: la clase 30 no las distingue, e incluye extracción no metálica como la de Sechura.
-- Un área exacta: las fuentes difieren hasta en tres veces según su definición.
+- Un área exacta: las fuentes difieren unas tres veces a nivel nacional y más de cuatro en Madre de Dios, según su definición.
 - Una relación causal con la luz o la pobreza: son capas de contexto.
 
 ---
@@ -238,13 +248,13 @@ MapBiomas publica el área solo por departamento, así que el cálculo distrital
 
 `scripts/contrastar_huella.py` compara la huella con una fuente construida aparte: imágenes Sentinel-2 y un modelo propio de Earth Genome (`amazon_basin_mining_scar_masks.tif`, 10 m, versión del 16 de octubre de 2026, CC BY 4.0).
 
-1. **Extensión por año:** cada píxel guarda el año en que se confirmó la cicatriz, así que la extensión de un año es todo lo confirmado hasta entonces. Los códigos trimestrales son provisionales y quedan fuera. Una cicatriz se confirma al verla otra vez el año siguiente, por eso **2024 es el último año comparable**.
+1. **Extensión por año:** cada píxel guarda el periodo en que empezó una cicatriz confirmada, así que la extensión de un año es todo lo iniciado hasta entonces. Los códigos trimestrales quedan fuera. Una cicatriz se confirma al verla otra vez dentro de la ventana siguiente, por eso **2024 es el último año anual completo**.
 2. **Misma grilla:** los píxeles se agrupan en la grilla de 500 m y el área se calcula igual que en M4.
-3. **Comparación:** se reportan la razón 2018–2024, el solapamiento por celda en Madre de Dios y la diferencia de nivel.
+3. **Comparación:** se reportan la razón del periodo y de sus dos mitades, la correlación de aumentos anuales, el solapamiento por celda con su tasa base, la diferencia de nivel y las razones de otros departamentos.
 
 ### M10. Cifras y datos del atlas
 
-`brillo/atlas.py` calcula los hallazgos A1 a A3 desde el panel, y `scripts/construir_web.py` escribe los archivos de `web/data`. La página no tiene cifras escritas a mano: las calcula con esos archivos. El script falla si el redondeo cambia el conteo de distritos respecto de `atlas.json`. Una celda se dibuja si en algún año al menos 1 % de ella es minería, unas 0.2 ha, para no mostrar píxeles sueltos. Las pruebas del navegador comprueban que cada control cambie lo que se muestra.
+`brillo/atlas.py` calcula los hallazgos A1 a A3 desde el panel, y `scripts/construir_web.py` escribe los archivos de `web/data`. La página no tiene cifras escritas a mano: las calcula con esos archivos. El script falla si el redondeo cambia el conteo de distritos respecto de `atlas.json`. Una celda se dibuja si en algún año al menos 1 % de ella es minería, unas 0.2 ha, para no mostrar píxeles sueltos. `tests/test_web_data.py` corre antes de cada despliegue y compara los archivos publicados con el panel. `scripts/probar_web.py`, que necesita Playwright y se corre a mano, comprueba en el navegador que cada control cambie lo que se muestra.
 
 ### M5. Pobreza oficial
 
@@ -284,7 +294,7 @@ La ENAHO no representa a los distritos: en 2024 cubre 1,271, con mediana de 14 h
 | Panel | 24,674 filas, claves únicas, sin nulos en luz ni huella |
 | Suma de MINEM contra sus totales (8 metales, 2013–2019) | Diferencia prácticamente nula en 56 comparaciones |
 | Huella contra la tabla oficial de MapBiomas | 0.25 % nacional, 4.8 % departamental |
-| **Huella contra Amazon Mining Watch, Madre de Dios, 2018–2024** | **×2.02 contra ×1.98; 96–98 % en las mismas celdas; distinto nivel** |
+| **Huella contra Amazon Mining Watch, Madre de Dios, 2018–2024** | **×2.02 contra ×1.98; 96–98 % en las mismas celdas; distinto nivel y calendario; discrepan fuera de Madre de Dios** |
 | Pobreza nacional contra el INEI, 2016–2025 | Coincide en los 10 años |
 | Regla gasto contra línea, 2013–2025 | 100 % en los 13 años |
 | Referencia con Stata 17 (`docs/referencia_stata.do`, 2024) | Tasas departamentales idénticas; razón de errores estándar de 0.92 a 1.01 |
@@ -316,6 +326,7 @@ La ENAHO no representa a los distritos: en 2024 cubre 1,271, con mediana de 14 h
 | "Con aperturas parecidas, destinos opuestos" | Las operaciones no son comparables en escala | H4 |
 | "La mina enciende el distrito" | La apertura típica casi no cambia la luz | H8 |
 | "Los distritos mineros brillan tres veces más que sus vecinos" | Es la mediana de una de tres medidas, dentro del departamento, e incluye la luz de la operación | H1 |
+| "Las dos fuentes van al mismo ritmo" y "es la parte contrastada" | Coinciden entre los extremos de 2018 a 2024, no en los subperiodos. El contraste cubre 41 % del aumento, no 63 % | Verificación independiente |
 
 ---
 

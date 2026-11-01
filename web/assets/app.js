@@ -264,9 +264,9 @@ function renderFindings() {
   const leader = a.top_districts[0], md = a.madre_de_dios, y0 = a.first_year, y1 = a.last_year;
   const items = [
     [`La superficie clasificada como minera pasó de ${fmt0.format(first)} a ${fmt0.format(last)} km²: se multiplicó por ${fmt1.format(a.ratio)} en ${y1 - y0} años.`,
-      `Según MapBiomas Perú, ${y0} a ${y1}. El área exacta está en discusión, por eso conviene mirar la tendencia.`],
+      `Según MapBiomas Perú, ${y0} a ${y1}. El área exacta está en discusión y gran parte del aumento se apoya en esta fuente.`],
     [`Madre de Dios explica el ${pct(md.share_of_increase)} del aumento y ya reúne el ${pct(md.share_of_last)} de la huella del país.`,
-      `Pasó de ${fmt0.format(md.first_km2)} a ${fmt0.format(md.last_km2)} km². Es la parte contrastada con una segunda fuente.`],
+      `Pasó de ${fmt0.format(md.first_km2)} a ${fmt0.format(md.last_km2)} km². El tramo de 2018 a 2024 tiene una segunda fuente.`],
     [`Diez distritos explican el ${pct(a.top_share_of_increase)} del aumento. ${titleCase(leader.district)} pasó de ${fmt0.format(leader.first_km2)} a ${fmt0.format(leader.last_km2)} km².`,
       `Los distritos con huella visible pasaron de ${fmt0.format(a.districts_with_footprint[y0])} a ${fmt0.format(a.districts_with_footprint[y1])}: se concentra mucho y también se extiende.`],
   ];
@@ -274,19 +274,17 @@ function renderFindings() {
 }
 
 function renderContrastText() {
-  const c = data.atlas.contrast.madre_de_dios, y = c.last_confirmed_year, y0 = data.atlas.contrast.years[0];
-  const on = Object.values(c.mapbiomas_on_amw).filter((_, i) => data.atlas.contrast.years[i] <= y);
-  const ratio = c.ratio_to_last_confirmed;
-  const rest = 1 - data.atlas.madre_de_dios.share_of_increase;
-  const step = (series) => series[2023] - series[2022];
-  const v = data.atlas.validation;
+  const contrast = data.atlas.contrast, c = contrast.madre_de_dios, y = c.last_confirmed_year, y0 = contrast.years[0];
+  const on = Object.values(c.mapbiomas_on_amw).filter((_, i) => contrast.years[i] <= y);
+  const { whole, first_half: a, second_half: b } = c.periods;
+  const covered = contrast.share_of_increase_contrasted;
+  const others = contrast.other_departments.map((d) => `${titleCase(d.name)} (×${fmt1.format(d.mapbiomas_ratio)} y ×${fmt1.format(d.amw_ratio)})`);
   $("contrast-text").innerHTML = `
-    <p>Amazon Mining Watch usa otro satélite (Sentinel-2) y otro modelo, así que sirve como comprobación independiente. En Madre de Dios, entre ${y0} y ${y}, <strong>MapBiomas se multiplica por ${fmt2.format(ratio.mapbiomas)} y Amazon Mining Watch por ${fmt2.format(ratio.amw)}</strong>.</p>
-    <p>También coinciden en el lugar: entre ${pct(d3.min(on))} y ${pct(d3.max(on))} de la superficie de MapBiomas cae en celdas de 500 m donde la otra fuente detecta cicatrices.</p>
-    <p>No coinciden en el nivel: en ${y} una suma ${fmt0.format(c.amw_km2[y])} km² y la otra ${fmt0.format(c.mapbiomas_km2[y])} km². Amazon Mining Watch acumula cicatrices desde 2018 e indica que su máscara acumulada mide cerca de 1.7 veces lo anotado a mano. MapBiomas clasifica el suelo de cada año.</p>
-    <p>Tampoco coinciden en cada salto: de 2022 a 2023, MapBiomas sube ${fmt0.format(step(c.mapbiomas_km2))} km² y la otra fuente, ${fmt0.format(step(c.amw_km2))} km².</p>
-    <p>El ${pct(rest)} restante del aumento, fuera de Madre de Dios, se apoya sobre todo en MapBiomas.</p>`;
-  $("method-check").textContent = `La suma nacional difiere de la tabla oficial de MapBiomas en ${fmt2.format(v.max_national_gap * 100)} % como máximo. Eso prueba que el cálculo es correcto, no que el satélite acierte: por eso existe el contraste.`;
+    <p>Amazon Mining Watch usa otro satélite (Sentinel-2) y otro modelo, así que sirve como comprobación independiente. Solo cubre la cuenca amazónica. Aquí se compara en Madre de Dios entre ${y0} y ${y}, un tramo que equivale al <strong>${pct(covered)} del aumento nacional</strong>. El ${pct(1 - covered)} restante se apoya sobre todo en MapBiomas.</p>
+    <p><strong>Coinciden en la dirección y el lugar.</strong> Ambas se duplican en el periodo (×${fmt2.format(whole.mapbiomas)} y ×${fmt2.format(whole.amw)}). Además, entre ${pct(d3.min(on))} y ${pct(d3.max(on))} de la superficie de MapBiomas cae en celdas de 500 m con cicatrices, que son solo el ${fmt1.format(c.cells_with_scars_share * 100)} % de las celdas del departamento.</p>
+    <p><strong>No coinciden en el nivel ni en el calendario.</strong> En ${y} suman ${fmt0.format(c.amw_km2[y])} y ${fmt0.format(c.mapbiomas_km2[y])} km². De ${y0} a 2021, MapBiomas crece ×${fmt2.format(a.mapbiomas)} y la otra fuente ×${fmt2.format(a.amw)}; de 2021 a ${y}, ×${fmt2.format(b.mapbiomas)} y ×${fmt2.format(b.amw)}. La coincidencia del periodo completo no sirve para fechar los saltos. Amazon Mining Watch acumula cicatrices e indica que su máscara acumulada mide cerca de 1.7 veces lo anotado a mano; MapBiomas clasifica el suelo de cada año.</p>
+    <p><strong>Fuera de Madre de Dios discrepan más:</strong> ${others.join(", ")}, en ese orden, de ${y0} a ${y}. Amazon Mining Watch cubre solo la parte amazónica de varios de ellos y parte de áreas pequeñas, así que estas razones no se comparan directamente.</p>`;
+  $("method-check").textContent = `La suma nacional difiere de la tabla oficial de MapBiomas en ${fmt2.format(data.atlas.validation.max_national_gap * 100)} % como máximo. Eso muestra que la suma reproduce esa tabla, no que el satélite acierte: por eso existe el contraste.`;
 }
 
 function tip(host) {
@@ -502,16 +500,25 @@ function initControls() {
   const names = [...new Set(data.panel.districts.map((d) => d.d))].sort();
   $("department").append(...names.map((name) => new Option(titleCase(name), name)));
   const label = (d) => `${titleCase(d.n)}, ${titleCase(d.p)}, ${titleCase(d.d)}`;
-  const lookup = new Map(data.panel.districts.map((d) => [label(d).toLowerCase(), d.u]));
+  const plain = (text) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+  const byLabel = new Map(data.panel.districts.map((d) => [plain(label(d)), d.u]));
   $("district-list").append(...data.panel.districts.map((d) => { const o = document.createElement("option"); o.value = label(d); return o; }));
-  $("controls").addEventListener("submit", (event) => event.preventDefault());
+  const search = () => {
+    const typed = plain($("search").value), note = $("search-note");
+    note.textContent = "";
+    if (!typed) return;
+    const named = data.panel.districts.filter((d) => plain(d.n) === typed);
+    const ubigeo = byLabel.get(typed) || (named.length === 1 ? named[0].u : null);
+    if (ubigeo) { stop(); selectDistrict(ubigeo); return; }
+    note.textContent = named.length > 1
+      ? `Hay ${named.length} distritos con ese nombre. Elige uno de la lista.`
+      : "No se encontró ese distrito. Revisa el nombre o elígelo de la lista.";
+  };
+  $("controls").addEventListener("submit", (event) => { event.preventDefault(); search(); });
   $("year").addEventListener("input", (event) => { stop(); state.year = Number(event.target.value); refresh(); });
   $("department").addEventListener("change", (event) => { stop(); selectDepartment(event.target.value); });
   $("indicator").addEventListener("change", (event) => { state.indicator = event.target.value; refresh(); });
-  $("search").addEventListener("change", (event) => {
-    const ubigeo = lookup.get(event.target.value.trim().toLowerCase());
-    if (ubigeo) { stop(); selectDistrict(ubigeo); }
-  });
+  $("search").addEventListener("change", search);
   $("play").addEventListener("click", () => (state.playing ? stop() : play()));
   $("download").addEventListener("click", downloadCsv);
   let resize;

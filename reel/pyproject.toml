@@ -1,0 +1,26 @@
+[project]
+name = "paradoja-del-brillo-reel"
+version = "0.1.0"
+description = "Reel vertical 9:16 con voz clonada por IA, subtítulos karaoke y música (Tarea 3, Parte 3)"
+requires-python = ">=3.12,<3.13"
+# Separate environment from the repository root: qwen-tts pins transformers==4.57.3.
+dependencies = [
+    "faster-whisper>=1.2",
+    "imageio-ffmpeg>=0.6",
+    "jiwer>=4.0",
+    "num2words>=0.5.14",
+    "numpy>=2.0",
+    "pillow>=11.0",
+    "qwen-tts>=0.1.1",
+    "soundfile>=0.13",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.3"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

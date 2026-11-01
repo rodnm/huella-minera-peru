@@ -46,6 +46,37 @@ def describe(panel: pd.DataFrame, top: int = 10) -> dict:
     }
 
 
+def contrast_periods(table: pd.DataFrame, department: str, years: tuple[int, int, int]) -> dict:
+    """Where two sources agree and where not: ratios over the whole period and its two halves, and yearly gains."""
+    rows = table[table["department"] == department].set_index("year").sort_index()
+    first, middle, last = years
+    ratio = lambda column, a, b: float(rows.loc[b, column] / rows.loc[a, column])
+    span = rows.loc[first:last]
+    return {
+        "whole": {source: ratio(f"{source}_km2", first, last) for source in ("mapbiomas", "amw")},
+        "first_half": {source: ratio(f"{source}_km2", first, middle) for source in ("mapbiomas", "amw")},
+        "second_half": {source: ratio(f"{source}_km2", middle, last) for source in ("mapbiomas", "amw")},
+        "gain_km2": {source: float(rows.loc[last, f"{source}_km2"] - rows.loc[first, f"{source}_km2"])
+                     for source in ("mapbiomas", "amw")},
+        "yearly_gain_correlation": float(span["mapbiomas_km2"].diff().corr(span["amw_km2"].diff())),
+    }
+
+
+def other_departments(table: pd.DataFrame, excluded: str, first: int, last: int, min_km2: float) -> list[dict]:
+    """Ratios of both sources in the other departments where the second source sees at least ``min_km2``."""
+    wide = table.pivot(index="department", columns="year", values=["mapbiomas_km2", "amw_km2"])
+    rows = []
+    for department in wide.index:
+        amw_first, amw_last = wide.loc[department, ("amw_km2", first)], wide.loc[department, ("amw_km2", last)]
+        map_first, map_last = wide.loc[department, ("mapbiomas_km2", first)], wide.loc[department, ("mapbiomas_km2", last)]
+        if department == excluded or amw_last < min_km2 or amw_first <= 0 or map_first <= 0:
+            continue
+        rows.append({"department": department, "mapbiomas_ratio": float(map_last / map_first),
+                     "amw_ratio": float(amw_last / amw_first), "amw_first_km2": float(amw_first),
+                     "amw_last_km2": float(amw_last)})
+    return sorted(rows, key=lambda row: -row["amw_last_km2"])
+
+
 def _number(value, digits: int) -> float | None:
     return None if pd.isna(value) else round(float(value), digits)
 

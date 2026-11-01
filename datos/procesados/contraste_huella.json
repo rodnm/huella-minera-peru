@@ -50,12 +50,62 @@
       "2024": 0.942,
       "2025": 0.951
     },
+    "cells_with_scars_share": 0.0315,
+    "periods": {
+      "whole": {
+        "mapbiomas": 2.017195343478805,
+        "amw": 1.9777231742366126
+      },
+      "first_half": {
+        "mapbiomas": 1.2756397265143402,
+        "amw": 1.5166239021965533
+      },
+      "second_half": {
+        "mapbiomas": 1.5813205731611626,
+        "amw": 1.3040300705878636
+      },
+      "gain_km2": {
+        "mapbiomas": 515.6817334469379,
+        "amw": 751.4674573559989
+      },
+      "yearly_gain_correlation": -0.59823315582849
+    },
     "last_confirmed_year": 2024,
     "ratio_to_last_confirmed": {
       "mapbiomas": 2.02,
       "amw": 1.98
     }
   },
+  "other_departments": [
+    {
+      "department": "08",
+      "mapbiomas_ratio": 1.573389652127896,
+      "amw_ratio": 4.648706898830954,
+      "amw_first_km2": 5.060810229041174,
+      "amw_last_km2": 23.526223425417967
+    },
+    {
+      "department": "21",
+      "mapbiomas_ratio": 1.391282746912241,
+      "amw_ratio": 3.595838246831538,
+      "amw_first_km2": 5.937687417188857,
+      "amw_last_km2": 21.350963512458062
+    },
+    {
+      "department": "10",
+      "mapbiomas_ratio": 6.731188488572497,
+      "amw_ratio": 103.32018775759279,
+      "amw_first_km2": 0.17460056232414228,
+      "amw_last_km2": 18.039762881911663
+    },
+    {
+      "department": "16",
+      "mapbiomas_ratio": 0.413178033637617,
+      "amw_ratio": 6.421133294794739,
+      "amw_first_km2": 0.9524599898419559,
+      "amw_last_km2": 6.115872552734042
+    }
+  ],
   "district_gain_spearman": {
     "madre_de_dios": 1.0,
     "districts_with_scars": 0.868,

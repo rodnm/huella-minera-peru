@@ -63,9 +63,9 @@ def write_fraction(out: Path, fraction: np.ndarray, grid: Affine, crs) -> Path:
 
 
 def scar_fractions(mask: Path, like: Path, out_dir: Path, years: list[int]) -> dict[int, Path]:
-    """Share of each pixel of the ``like`` grid with an Amazon Mining Watch scar confirmed by each year.
+    """Share of each pixel of the ``like`` grid with an Amazon Mining Watch scar whose onset is at or before each year.
 
-    The 10 m mask stores the year each scar was confirmed, so a year's extent is every onset up to it; the provisional
+    The 10 m mask stores the period each confirmed scar began, so a year's extent is every onset up to it; the provisional
     quarterly codes (20251 for Q1 2025) are larger than any year and stay out. Scars are sparse, so only their pixels
     are binned into the coarse grid, block by block, instead of holding a 10 m mask in memory.
     """
@@ -140,6 +140,15 @@ def maus_agreement(mines: gpd.GeoDataFrame, fraction_path: Path) -> float:
                             all_touched=True)
     area = fraction * pixel_area_km2(transform, fraction.shape)
     return float(area[on_maus].sum() / area.sum())
+
+
+def presence_share(path: Path, within) -> float:
+    """Share of a region's area on pixels where the raster is present: the base rate for reading ``overlap_share``."""
+    with rasterio.open(path) as src:
+        values, transform = src.read(1), src.transform
+    area = pixel_area_km2(transform, values.shape)
+    inside = geometry_mask([within], out_shape=values.shape, transform=transform, invert=True)
+    return float(area[inside & (values > 0)].sum() / area[inside].sum())
 
 
 def overlap_share(a_path: Path, b_path: Path, within=None) -> float:

@@ -13,7 +13,7 @@ import truststore
 truststore.inject_into_ssl()
 
 # An honest User-Agent: some government portals block unknown clients, and we do not pretend to be a browser
-USER_AGENT = "paradoja-del-brillo/0.1 (student data project; +https://github.com/rodnm/paradoja-del-brillo)"
+USER_AGENT = "huella-minera-peru/0.1 (student data project; +https://github.com/rodnm/huella-minera-peru)"
 
 
 def new_session() -> requests.Session:

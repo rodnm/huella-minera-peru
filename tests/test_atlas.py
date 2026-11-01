@@ -7,7 +7,7 @@ import pytest
 import rasterio
 from rasterio.transform import from_origin
 
-from brillo.atlas import MADRE_DE_DIOS, describe, footprint_pixels, panel_payload
+from brillo.atlas import MADRE_DE_DIOS, contrast_periods, describe, footprint_pixels, other_departments, panel_payload
 
 
 def panel():
@@ -101,6 +101,30 @@ def test_footprint_pixels_keep_pixels_seen_in_any_year_and_store_each_year(tmp_p
     by_pixel = dict(zip(zip(rows, cols), map(tuple, fractions.tolist())))
     assert by_pixel[(0, 0)] == (0, 255)
     assert by_pixel[(1, 0)] == (128, 128)
+
+
+def contrast_table():
+    rows = [("17", 2018, 100.0, 200.0), ("17", 2019, 150.0, 210.0), ("17", 2020, 160.0, 300.0), ("17", 2021, 200.0, 400.0),
+            ("21", 2018, 50.0, 2.0), ("21", 2021, 60.0, 8.0), ("08", 2018, 10.0, 0.5), ("08", 2021, 20.0, 1.0)]
+    return pd.DataFrame(rows, columns=["department", "year", "mapbiomas_km2", "amw_km2"])
+
+
+def test_contrast_periods_show_that_a_shared_ratio_can_hide_different_halves():
+    result = contrast_periods(contrast_table(), "17", (2018, 2019, 2021))
+
+    assert result["whole"] == {"mapbiomas": 2.0, "amw": 2.0}
+    assert result["first_half"] == {"mapbiomas": 1.5, "amw": 1.05}
+    assert result["second_half"]["amw"] == pytest.approx(400 / 210)
+    assert result["gain_km2"] == {"mapbiomas": 100.0, "amw": 200.0}
+    assert result["yearly_gain_correlation"] < 0
+
+
+def test_other_departments_leave_out_the_main_one_and_small_bases():
+    rows = other_departments(contrast_table(), "17", 2018, 2021, min_km2=5)
+
+    assert [row["department"] for row in rows] == ["21"]
+    assert rows[0]["mapbiomas_ratio"] == pytest.approx(1.2)
+    assert rows[0]["amw_ratio"] == 4.0
 
 
 def test_madre_de_dios_is_the_inei_department_code():

@@ -1,0 +1,54 @@
+{
+  "titulo": "La huella de la minería en el Perú",
+  "fuente": "Fuente: MapBiomas Perú (Col. 4) y Amazon Mining Watch",
+  "creditos": [
+    "Datos: MapBiomas Perú y Amazon Mining Watch, CC BY 4.0 (enlaces en el repositorio)",
+    "Mapas y gráficos: elaboración propia con esos datos",
+    "Tipografías: Fraunces e IBM Plex (SIL Open Font License)",
+    "Voz generada con IA (Qwen3-TTS) a partir de la voz del autor"
+  ],
+  "escenas": [
+    {
+      "frase": "Así creció la huella de la minería en el Perú, vista desde el espacio. En doce años, casi se triplicó.",
+      "cifra": "×2.7",
+      "etiqueta": "de 727 a 1,985 km², según MapBiomas",
+      "visual": "escenas/atlas/peru"
+    },
+    {
+      "frase": "Pero no creció igual en todas partes. Madre de Dios explica el sesenta y tres por ciento del aumento.",
+      "cifra": "63 %",
+      "etiqueta": "del aumento, de 2013 a 2025",
+      "visual": "escenas/atlas/departamentos"
+    },
+    {
+      "frase": "Esto es lo que clasifica MapBiomas, píxel a píxel. Lo oscuro ya estaba en dos mil trece. Lo claro apareció después.",
+      "cifra": "",
+      "etiqueta": "Madre de Dios, píxeles de 30 metros",
+      "visual": "escenas/atlas/madre_de_dios"
+    },
+    {
+      "frase": "Solo diez distritos explican casi tres cuartas partes del crecimiento. El distrito de Inambari pasó de ochenta y ocho a cuatrocientos diecisiete kilómetros cuadrados.",
+      "cifra": "73 %",
+      "etiqueta": "del aumento, en 10 distritos",
+      "visual": "escenas/atlas/inambari"
+    },
+    {
+      "frase": "¿Y si el satélite se equivoca? Lo comparamos con Amazon Mining Watch, que usa otro satélite y otro modelo. En Madre de Dios, las dos se duplican en seis años y señalan las mismas zonas, pero no coinciden en el área ni en el calendario.",
+      "cifra": "×2.02 y ×1.98",
+      "etiqueta": "Madre de Dios, de 2018 a 2024",
+      "visual": "escenas/atlas/contraste"
+    },
+    {
+      "frase": "También hay límites. Estos mapas no separan lo que es legal de lo que es ilegal, y más de la mitad del aumento no tiene una segunda fuente que lo confirme.",
+      "cifra": "",
+      "etiqueta": "Lo que estos datos no dicen",
+      "visual": "escenas/atlas/cobertura"
+    },
+    {
+      "frase": "Explora tu distrito en el atlas, con cada cifra y su fuente. El enlace está en la descripción.",
+      "cifra": "",
+      "etiqueta": "Atlas interactivo, enlace en la descripción",
+      "visual": "escenas/atlas/dashboard"
+    }
+  ]
+}

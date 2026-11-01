@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>La huella de la minería en el Perú, 2013–2025</title>
-<meta name="description" content="Atlas por distrito del suelo minero visible desde satélite en el Perú, con cada cifra contrastada y sus límites a la vista.">
+<meta name="description" content="Atlas por distrito del suelo minero visible desde satélite en el Perú, con sus fuentes, un contraste independiente donde existe y sus límites a la vista.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -35,6 +35,7 @@
     <span>Buscar distrito</span>
     <input type="search" id="search" list="district-list" placeholder="Por ejemplo, Inambari" autocomplete="off">
     <datalist id="district-list"></datalist>
+    <span class="search-note" id="search-note" role="status"></span>
   </label>
 </form>
 
@@ -42,7 +43,7 @@
   <div class="intro">
     <h1>La huella de la minería en el Perú, 2013–2025</h1>
     <p class="question">¿Dónde apareció y cuánto creció el suelo minero que se ve desde el satélite?</p>
-    <p class="lead">La minería deja suelo expuesto, y eso se ve desde el espacio. Este atlas suma, distrito por distrito y año por año, lo que MapBiomas clasifica como minería. Una segunda fuente, independiente, ayuda a comprobarlo.</p>
+    <p class="lead">La minería deja suelo expuesto, y eso se ve desde el espacio. Este atlas suma, distrito por distrito y año por año, lo que MapBiomas clasifica como minería. Una segunda fuente independiente la contrasta donde hay datos, y aquí también se ve en qué discrepan.</p>
   </div>
   <div class="stats">
     <h2 class="scope" id="scope-name">Todo el Perú</h2>
@@ -97,7 +98,7 @@
       <div id="contrast-text"></div>
     </div>
     <figure>
-      <figcaption><h3>Madre de Dios: dos fuentes, el mismo ritmo y distinto nivel</h3><p>Kilómetros cuadrados, 2018 a 2024, último año con cicatrices confirmadas.</p></figcaption>
+      <figcaption><h3>Madre de Dios: las dos fuentes suben, con distinto nivel y calendario</h3><p>Kilómetros cuadrados, 2018 a 2024, último año con cicatrices confirmadas.</p></figcaption>
       <div id="contrast" class="chart"></div>
     </figure>
   </section>
@@ -117,9 +118,9 @@
       <h2>Lo que estos datos no dicen</h2>
       <ul class="limits">
         <li><strong>No distinguen minería legal, informal o ilegal.</strong> La clase incluye además la extracción no metálica, como los fosfatos de Sechura.</li>
-        <li><strong>El área exacta está en discusión.</strong> En 2019, los polígonos de Maus y su equipo suman unas tres veces más que MapBiomas, y el grupo de clases sin vegetación de MapBiomas, donde está la minería, tiene 74 % de exactitud de productor.</li>
-        <li><strong>Fuera de la Amazonía no hay contraste.</strong> Amazon Mining Watch solo cubre esa cuenca, de modo que el crecimiento en los Andes y la costa se apoya en una sola fuente.</li>
-        <li><strong>Mejor leer la tendencia que un año suelto.</strong> Las dos fuentes coinciden en el periodo, no en cada salto anual.</li>
+        <li><strong>El área exacta está en discusión.</strong> En 2019, los polígonos de Maus y su equipo suman unas tres veces más que MapBiomas en el país, y el grupo de clases sin vegetación de MapBiomas, donde está la minería, tiene 74 % de exactitud de productor.</li>
+        <li><strong>Más de la mitad del aumento no tiene contraste.</strong> Amazon Mining Watch solo cubre la cuenca amazónica, y aquí se compara en Madre de Dios entre 2018 y 2024. El resto se apoya sobre todo en MapBiomas.</li>
+        <li><strong>Las fuentes no coinciden año a año.</strong> Tampoco coinciden fuera de Madre de Dios. Mejor no usar este atlas para fechar un salto.</li>
         <li><strong>La luz y la pobreza son contexto.</strong> Verlas junto a la huella no significa que una cause la otra, y este atlas no lo afirma. La pobreza es la estimación del INEI para 2018, con su intervalo. La luz nacional tiene saltos que aún no están explicados.</li>
       </ul>
     </div>
