@@ -224,6 +224,16 @@ def fit_view(bounds, width: int = 860, height: int = 720, padding: int = 36) -> 
             "zoom": round(zoom, 2)}
 
 
+def view_limits(view: dict, width: int = 860, height: int = 720) -> list[list[float]]:
+    """The box a map of that size exactly fills at that view: as deck.gl's maxBounds, it locks the farthest view there."""
+    scale = 512 * 2 ** view["zoom"]
+    half_x = width / 2 / scale * 360
+    half_y = height / 2 / scale * 2 * math.pi
+    middle = math.log(math.tan(math.pi / 4 + math.radians(view["latitude"]) / 2))
+    latitude = lambda y: math.degrees(2 * math.atan(math.exp(y)) - math.pi / 2)
+    return [[view["longitude"] - half_x, latitude(middle - half_y)], [view["longitude"] + half_x, latitude(middle + half_y)]]
+
+
 def bounds_of(atlas: Atlas, ubigeos: set[str]) -> tuple:
     west, south, east, north = math.inf, math.inf, -math.inf, -math.inf
 

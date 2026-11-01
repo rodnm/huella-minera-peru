@@ -1,4 +1,6 @@
 """The app as a user sees it: it must run on the committed data, and every control must change the figures."""
+import json
+import math
 from pathlib import Path
 
 import pytest
@@ -137,3 +139,27 @@ def test_a_slider_value_that_is_a_year_behind_is_not_the_user_moving_it(app):
 
     assert not app.exception
     assert app.session_state["year"] == 2025
+
+
+def map_view(app) -> dict:
+    return json.loads(app.get("deck_gl_json_chart")[0].proto.json)["initialViewState"]
+
+
+def test_the_map_cannot_be_moved_past_peru(app):
+    national = map_view(app)
+    west, east = national["maxBounds"][0][0], national["maxBounds"][1][0]
+
+    assert west < -81.4 and east > -68.6
+    assert (west + east) / 2 == pytest.approx(national["longitude"])
+    # Below the limit of the largest and the smallest map, so each one starts at its own farthest view
+    assert national["zoom"] < math.log2(602 / ((east - west) / 360 * 512))
+
+
+def test_the_limit_stays_national_when_a_department_is_chosen(app):
+    limits = map_view(app)["maxBounds"]
+    app.session_state["department"] = "MADRE DE DIOS"
+    app.run()
+
+    assert not app.exception
+    assert map_view(app)["maxBounds"] == limits
+    assert map_view(app)["zoom"] > 4.6

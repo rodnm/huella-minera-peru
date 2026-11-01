@@ -7,11 +7,13 @@ import pydeck
 import streamlit as st
 
 from logica import (INDICATORS, MADRE_DE_DIOS, PERU_BOUNDS, bounds_of, contrast_paragraphs, csv_rows, department_rows,
-                    district_features, findings, fit_view, km2, kpis, load_atlas, percent, points_for_year, ranking, rgb,
+                    district_features, findings, fit_view, view_limits, km2, kpis, load_atlas, percent, points_for_year, ranking, rgb,
                     scope_mask, thresholds_for, title_case)
 
 PLAY_PAUSE_SECONDS = 0.7
 MAP_HEIGHT = 720
+PHONE_MAP_WIDTH, PHONE_MAP_HEIGHT = 602, 504  # same shape: the same limits lock it farther out, with all of Peru in view
+MAP_WIDTH = 860  # always this wide, cropped evenly on narrow screens: the farthest view is only locked if the map keeps the shape of its limits
 PIXELS, METERS = pydeck.types.String("pixels"), pydeck.types.String("meters")  # pydeck reads bare strings as expressions
 BLANK_MAP = {"version": 8, "sources": {}, "layers": [{"id": "fondo", "type": "background", "paint": {"background-color": "#0b1713"}}]}
 
@@ -59,7 +61,10 @@ h3 {{ font-size: 1.05rem !important; font-weight: 600 !important; line-height: 1
 .kpis dt {{ color: {SURFACE["text_muted"]}; font-size: 0.82rem; line-height: 1.3; }}
 .kpis dd {{ margin: 0 !important; font: 700 2.1rem/1.05 "IBM Plex Sans Condensed", sans-serif; }}
 .kpis small {{ display: block; font: 400 0.8rem/1.3 "IBM Plex Sans", sans-serif; color: {SURFACE["text_muted"]}; margin-top: 0.15rem; }}
-.st-key-mapa {{ position: relative; background: #0b1713; gap: 0; }}
+.st-key-mapa {{ position: relative; background: #0b1713; gap: 0; overflow: hidden; }}
+.st-key-mapa [data-testid="stDeckGlJsonChart"] {{ width: {MAP_WIDTH}px; max-width: none; margin-left: calc(50% - {MAP_WIDTH // 2}px); }}
+/* The - button and full screen skip the limit of the map; the wheel, a pinch and a double click respect it */
+.st-key-mapa [data-testid="stElementToolbar"], .st-key-mapa .mapboxgl-ctrl-group {{ display: none; }}
 .st-key-mapa [data-testid="stElementContainer"]:has(.legend), .st-key-mapa [data-testid="stElementContainer"]:has(.big-year), .st-key-mapa [data-testid="stHtml"] {{ position: static; height: 0; min-height: 0; margin: 0; padding: 0; }}
 .big-year {{ position: absolute; left: 1.25rem; bottom: 0.75rem; z-index: 5; pointer-events: none; font: 700 clamp(4rem, 8vw, 7.5rem)/0.9 Fraunces, Georgia, serif; letter-spacing: -0.03em; color: {SURFACE["text"]}; }}
 .legend {{ position: absolute; left: 1rem; top: 1rem; z-index: 5; max-width: 21rem; padding: 0.5rem 0.7rem; background: {SURFACE["background"]}; border: 1px solid {SURFACE["grid"]}; border-radius: 3px; font-size: 0.8rem; line-height: 1.35; color: {SURFACE["text_muted"]}; }}
@@ -77,7 +82,7 @@ h3 {{ font-size: 1.05rem !important; font-weight: 600 !important; line-height: 1
 .card dd {{ margin: 0 !important; text-align: right; font-weight: 500; }}
 .card h3 {{ font: 600 1.3rem/1.15 Fraunces, Georgia, serif !important; }}
 .card p {{ color: {SURFACE["text_muted"]}; font-size: 0.85rem; margin: 0; }}
-@media (max-width: 640px) {{ .st-key-controles {{ position: static; }} .legend p {{ display: none; }} .block-container {{ padding: 0 1rem 2.5rem; }} }}
+@media (max-width: 640px) {{ .st-key-mapa [data-testid="stElementContainer"]:has([data-testid="stDeckGlJsonChart"]), .st-key-mapa [data-testid="stFullScreenFrame"]:has([data-testid="stDeckGlJsonChart"]) {{ flex: 0 0 {PHONE_MAP_HEIGHT}px !important; height: {PHONE_MAP_HEIGHT}px !important; }} .st-key-mapa [data-testid="stDeckGlJsonChart"] {{ width: {PHONE_MAP_WIDTH}px; height: {PHONE_MAP_HEIGHT}px; margin-left: calc(50% - {PHONE_MAP_WIDTH // 2}px); }} .st-key-controles {{ position: static; }} .legend p {{ display: none; }} .block-container {{ padding: 0 1rem 2.5rem; }} }}
 </style>
 """)
 
@@ -240,7 +245,11 @@ def build_deck() -> pydeck.Deck:
     tooltip = {"html": "<b>{nombre}</b><br>{departamento}<br>" + f"{INDICATORS[indicator].label}: " + "{valor}",
                "style": {"backgroundColor": SURFACE["panel"], "color": SURFACE["text"], "fontSize": "13px",
                          "border": f"1px solid {SURFACE['grid']}"}}
-    deck = pydeck.Deck(layers=layers, initial_view_state=pydeck.ViewState(**fit_view(bounds, height=MAP_HEIGHT)),
+    limits = view_limits(fit_view(PERU_BOUNDS, MAP_WIDTH, MAP_HEIGHT), MAP_WIDTH, MAP_HEIGHT)
+    view = fit_view(bounds, MAP_WIDTH, MAP_HEIGHT)
+    if bounds == PERU_BOUNDS:
+        view["zoom"] -= 0.52  # below the limit of every map size, so each one starts at its own farthest view
+    deck = pydeck.Deck(layers=layers, initial_view_state=pydeck.ViewState(**view, max_bounds=limits),
                        map_provider=None, tooltip=tooltip)
     deck.map_style = [BLANK_MAP]  # Streamlit reads the first item of a list: this keeps its default street map out
     return deck
