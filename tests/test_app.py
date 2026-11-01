@@ -1,7 +1,11 @@
 """The app as a user sees it: it must run on the committed data, and every control must change the figures."""
+import json
+import math
+import time
 from pathlib import Path
 
 import pytest
+import streamlit as st
 from streamlit.testing.v1 import AppTest
 
 APP = str(Path(__file__).resolve().parent.parent / "dashboard" / "app.py")
@@ -93,3 +97,108 @@ def test_play_goes_through_every_year_and_stops_at_the_last(app):
     assert app.session_state["playing"] is False
     assert app.session_state["year"] == 2025
     assert "Reproducir" in [b.label for b in app.button]
+
+
+def test_the_slider_is_sent_after_the_map(monkeypatch):
+    """The map takes seconds to arrive, so a slider sent before it runs a year ahead of the year on the map."""
+    sent = []
+    for name in ("pydeck_chart", "slider"):
+        def record(*args, _name=name, _original=getattr(st, name), **kwargs):
+            sent.append(_name)
+            return _original(*args, **kwargs)
+        monkeypatch.setattr(st, name, record)
+
+    test = AppTest.from_file(APP, default_timeout=60)
+    test.session_state["year"] = 2018
+    test.session_state["playing"] = False
+    test.session_state["department"] = ""
+    test.session_state["indicator"] = "huella"
+    test.session_state["district"] = None
+    test.session_state["search"] = None
+    test.run()
+
+    assert not test.exception
+    assert sent == ["pydeck_chart", "slider"]
+
+
+def test_moving_the_slider_changes_the_year_and_stops_the_animation(app):
+    app.slider[0].set_value(2018).run()
+
+    assert not app.exception
+    assert app.session_state["year"] == 2018
+    assert app.session_state["playing"] is False
+    assert "1,041" in page_text(app)
+
+
+def test_a_slider_value_that_is_a_year_behind_is_not_the_user_moving_it(app):
+    """A click elsewhere reports the slider as the browser has it, which during the animation can be the previous year."""
+    app.slider[0].set_value(2023).run()
+    app.session_state["year"] = 2024
+    app.session_state["year_slider"] = 2024
+    app.session_state["playing"] = True
+    app.slider[0].set_value(2023).run()
+
+    assert not app.exception
+    assert app.session_state["year"] == 2025
+
+
+def map_view(app) -> dict:
+    return json.loads(app.get("deck_gl_json_chart")[0].proto.json)["initialViewState"]
+
+
+def test_the_map_cannot_be_moved_past_peru(app):
+    national = map_view(app)
+    west, east = national["maxBounds"][0][0], national["maxBounds"][1][0]
+
+    assert west < -81.4 and east > -68.6
+    assert (west + east) / 2 == pytest.approx(national["longitude"])
+    # Below the limit of the largest and the smallest map, so each one starts at its own farthest view
+    assert national["zoom"] < math.log2(602 / ((east - west) / 360 * 512))
+
+
+def test_the_limit_stays_national_when_a_department_is_chosen(app):
+    limits = map_view(app)["maxBounds"]
+    app.session_state["department"] = "MADRE DE DIOS"
+    app.run()
+
+    assert not app.exception
+    assert map_view(app)["maxBounds"] == limits
+    assert map_view(app)["zoom"] > 4.6
+
+
+def test_the_pause_button_pauses_even_if_the_browser_is_a_year_behind(monkeypatch):
+    """On a slow link the slider reaches the browser after the map, so the click reports the year still on screen."""
+    monkeypatch.setattr(st, "rerun", lambda: None)
+    monkeypatch.setattr(time, "sleep", lambda _: None)
+    test = AppTest.from_file(APP, default_timeout=60)
+    test.session_state["year"] = 2024
+    test.session_state["playing"] = True
+    test.session_state["department"] = ""
+    test.session_state["indicator"] = "huella"
+    test.session_state["district"] = None
+    test.session_state["search"] = None
+    test.run()
+    pause = next(button for button in test.button if button.label == "Pausar")
+
+    test.slider[0].set_value(2023)
+    pause.click().run()
+
+    assert not test.exception
+    assert test.session_state["playing"] is False
+    assert test.session_state["year"] == 2023
+
+
+def test_a_move_counts_as_what_the_browser_knows_before_the_slider_is_drawn_again(app, monkeypatch):
+    """Going to a year and back before the map arrives must keep the second move."""
+    known = []
+    draw = st.slider
+
+    def record(*args, **kwargs):
+        known.append(st.session_state.get("slider_sent"))
+        return draw(*args, **kwargs)
+
+    monkeypatch.setattr(st, "slider", record)
+    app.slider[0].set_value(2018).run()
+
+    assert not app.exception
+    assert known == [2018]

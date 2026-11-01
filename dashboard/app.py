@@ -7,11 +7,13 @@ import pydeck
 import streamlit as st
 
 from logica import (INDICATORS, MADRE_DE_DIOS, PERU_BOUNDS, bounds_of, contrast_paragraphs, csv_rows, department_rows,
-                    district_features, findings, fit_view, km2, kpis, load_atlas, percent, points_for_year, ranking, rgb,
+                    district_features, findings, fit_view, view_limits, km2, kpis, load_atlas, percent, points_for_year, ranking, rgb,
                     scope_mask, thresholds_for, title_case)
 
 PLAY_PAUSE_SECONDS = 0.7
 MAP_HEIGHT = 720
+PHONE_MAP_WIDTH, PHONE_MAP_HEIGHT = 602, 504  # same shape: the same limits lock it farther out, with all of Peru in view
+MAP_WIDTH = 860  # always this wide, cropped evenly on narrow screens: the farthest view is only locked if the map keeps the shape of its limits
 PIXELS, METERS = pydeck.types.String("pixels"), pydeck.types.String("meters")  # pydeck reads bare strings as expressions
 BLANK_MAP = {"version": 8, "sources": {}, "layers": [{"id": "fondo", "type": "background", "paint": {"background-color": "#0b1713"}}]}
 
@@ -59,7 +61,10 @@ h3 {{ font-size: 1.05rem !important; font-weight: 600 !important; line-height: 1
 .kpis dt {{ color: {SURFACE["text_muted"]}; font-size: 0.82rem; line-height: 1.3; }}
 .kpis dd {{ margin: 0 !important; font: 700 2.1rem/1.05 "IBM Plex Sans Condensed", sans-serif; }}
 .kpis small {{ display: block; font: 400 0.8rem/1.3 "IBM Plex Sans", sans-serif; color: {SURFACE["text_muted"]}; margin-top: 0.15rem; }}
-.st-key-mapa {{ position: relative; background: #0b1713; gap: 0; }}
+.st-key-mapa {{ position: relative; background: #0b1713; gap: 0; overflow: hidden; }}
+.st-key-mapa [data-testid="stDeckGlJsonChart"] {{ width: {MAP_WIDTH}px; max-width: none; margin-left: calc(50% - {MAP_WIDTH // 2}px); }}
+/* The - button and full screen skip the limit of the map; the wheel, a pinch and a double click respect it */
+.st-key-mapa [data-testid="stElementToolbar"], .st-key-mapa .mapboxgl-ctrl-group {{ display: none; }}
 .st-key-mapa [data-testid="stElementContainer"]:has(.legend), .st-key-mapa [data-testid="stElementContainer"]:has(.big-year), .st-key-mapa [data-testid="stHtml"] {{ position: static; height: 0; min-height: 0; margin: 0; padding: 0; }}
 .big-year {{ position: absolute; left: 1.25rem; bottom: 0.75rem; z-index: 5; pointer-events: none; font: 700 clamp(4rem, 8vw, 7.5rem)/0.9 Fraunces, Georgia, serif; letter-spacing: -0.03em; color: {SURFACE["text"]}; }}
 .legend {{ position: absolute; left: 1rem; top: 1rem; z-index: 5; max-width: 21rem; padding: 0.5rem 0.7rem; background: {SURFACE["background"]}; border: 1px solid {SURFACE["grid"]}; border-radius: 3px; font-size: 0.8rem; line-height: 1.35; color: {SURFACE["text_muted"]}; }}
@@ -77,7 +82,7 @@ h3 {{ font-size: 1.05rem !important; font-weight: 600 !important; line-height: 1
 .card dd {{ margin: 0 !important; text-align: right; font-weight: 500; }}
 .card h3 {{ font: 600 1.3rem/1.15 Fraunces, Georgia, serif !important; }}
 .card p {{ color: {SURFACE["text_muted"]}; font-size: 0.85rem; margin: 0; }}
-@media (max-width: 640px) {{ .st-key-controles {{ position: static; }} .legend p {{ display: none; }} .block-container {{ padding: 0 1rem 2.5rem; }} }}
+@media (max-width: 640px) {{ .st-key-mapa [data-testid="stElementContainer"]:has([data-testid="stDeckGlJsonChart"]), .st-key-mapa [data-testid="stFullScreenFrame"]:has([data-testid="stDeckGlJsonChart"]) {{ flex: 0 0 {PHONE_MAP_HEIGHT}px !important; height: {PHONE_MAP_HEIGHT}px !important; }} .st-key-mapa [data-testid="stDeckGlJsonChart"] {{ width: {PHONE_MAP_WIDTH}px; height: {PHONE_MAP_HEIGHT}px; margin-left: calc(50% - {PHONE_MAP_WIDTH // 2}px); }} .st-key-controles {{ position: static; }} .legend p {{ display: none; }} .block-container {{ padding: 0 1rem 2.5rem; }} }}
 </style>
 """)
 
@@ -106,10 +111,15 @@ def stop_playing() -> None:
     st.session_state.playing = False
 
 
-def toggle_play() -> None:
-    if st.session_state.playing:
-        st.session_state.playing = False
-        return
+def choose_year() -> None:
+    # Any click also reports the slider as the browser has it, which during the animation can be the previous year:
+    # only a value other than the one last sent to the browser is the user moving it
+    if st.session_state.year_slider != st.session_state.get("slider_sent"):
+        st.session_state.year = st.session_state.slider_sent = st.session_state.year_slider
+        stop_playing()
+
+
+def start_playing() -> None:
     if st.session_state.year == last_year:
         st.session_state.year = atlas.years[0]
     st.session_state.playing = True
@@ -140,7 +150,7 @@ def close_card() -> None:
     st.session_state.search = None
 
 
-# A year chosen by the previous frame of the animation; a slider cannot be changed after it is drawn in the same run
+# A year chosen by the previous frame of the animation; it only counts if the animation is still playing
 pending = st.session_state.pop("next_year", None)
 if pending is not None and st.session_state.playing:
     st.session_state.year = pending
@@ -150,9 +160,11 @@ if pending is not None and st.session_state.playing:
 with st.container(key="controles"):
     play_col, year_col, department_col, indicator_col, search_col = st.columns([1, 4, 2, 2.4, 2.6], vertical_alignment="bottom")
     with play_col:
-        st.button("Pausar" if st.session_state.playing else "Reproducir", on_click=toggle_play, width="stretch")
+        # Each label has its own action: a click reported with an old slider value must not turn a pause into a restart
+        st.button("Pausar" if st.session_state.playing else "Reproducir", width="stretch",
+                  on_click=stop_playing if st.session_state.playing else start_playing)
     with year_col:
-        st.slider("Año", atlas.years[0], last_year, key="year", on_change=stop_playing)
+        year_slot = st.container()  # filled after the map: it takes seconds to arrive, and the slider must not run ahead of it
     with department_col:
         names = sorted(atlas.districts["department"].unique())
         st.selectbox("Departamento", [""] + names, key="department", on_change=choose_department,
@@ -232,7 +244,11 @@ def build_deck() -> pydeck.Deck:
     tooltip = {"html": "<b>{nombre}</b><br>{departamento}<br>" + f"{INDICATORS[indicator].label}: " + "{valor}",
                "style": {"backgroundColor": SURFACE["panel"], "color": SURFACE["text"], "fontSize": "13px",
                          "border": f"1px solid {SURFACE['grid']}"}}
-    deck = pydeck.Deck(layers=layers, initial_view_state=pydeck.ViewState(**fit_view(bounds, height=MAP_HEIGHT)),
+    limits = view_limits(fit_view(PERU_BOUNDS, MAP_WIDTH, MAP_HEIGHT), MAP_WIDTH, MAP_HEIGHT)
+    view = fit_view(bounds, MAP_WIDTH, MAP_HEIGHT)
+    if bounds == PERU_BOUNDS:
+        view["zoom"] -= 0.52  # below the limit of every map size, so each one starts at its own farthest view
+    deck = pydeck.Deck(layers=layers, initial_view_state=pydeck.ViewState(**view, max_bounds=limits),
                        map_provider=None, tooltip=tooltip)
     deck.map_style = [BLANK_MAP]  # Streamlit reads the first item of a list: this keeps its default street map out
     return deck
@@ -245,6 +261,12 @@ rail, map_col = st.columns([1, 2.6], gap="medium")
 with map_col:
     with st.container(key="mapa"):
         st.pydeck_chart(build_deck(), height=MAP_HEIGHT, key="mapa_deck")
+        # The year lives apart from the slider: a click that interrupts this run before the slider is drawn makes Streamlit
+        # forget the slider's state, and with it the year
+        with year_slot:
+            st.session_state.year_slider = year
+            st.slider("Año", atlas.years[0], last_year, key="year_slider", on_change=choose_year)
+            st.session_state.slider_sent = year
         st.html(legend_html())
         st.html(f'<div class="big-year" aria-hidden="true">{year}</div>')
 

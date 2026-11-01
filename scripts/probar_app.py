@@ -53,6 +53,49 @@ def choose(page, label, option):
     settle(page)
 
 
+def farthest_view_is_the_start(page, label):
+    """Zooms in, drags, zooms out as far as it goes and drags again: the map must end where it started."""
+    deck = page.locator('[data-testid="stDeckGlJsonChart"]').first
+    deck.scroll_into_view_if_needed()
+    settle(page)
+    page.wait_for_timeout(1500)
+    box = deck.bounding_box()
+    check(f"{label}: the map canvas keeps its shape", abs(box["width"] / box["height"] - 860 / 720) < 0.01, f'{box["width"]:.0f} x {box["height"]:.0f}')
+    window = page.locator(".st-key-mapa").first.bounding_box()
+    left, right = max(box["x"], window["x"]), min(box["x"] + box["width"], window["x"] + window["width"])
+    top = box["y"]
+    bottom = min(box["y"] + box["height"], page.viewport_size["height"])
+    middle = ((left + right) / 2, (top + bottom) / 2)
+    empty_corner = (right - 8, top + 8)  # no district there, so it clears the highlight of the last one under the pointer
+
+    def drag(dx, dy):
+        page.mouse.move(*middle)
+        page.mouse.down()
+        page.mouse.move(middle[0] + dx, middle[1] + dy, steps=8)
+        page.mouse.up()
+
+    page.mouse.move(*empty_corner)
+    page.wait_for_timeout(500)
+    skips_the_limit = page.locator(".st-key-mapa .mapboxgl-ctrl-zoom-out, .st-key-mapa [data-testid='stElementToolbar']").locator("visible=true").count()
+    check(f"{label}: no map control skips the limit", skips_the_limit == 0, str(skips_the_limit))
+    start_view = deck.screenshot()
+    page.mouse.move(left + 40, middle[1] - 60)
+    for _ in range(6):
+        page.mouse.wheel(0, -240)
+        page.wait_for_timeout(120)
+    drag(100, -120)
+    page.wait_for_timeout(800)
+    check(f"{label}: zoom and drag move the map", deck.screenshot() != start_view)
+    page.mouse.move(left + 30, middle[1] + 90)
+    for _ in range(30):
+        page.mouse.wheel(0, 480)
+        page.wait_for_timeout(50)
+    drag(-120, 140)
+    page.mouse.move(*empty_corner)
+    page.wait_for_timeout(1800)
+    check(f"{label}: the farthest view is the centered starting view", deck.screenshot() == start_view)
+
+
 with sync_playwright() as p:
     browser = p.chromium.launch(args=GPU)
     context = browser.new_context(viewport={"width": 1440, "height": 900})
@@ -63,6 +106,22 @@ with sync_playwright() as p:
     page.goto(URL)
     page.wait_for_selector(".kpis", timeout=120000)
     first_kpis = kpis(page)
+    page.evaluate("""() => {
+      window.yearGap = {longest: 0, since: null};
+      const tick = () => {
+        const slider = document.querySelector('[data-testid="stSliderThumbValue"]')?.textContent;
+        const label = document.querySelector('.big-year')?.textContent;
+        const gap = window.yearGap, now = performance.now();
+        if (slider && label && slider !== label) {
+          gap.since ??= now;
+          gap.longest = Math.max(gap.longest, now - gap.since);
+        } else {
+          gap.since = null;
+        }
+        requestAnimationFrame(tick);
+      };
+      tick();
+    }""")
     page.screenshot(path=OUT / "1_start.png")
     print("  first:", first_kpis[:90])
     seen = set()
@@ -80,6 +139,8 @@ with sync_playwright() as p:
     final = kpis(page)
     check("autoplay ends in 2025 with the national figures", "1,985" in final and "×2.7" in final and "310" in final and "73 %" in final, final[:120])
     check("autoplay started earlier than the end", "2025" not in first_kpis, first_kpis[:40])
+    year_gap = page.evaluate("window.yearGap.longest")
+    check("the slider and the year on the map change together", year_gap < 1000, f"{year_gap:.0f} ms")
     check("no exception box after playing", page.locator('[data-testid="stException"]').count() == 0)
     page.screenshot(path=OUT / "2_end_2025.png")
 
@@ -97,6 +158,8 @@ with sync_playwright() as p:
     check("slider changes the KPI", "1,041" in kpis(page) and "2018" in kpis(page), kpis(page)[:60])
     set_year(2025)
     check("slider returns to the last year", "1,985" in kpis(page), kpis(page)[:60])
+
+    farthest_view_is_the_start(page, "1440")
 
     # Pause
     page.get_by_role("button", name="Reproducir").click()
@@ -121,6 +184,11 @@ with sync_playwright() as p:
     # Indicator
     for option, title in (("Huella nueva", "donde más creció"), ("Luz nocturna", "más luz por km²"), ("Pobreza monetaria", "mayor pobreza")):
         choose(page, "Mostrar en el mapa", option)
+        wait_for_text(page, ".legend", option.split()[0])
+        try:
+            page.get_by_text(title).first.wait_for(timeout=45000)
+        except Exception:
+            pass
         check(f"indicator {option} changes the ranking", page.get_by_text(title).count() > 0)
         check(f"indicator {option} changes the legend", option.split()[0] in page.locator(".legend").inner_text())
         page.wait_for_timeout(800)
@@ -135,7 +203,10 @@ with sync_playwright() as p:
     page.wait_for_timeout(1500)
     page.screenshot(path=OUT / "5_inambari.png")
     page.get_by_role("button", name="Cerrar la ficha").click()
-    settle(page)
+    try:
+        page.locator(".card").wait_for(state="detached", timeout=45000)
+    except Exception:
+        pass
     check("the card closes", page.locator(".card").count() == 0)
 
     # Tooltip over the Andes
@@ -174,6 +245,16 @@ with sync_playwright() as p:
     width = phone.evaluate("document.documentElement.scrollWidth")
     check("no horizontal scroll at 390", width <= 392, str(width))
     phone.screenshot(path=OUT / "10_phone.png")
+    farthest_view_is_the_start(phone, "390")
+    gap = phone.locator(".st-key-mapa").first.bounding_box()["height"] - phone.locator('[data-testid="stDeckGlJsonChart"]').first.bounding_box()["height"]
+    check("390: no empty band under the map", abs(gap) < 2, f"{gap:.0f} px")
+    phone.locator(".st-key-mapa").first.screenshot(path=OUT / "11_phone_map.png")
+
+    narrow = browser.new_context(viewport={"width": 1024, "height": 900}).new_page()
+    narrow.goto(URL)
+    narrow.wait_for_selector("button:has-text('Reproducir')", timeout=120000)
+    farthest_view_is_the_start(narrow, "1024")
+    narrow.locator(".st-key-mapa").first.screenshot(path=OUT / "12_narrow_map.png")
     browser.close()
 
 print(f"\n{len(FAILS)} failed: {FAILS}")

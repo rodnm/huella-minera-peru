@@ -1,9 +1,10 @@
 import json
+import math
 
 import numpy as np
 import pytest
 
-from logica import (INDICATORS, Atlas, contrast_paragraphs, district_features, findings, fit_view, kpis, km2,
+from logica import (INDICATORS, Atlas, contrast_paragraphs, district_features, findings, fit_view, view_limits, kpis, km2,
                     load_atlas, points_for_year, ranking, title_case)
 
 
@@ -164,3 +165,16 @@ def test_fit_view_zooms_in_on_a_smaller_area():
 
     assert district["zoom"] > peru["zoom"]
     assert peru["longitude"] == pytest.approx(-75.0)
+
+
+def test_view_limits_are_the_box_a_map_of_that_size_fills_at_that_view():
+    view = fit_view(((-81.4, -18.4), (-68.6, 0.1)), width=860, height=720)
+    (west, south), (east, north) = view_limits(view, width=860, height=720)
+    world = lambda lat: math.log(math.tan(math.pi / 4 + math.radians(lat) / 2)) / (2 * math.pi) * 512
+
+    # deck.gl's lowest zoom is the largest of log2(size / box) in each axis: both must give the zoom of the view
+    assert math.log2(860 / ((east - west) / 360 * 512)) == pytest.approx(view["zoom"], abs=1e-9)
+    assert math.log2(720 / (world(north) - world(south))) == pytest.approx(view["zoom"], abs=1e-9)
+    assert (west + east) / 2 == pytest.approx(view["longitude"])
+    assert (world(north) + world(south)) / 2 == pytest.approx(world(view["latitude"]))
+    assert west < -81.4 and east > -68.6 and south < -18.4 and north > 0.1
