@@ -2,6 +2,7 @@
 from pathlib import Path
 
 import pytest
+import streamlit as st
 from streamlit.testing.v1 import AppTest
 
 APP = str(Path(__file__).resolve().parent.parent / "dashboard" / "app.py")
@@ -93,3 +94,46 @@ def test_play_goes_through_every_year_and_stops_at_the_last(app):
     assert app.session_state["playing"] is False
     assert app.session_state["year"] == 2025
     assert "Reproducir" in [b.label for b in app.button]
+
+
+def test_the_slider_is_sent_after_the_map(monkeypatch):
+    """The map takes seconds to arrive, so a slider sent before it runs a year ahead of the year on the map."""
+    sent = []
+    for name in ("pydeck_chart", "slider"):
+        def record(*args, _name=name, _original=getattr(st, name), **kwargs):
+            sent.append(_name)
+            return _original(*args, **kwargs)
+        monkeypatch.setattr(st, name, record)
+
+    test = AppTest.from_file(APP, default_timeout=60)
+    test.session_state["year"] = 2018
+    test.session_state["playing"] = False
+    test.session_state["department"] = ""
+    test.session_state["indicator"] = "huella"
+    test.session_state["district"] = None
+    test.session_state["search"] = None
+    test.run()
+
+    assert not test.exception
+    assert sent == ["pydeck_chart", "slider"]
+
+
+def test_moving_the_slider_changes_the_year_and_stops_the_animation(app):
+    app.slider[0].set_value(2018).run()
+
+    assert not app.exception
+    assert app.session_state["year"] == 2018
+    assert app.session_state["playing"] is False
+    assert "1,041" in page_text(app)
+
+
+def test_a_slider_value_that_is_a_year_behind_is_not_the_user_moving_it(app):
+    """A click elsewhere reports the slider as the browser has it, which during the animation can be the previous year."""
+    app.slider[0].set_value(2023).run()
+    app.session_state["year"] = 2024
+    app.session_state["year_slider"] = 2024
+    app.session_state["playing"] = True
+    app.slider[0].set_value(2023).run()
+
+    assert not app.exception
+    assert app.session_state["year"] == 2025

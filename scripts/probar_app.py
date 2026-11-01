@@ -63,6 +63,22 @@ with sync_playwright() as p:
     page.goto(URL)
     page.wait_for_selector(".kpis", timeout=120000)
     first_kpis = kpis(page)
+    page.evaluate("""() => {
+      window.yearGap = {longest: 0, since: null};
+      const tick = () => {
+        const slider = document.querySelector('[data-testid="stSliderThumbValue"]')?.textContent;
+        const label = document.querySelector('.big-year')?.textContent;
+        const gap = window.yearGap, now = performance.now();
+        if (slider && label && slider !== label) {
+          gap.since ??= now;
+          gap.longest = Math.max(gap.longest, now - gap.since);
+        } else {
+          gap.since = null;
+        }
+        requestAnimationFrame(tick);
+      };
+      tick();
+    }""")
     page.screenshot(path=OUT / "1_start.png")
     print("  first:", first_kpis[:90])
     seen = set()
@@ -80,6 +96,8 @@ with sync_playwright() as p:
     final = kpis(page)
     check("autoplay ends in 2025 with the national figures", "1,985" in final and "×2.7" in final and "310" in final and "73 %" in final, final[:120])
     check("autoplay started earlier than the end", "2025" not in first_kpis, first_kpis[:40])
+    year_gap = page.evaluate("window.yearGap.longest")
+    check("the slider and the year on the map change together", year_gap < 1000, f"{year_gap:.0f} ms")
     check("no exception box after playing", page.locator('[data-testid="stException"]').count() == 0)
     page.screenshot(path=OUT / "2_end_2025.png")
 

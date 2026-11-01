@@ -106,6 +106,14 @@ def stop_playing() -> None:
     st.session_state.playing = False
 
 
+def choose_year() -> None:
+    # Any click also reports the slider as the browser has it, which during the animation can be the previous year:
+    # only a value other than the one last sent to the browser is the user moving it
+    if st.session_state.year_slider != st.session_state.get("slider_sent"):
+        st.session_state.year = st.session_state.year_slider
+        stop_playing()
+
+
 def toggle_play() -> None:
     if st.session_state.playing:
         st.session_state.playing = False
@@ -140,7 +148,7 @@ def close_card() -> None:
     st.session_state.search = None
 
 
-# A year chosen by the previous frame of the animation; a slider cannot be changed after it is drawn in the same run
+# A year chosen by the previous frame of the animation; it only counts if the animation is still playing
 pending = st.session_state.pop("next_year", None)
 if pending is not None and st.session_state.playing:
     st.session_state.year = pending
@@ -152,7 +160,7 @@ with st.container(key="controles"):
     with play_col:
         st.button("Pausar" if st.session_state.playing else "Reproducir", on_click=toggle_play, width="stretch")
     with year_col:
-        st.slider("Año", atlas.years[0], last_year, key="year", on_change=stop_playing)
+        year_slot = st.container()  # filled after the map: it takes seconds to arrive, and the slider must not run ahead of it
     with department_col:
         names = sorted(atlas.districts["department"].unique())
         st.selectbox("Departamento", [""] + names, key="department", on_change=choose_department,
@@ -245,6 +253,12 @@ rail, map_col = st.columns([1, 2.6], gap="medium")
 with map_col:
     with st.container(key="mapa"):
         st.pydeck_chart(build_deck(), height=MAP_HEIGHT, key="mapa_deck")
+        # The year lives apart from the slider: a click that interrupts this run before the slider is drawn makes Streamlit
+        # forget the slider's state, and with it the year
+        with year_slot:
+            st.session_state.year_slider = year
+            st.slider("Año", atlas.years[0], last_year, key="year_slider", on_change=choose_year)
+            st.session_state.slider_sent = year
         st.html(legend_html())
         st.html(f'<div class="big-year" aria-hidden="true">{year}</div>')
 
