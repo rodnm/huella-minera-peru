@@ -184,6 +184,11 @@ with sync_playwright() as p:
     # Indicator
     for option, title in (("Huella nueva", "donde más creció"), ("Luz nocturna", "más luz por km²"), ("Pobreza monetaria", "mayor pobreza")):
         choose(page, "Mostrar en el mapa", option)
+        wait_for_text(page, ".legend", option.split()[0])
+        try:
+            page.get_by_text(title).first.wait_for(timeout=45000)
+        except Exception:
+            pass
         check(f"indicator {option} changes the ranking", page.get_by_text(title).count() > 0)
         check(f"indicator {option} changes the legend", option.split()[0] in page.locator(".legend").inner_text())
         page.wait_for_timeout(800)
@@ -198,7 +203,10 @@ with sync_playwright() as p:
     page.wait_for_timeout(1500)
     page.screenshot(path=OUT / "5_inambari.png")
     page.get_by_role("button", name="Cerrar la ficha").click()
-    settle(page)
+    try:
+        page.locator(".card").wait_for(state="detached", timeout=45000)
+    except Exception:
+        pass
     check("the card closes", page.locator(".card").count() == 0)
 
     # Tooltip over the Andes

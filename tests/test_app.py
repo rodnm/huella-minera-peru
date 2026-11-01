@@ -1,6 +1,7 @@
 """The app as a user sees it: it must run on the committed data, and every control must change the figures."""
 import json
 import math
+import time
 from pathlib import Path
 
 import pytest
@@ -163,3 +164,41 @@ def test_the_limit_stays_national_when_a_department_is_chosen(app):
     assert not app.exception
     assert map_view(app)["maxBounds"] == limits
     assert map_view(app)["zoom"] > 4.6
+
+
+def test_the_pause_button_pauses_even_if_the_browser_is_a_year_behind(monkeypatch):
+    """On a slow link the slider reaches the browser after the map, so the click reports the year still on screen."""
+    monkeypatch.setattr(st, "rerun", lambda: None)
+    monkeypatch.setattr(time, "sleep", lambda _: None)
+    test = AppTest.from_file(APP, default_timeout=60)
+    test.session_state["year"] = 2024
+    test.session_state["playing"] = True
+    test.session_state["department"] = ""
+    test.session_state["indicator"] = "huella"
+    test.session_state["district"] = None
+    test.session_state["search"] = None
+    test.run()
+    pause = next(button for button in test.button if button.label == "Pausar")
+
+    test.slider[0].set_value(2023)
+    pause.click().run()
+
+    assert not test.exception
+    assert test.session_state["playing"] is False
+    assert test.session_state["year"] == 2023
+
+
+def test_a_move_counts_as_what_the_browser_knows_before_the_slider_is_drawn_again(app, monkeypatch):
+    """Going to a year and back before the map arrives must keep the second move."""
+    known = []
+    draw = st.slider
+
+    def record(*args, **kwargs):
+        known.append(st.session_state.get("slider_sent"))
+        return draw(*args, **kwargs)
+
+    monkeypatch.setattr(st, "slider", record)
+    app.slider[0].set_value(2018).run()
+
+    assert not app.exception
+    assert known == [2018]
