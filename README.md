@@ -1,5 +1,82 @@
-# La paradoja del brillo
+# La huella de la minería en el Perú, 2013–2025
 
-Minería, luz nocturna y pobreza en los distritos del Perú. Tarea 3 del curso Python Intermedio.
+Un atlas interactivo, distrito por distrito, del suelo minero que se ve desde el satélite. Cada cifra sale de datos públicos que este repositorio descarga y limpia, y la tendencia principal se contrasta con una segunda fuente independiente.
 
-_En construcción._
+**[Abrir el dashboard](https://rodnm.github.io/huella-minera-peru/)** · **Publicación en LinkedIn:** se agrega al publicar
+
+![Mapa del Perú en 2025 con las celdas de huella minera](docs/capturas/atlas_peru.png)
+
+## Tema y pregunta de investigación
+
+**Tema:** expansión de la superficie minera en el Perú.
+
+**Pregunta:** ¿dónde apareció y cuánto creció el suelo minero que se ve desde el satélite entre 2013 y 2025?
+
+## Descripción del proyecto
+
+La minería deja suelo expuesto, y eso se ve desde el espacio. MapBiomas Perú clasifica ese suelo cada año, pero publica el área solo por departamento. Este proyecto la calcula por distrito, la muestra en un mapa que avanza año por año y la compara con Amazon Mining Watch.
+
+| Entrega | Dónde |
+|---|---|
+| Dashboard | [`web/`](web/), publicado con GitHub Pages |
+| Reel de 9:16 con voz clonada | [`reel/`](reel/) |
+| Datos procesados | [`datos/procesados/`](datos/procesados/) |
+| Metodología y todos los hallazgos | [`docs/metodologia_y_hallazgos.md`](docs/metodologia_y_hallazgos.md) |
+
+## Fuentes de datos y metodología
+
+| Fuente | Uso | Fecha | Licencia |
+|---|---|---|---|
+| [MapBiomas Perú, Colección 4](https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/) | Huella anual, clase 30, a 30 m | 2013–2025 | CC BY 4.0 |
+| [Amazon Mining Watch](https://source.coop/earthgenome/amazon-mining-watch) (Earth Genome) | Contraste independiente, cuenca amazónica, a 10 m | 2018–2024, versión del 16 oct 2026 | CC BY 4.0 |
+| [Maus et al. (2022)](https://doi.org/10.1594/PANGAEA.942325) | Comparación de nivel | 2019 | CC BY-SA 4.0 |
+| [NASA Black Marble VNP46A4](https://doi.org/10.5067/VIIRS/VNP46A4.002) | Capa de luz nocturna | 2013–2025 | Datos abiertos de NASA |
+| [INEI, Mapa de Pobreza](https://www.gob.pe/institucion/inei/informes-publicaciones/3204872-mapa-de-pobreza-provincial-y-distrital-2018) | Capa de pobreza monetaria, con intervalo | 2018 | Información pública |
+| [INGEMMET, GEOCATMIN](https://geocatmin.ingemmet.gob.pe/geocatmin/) | Límites distritales | Descarga de octubre de 2026 | Servicio público |
+
+La URL, la fecha de descarga y el SHA-256 de cada archivo están en [`datos/originales/MANIFEST.json`](datos/originales/MANIFEST.json).
+
+**Método, en corto:**
+
+1. El mapa de 30 m de cada año se promedia sobre una grilla de 500 m. Esa fracción, multiplicada por el área real de cada celda, se suma por distrito.
+2. El resultado se compara con la tabla oficial de MapBiomas: la diferencia nacional es de 0.25 % como máximo.
+3. La tendencia se contrasta con Amazon Mining Watch, que usa otro satélite y otro modelo.
+4. Una prueba automática impide publicar datos si el conteo del navegador difiere de `atlas.json`.
+
+## Tres hallazgos principales
+
+1. **La superficie clasificada como minera casi se triplicó:** de 727 a 1,985 km² entre 2013 y 2025 (×2.7), según MapBiomas.
+2. **Madre de Dios explica el 63 % del aumento** y reúne el 57 % de la huella de 2025.
+3. **El aumento está concentrado:** 10 distritos explican el 73 %. Inambari pasa de 88 a 417 km².
+
+**El contraste:** en Madre de Dios, entre 2018 y 2024, MapBiomas se multiplica por 2.02 y Amazon Mining Watch por 1.98, y entre 96 % y 98 % de la superficie de MapBiomas cae en celdas donde la otra fuente detecta cicatrices. El nivel difiere: 1,023 contra 1,520 km² en 2024.
+
+## Limitaciones
+
+- **No distingue minería legal, informal o ilegal,** e incluye extracción no metálica.
+- **El área exacta está en discusión.** Maus et al. suma unas tres veces más en 2019, y el grupo de clases sin vegetación de MapBiomas, donde está la minería, tiene 74 % de exactitud de productor.
+- **Fuera de la Amazonía no hay contraste anual.** El 37 % del aumento, fuera de Madre de Dios, se apoya sobre todo en MapBiomas.
+- **Las dos fuentes coinciden en el periodo, no en cada año.** Conviene leer la tendencia.
+- **La luz y la pobreza son contexto.** Este trabajo no afirma que la minería reduzca o aumente la pobreza: los datos no alcanzan para saberlo, y la [metodología](docs/metodologia_y_hallazgos.md) explica por qué.
+
+## Enlaces
+
+- Dashboard: <https://rodnm.github.io/huella-minera-peru/>
+- Publicación en LinkedIn: se agrega al publicar
+
+## Cómo reproducir
+
+Requiere [uv](https://docs.astral.sh/uv/) y un token gratuito de [NASA Earthdata](https://urs.earthdata.nasa.gov) en un archivo `.env`, que git ignora, con la línea `BLACKMARBLE_TOKEN=...`.
+
+```bash
+uv sync
+uv run python -m scripts.run_all    # unos 9 GB de descargas; reconstruye datos y web
+uv run pytest
+python -m http.server 8000 -d web   # abre http://localhost:8000
+```
+
+Sin uv: `pip install -r requirements.txt`. El reel tiene su propio entorno, explicado en [`reel/README.md`](reel/README.md).
+
+## Uso de inteligencia artificial
+
+Usé Claude Code (Anthropic) como asistente para escribir código, documentar y revisar el análisis. Las decisiones de tema, alcance y mensaje fueron mías, y las cifras se comprueban con las pruebas y validaciones del repositorio. La narración del reel se generó con Qwen3-TTS a partir de una grabación de mi propia voz, y el video lo indica de forma visible.
