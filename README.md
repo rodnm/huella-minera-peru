@@ -2,7 +2,7 @@
 
 Un atlas interactivo, distrito por distrito, del suelo minero que se ve desde el satélite. Cada cifra sale de datos públicos que este repositorio descarga y limpia. Una segunda fuente independiente contrasta el 41 % del aumento, y el proyecto publica también dónde discrepan.
 
-**[Abrir el dashboard](https://huella-minera-peru.streamlit.app)** · **Publicación en LinkedIn:** se agrega al publicar
+**[Abrir el dashboard](https://huella-minera-peru-rodnm.streamlit.app)** · **Publicación en LinkedIn:** se agrega al publicar
 
 | | |
 | :--- | :--- |
@@ -76,7 +76,7 @@ Coinciden en la dirección y en el lugar: entre 96 % y 98 % de la superficie de 
 
 ## Enlaces
 
-- Dashboard: <https://huella-minera-peru.streamlit.app>
+- Dashboard: <https://huella-minera-peru-rodnm.streamlit.app>
 - Publicación en LinkedIn: se agrega al publicar
 
 ## Cómo reproducir
