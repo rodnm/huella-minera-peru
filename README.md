@@ -2,13 +2,11 @@
 
 Un atlas interactivo, distrito por distrito, del suelo minero que se ve desde el satélite. Cada cifra sale de datos públicos que este repositorio descarga y limpia. Una segunda fuente independiente contrasta el 41 % del aumento, y el proyecto publica también dónde discrepan.
 
-**[Abrir el dashboard](https://rodnm.github.io/huella-minera-peru/)** · **Publicación en LinkedIn:** se agrega al publicar
+**[Abrir el dashboard](https://huella-minera-peru.streamlit.app)** · **Publicación en LinkedIn:** se agrega al publicar
 
 | | |
 | :--- | :--- |
 | **Autor** | Rodrigo Andrés Norabuena Mascaraqui ([@rodnm](https://github.com/rodnm)) |
-| **Curso** | Python Intermedio · Diplomatura de especialización Ciencia de Datos para las Ciencias Sociales y la Gestión Pública 2026 |
-| **Enunciado** | [d2cml-ai/Data-Science-Python#197](https://github.com/d2cml-ai/Data-Science-Python/issues/197) |
 
 ![Mapa del Perú en 2025 con las celdas de huella minera](docs/capturas/atlas_peru.png)
 
@@ -26,7 +24,7 @@ La minería deja suelo expuesto, y eso se ve desde el espacio. MapBiomas Perú c
 
 | Entrega | Dónde |
 |---|---|
-| Dashboard | [`web/`](web/), publicado con GitHub Pages |
+| Dashboard | [`dashboard/`](dashboard/), publicado en Streamlit Community Cloud |
 | Reel de 9:16 con voz clonada | [`reel/`](reel/) |
 | Datos procesados | [`datos/procesados/`](datos/procesados/) |
 | Metodología y todos los hallazgos | [`docs/metodologia_y_hallazgos.md`](docs/metodologia_y_hallazgos.md) |
@@ -49,7 +47,7 @@ La URL, la fecha de descarga y el SHA-256 de cada archivo están en [`datos/orig
 1. El mapa de 30 m de cada año se promedia sobre una grilla de 500 m. Esa fracción, multiplicada por el área real de cada celda, se suma por distrito.
 2. El resultado se compara con la tabla oficial de MapBiomas: la diferencia nacional es de 0.25 % como máximo.
 3. La tendencia en Madre de Dios, entre 2018 y 2024, se contrasta con Amazon Mining Watch, que usa otro satélite y otro modelo.
-4. Las pruebas de [`tests/test_web_data.py`](tests/test_web_data.py) corren antes de cada despliegue y lo detienen si los archivos publicados no coinciden con el panel.
+4. Las pruebas de [`tests/test_atlas_publicado.py`](tests/test_atlas_publicado.py) y [`tests/test_app.py`](tests/test_app.py) corren en cada cambio y fallan si los archivos publicados no coinciden con el panel o si un control deja de funcionar.
 
 ## Tres hallazgos principales
 
@@ -78,7 +76,7 @@ Coinciden en la dirección y en el lugar: entre 96 % y 98 % de la superficie de 
 
 ## Enlaces
 
-- Dashboard: <https://rodnm.github.io/huella-minera-peru/>
+- Dashboard: <https://huella-minera-peru.streamlit.app>
 - Publicación en LinkedIn: se agrega al publicar
 
 ## Cómo reproducir
@@ -87,13 +85,17 @@ Requiere [uv](https://docs.astral.sh/uv/) y un token gratuito de [NASA Earthdata
 
 ```bash
 uv sync
-uv run python -m scripts.run_all    # unos 9 GB de descargas; reconstruye datos y web
+uv run python -m scripts.run_all    # unos 9 GB de descargas; reconstruye los datos del atlas
 uv run pytest
-python -m http.server 8000 -d web   # abre http://localhost:8000
+uv run streamlit run dashboard/app.py
 ```
 
-Sin uv: `pip install -r requirements.txt`. El reel tiene su propio entorno, explicado en [`reel/README.md`](reel/README.md).
+Solo para abrir el dashboard no hace falta descargar nada, porque sus datos están en `datos/atlas/`: `pip install -r dashboard/requirements.txt`. Para todo el proceso sin uv: `pip install -r requirements.txt`. El reel tiene su propio entorno, explicado en [`reel/README.md`](reel/README.md).
 
 ## Uso de inteligencia artificial
 
 Usé Claude Code (Anthropic) como asistente para escribir código, documentar y revisar el análisis. Las decisiones de tema, alcance y mensaje fueron mías, y las cifras se comprueban con las pruebas y validaciones del repositorio. La narración del reel se generó con Qwen3-TTS a partir de una grabación de mi propia voz, y el video lo indica de forma visible.
+
+## Contexto
+
+El proyecto nació como trabajo final del curso Python Intermedio, de la Diplomatura de especialización en Ciencia de Datos para las Ciencias Sociales y la Gestión Pública (2026). El código del reel adapta el flujo de la sesión 15 de ese curso, como se indica en [`reel/recursos/CREDITOS.md`](reel/recursos/CREDITOS.md).

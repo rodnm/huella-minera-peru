@@ -59,7 +59,7 @@ def main() -> int:
     if args.inicio is not None:
         start, end = args.inicio, args.fin
         if not 15 <= end - start <= 25:
-            print(f"  aviso: el tramo dura {end - start:.1f} s; el curso pide entre 15 y 25 s")
+            print(f"  aviso: el tramo dura {end - start:.1f} s; conviene que dure entre 15 y 25 s")
     else:
         segments = asr.segments(audio16, vad_filter=True, beam_size=5, condition_on_previous_text=False)
         window = choose_reference_window(segments, volume_std=volume_std(audio16, SR_ASR))

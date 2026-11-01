@@ -9,7 +9,7 @@ from brillo.atlas import MIN_DISTRICT_KM2, describe
 
 ROOT = Path(__file__).resolve().parent.parent
 PROCESADOS = ROOT / "datos" / "procesados"
-WEB_DATA = ROOT / "web" / "data"
+WEB_DATA = ROOT / "datos" / "atlas"
 
 
 @pytest.fixture(scope="module")

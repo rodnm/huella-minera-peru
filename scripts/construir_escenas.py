@@ -1,6 +1,6 @@
 """Draw the reel's scene visuals from the project data: every map and chart comes from the same files as the dashboard.
 
-Run from the repository root, after scripts.construir_web and reel's fonts (cd reel && uv run python -m reelkit.fonts):
+Run from the repository root, after scripts.construir_atlas and reel's fonts (cd reel && uv run python -m reelkit.fonts):
     uv run python -m scripts.construir_escenas
 Frames go to reel/escenas/atlas/<scene>/, 1080 x 960, the reel's visual box. The MapBiomas scenes read the 30 m rasters,
 so they show more detail than the 500 m grid of the dashboard.
@@ -17,7 +17,7 @@ from rasterio.transform import from_bounds as transform_from_bounds
 from rasterio.windows import from_bounds
 
 ROOT = Path(__file__).resolve().parent.parent
-WEB_DATA = ROOT / "web" / "data"
+WEB_DATA = ROOT / "datos" / "atlas"
 OUT = ROOT / "reel" / "escenas" / "atlas"
 FONTS = ROOT / "reel" / "recursos" / "fuentes"
 MAPBIOMAS = ROOT / "datos" / "originales" / "mapbiomas"
