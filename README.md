@@ -2,7 +2,7 @@
 
 Un atlas interactivo, distrito por distrito, del suelo minero que se ve desde el satélite. Cada cifra sale de datos públicos que este repositorio descarga y limpia. Una segunda fuente independiente contrasta el 41 % del aumento, y el proyecto publica también dónde discrepan.
 
-**[Abrir el dashboard](https://claude.ai/artifact/TLWHpf4ZSXAAhyBEZTmKh7)** · **Publicación en LinkedIn:** se agrega al publicar
+**[Abrir el dashboard](https://claude.ai/artifact/TLWHpf4ZSXAAhyBEZTmKh7)** · **[Publicación en LinkedIn](https://lnkd.in/p/eTbq4y_A)**
 
 | | |
 | :--- | :--- |
@@ -77,7 +77,7 @@ Coinciden en la dirección y en el lugar: entre 96 % y 98 % de la superficie de 
 ## Enlaces
 
 - Dashboard: <https://claude.ai/artifact/TLWHpf4ZSXAAhyBEZTmKh7>
-- Publicación en LinkedIn: se agrega al publicar
+- Publicación en LinkedIn: <https://lnkd.in/p/eTbq4y_A>
 
 ## Cómo reproducir
 
