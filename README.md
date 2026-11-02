@@ -47,7 +47,7 @@ La URL, la fecha de descarga y el SHA-256 de cada archivo están en [`datos/orig
 1. El mapa de 30 m de cada año se promedia sobre una grilla de 500 m. Esa fracción, multiplicada por el área real de cada celda, se suma por distrito.
 2. El resultado se compara con la tabla oficial de MapBiomas: la diferencia nacional es de 0.25 % como máximo.
 3. La tendencia en Madre de Dios, entre 2018 y 2024, se contrasta con Amazon Mining Watch, que usa otro satélite y otro modelo.
-4. Las pruebas de [`tests/test_atlas_publicado.py`](tests/test_atlas_publicado.py) y [`tests/test_atlas_web.py`](tests/test_atlas_web.py) corren en cada cambio y fallan si los archivos publicados no coinciden con el panel o si un control deja de funcionar.
+4. Las pruebas de [`tests/test_atlas_publicado.py`](tests/test_atlas_publicado.py) corren en cada cambio y fallan si los archivos publicados no coinciden con el panel. Los controles de la página se comprueban en un navegador, a mano, con [`scripts/probar_web.py`](scripts/probar_web.py).
 
 ## Tres hallazgos principales
 
@@ -88,7 +88,7 @@ uv sync
 uv run python -m scripts.run_all    # unos 9 GB de descargas; reconstruye los datos del atlas
 uv run pytest
 uv run python -m scripts.preparar_web
-uv run python -m http.server 8596 -d web    # abrir http://127.0.0.1:8596/atlas.html
+uv run python -m http.server 8596 -d web    # abrir http://127.0.0.1:8596/
 ```
 
 Solo para abrir el dashboard no hace falta el proceso completo, porque sus datos están en `datos/atlas/`: bastan las dos últimas líneas. La carpeta [`dashboard/`](dashboard/) conserva una versión anterior en Streamlit, que ya no es la oficial. Para todo el proceso sin uv: `pip install -r requirements.txt`. El reel tiene su propio entorno, explicado en [`reel/README.md`](reel/README.md).

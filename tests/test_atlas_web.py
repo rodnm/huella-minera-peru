@@ -33,12 +33,28 @@ def test_the_prepared_footprint_decodes_to_the_committed_bytes(tmp_path, monkeyp
     from scripts import preparar_web
 
     monkeypatch.setattr(preparar_web, "TARGET", tmp_path / "data")
+    monkeypatch.setattr(preparar_web, "INDEX", tmp_path / "index.html")
     monkeypatch.setattr(preparar_web, "ROOT", tmp_path.parent)
     preparar_web.main()
 
     text = (tmp_path / "data" / "huella.txt").read_text(encoding="ascii")
     assert base64.b64decode(text) == (ROOT / "datos" / "atlas" / "huella.bin").read_bytes()
     assert (tmp_path / "data" / "panel.json").read_bytes() == (ROOT / "datos" / "atlas" / "panel.json").read_bytes()
+
+
+def test_the_local_copy_declares_its_encoding_and_phone_layout(tmp_path, monkeypatch):
+    monkeypatch.syspath_prepend(str(ROOT))
+    from scripts import preparar_web
+
+    monkeypatch.setattr(preparar_web, "TARGET", tmp_path / "data")
+    monkeypatch.setattr(preparar_web, "INDEX", tmp_path / "index.html")
+    monkeypatch.setattr(preparar_web, "ROOT", tmp_path.parent)
+    preparar_web.main()
+
+    index = (tmp_path / "index.html").read_text(encoding="utf-8")
+    assert index.startswith("<!doctype html>")
+    assert '<meta charset="utf-8">' in index and 'name="viewport"' in index
+    assert PAGE in index
 
 
 def test_no_control_depends_on_a_download_the_frame_blocks():
