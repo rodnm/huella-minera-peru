@@ -25,7 +25,7 @@ La minería deja suelo expuesto, y eso se ve desde el espacio. MapBiomas Perú c
 | Entrega | Dónde |
 |---|---|
 | Dashboard | [`web/atlas.html`](web/atlas.html), publicado como página pública; corre en el navegador y lee `datos/atlas/` |
-| Reel de 9:16 con voz clonada | [`reel/`](reel/) |
+| Reel de 9:16 con voz clonada | [`reel/reel.mp4`](reel/reel.mp4), con su [guion](reel/guion.json), sus [subtítulos](reel/subtitulos.srt) y sus [créditos](reel/recursos/CREDITOS.md) |
 | Datos procesados | [`datos/procesados/`](datos/procesados/) |
 | Metodología y todos los hallazgos | [`docs/metodologia_y_hallazgos.md`](docs/metodologia_y_hallazgos.md) |
 

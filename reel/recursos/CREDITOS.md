@@ -27,6 +27,8 @@ La pista no se descarga ni se versiona: la elige el autor y la guarda en `recurs
 |---|---|---|---|---|
 | «Secret Garden», primeros 30 s, repetidos bajo la voz en un editor de video | Eugenio Mininni | <https://mixkit.co/free-stock-music/> | [Mixkit Stock Music Free License](https://mixkit.co/license/#musicFree) | 2026-11-01 |
 
+El archivo suelto de la pista sigue fuera del repositorio. `reel/reel.mp4` la contiene solo mezclada bajo la voz, como parte del video final.
+
 ## Código base
 
 El pipeline se basa en la sesión 15 del curso, [d2cml-ai/Data-Science-Python, `sessions/15-texto-a-reel`](https://github.com/d2cml-ai/Data-Science-Python/tree/main/sessions/15-texto-a-reel) (`reel.py`, `hacer_reel.py`).
