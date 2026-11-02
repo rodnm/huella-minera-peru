@@ -1,6 +1,7 @@
 """Text fitting never overflows its box, and scene text never covers the visual."""
 from PIL import Image, ImageDraw, ImageFont
 
+from reelkit import layout
 from reelkit.layout import FRAME, VISUAL_BOX, ZONES, fit_text, scene_text_layer
 
 
@@ -69,3 +70,25 @@ def test_scene_text_layer_never_draws_over_the_visual_box():
         assert bbox is not None
         assert not _overlap(bbox, VISUAL_BOX), scene
         assert _inside(bbox, ZONES["figure"]), (scene, bbox)
+
+
+def test_a_line_break_in_the_text_is_kept():
+    box = (60, 0, 1020, 200)
+    fitted = fit_text(_draw(), "Fuente: datos\nNombre Apellido", lambda s: default_fonts("text", s), box, max_size=28, min_size=20)
+    assert fitted.lines == ["Fuente: datos", "Nombre Apellido"]
+
+
+def test_the_author_goes_on_a_line_of_their_own_in_the_footer(monkeypatch):
+    seen = []
+    real = layout.fit_text
+
+    def spy(draw, text, *args, **kwargs):
+        fitted = real(draw, text, *args, **kwargs)
+        seen.append(fitted.lines)
+        return fitted
+
+    monkeypatch.setattr(layout, "fit_text", spy)
+    colors = {"background": "#000000", "text": "#ffffff", "text_muted": "#cccccc", "panel": "#111111", "accent": "#ff0000"}
+    layout.base_layer("Título", "Fuente: MapBiomas Perú (Col. 4) y Amazon Mining Watch", "Rodrigo Norabuena", default_fonts, colors)
+
+    assert seen[-1] == ["Fuente: MapBiomas Perú (Col. 4) y Amazon Mining Watch", "Rodrigo Norabuena"]

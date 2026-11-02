@@ -1,0 +1,942 @@
+<title>La huella de la minería en el Perú</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --background: #0f1e19;
+  --panel: #162a23;
+  --grid: #2c4238;
+  --text: #f1e9d6;
+  --text-muted: #a9b6a8;
+  --context: #43594e;
+  --mining: #c1882e;
+  --contrast: #2ba798;
+  --footprint-0: #8a5413;
+  --footprint-1: #9e6926;
+  --footprint-2: #b18039;
+  --footprint-3: #c5964d;
+  --footprint-4: #d8ad61;
+  --footprint-5: #ebc576;
+  --footprint-6: #ffdd8b;
+  --light-0: #2a6496;
+  --light-1: #3e7ba8;
+  --light-2: #5592b9;
+  --light-3: #6daaca;
+  --light-4: #87c2dc;
+  --light-5: #a2daed;
+  --light-6: #bff2ff;
+  --poverty-0: #7a3a66;
+  --poverty-1: #8f517e;
+  --poverty-2: #a56897;
+  --poverty-3: #bb80b0;
+  --poverty-4: #d198ca;
+  --poverty-5: #e8b2e4;
+  --poverty-6: #ffcbff;
+}
+:root { color-scheme: dark; }
+/* Canopy seen from above: dark forest ground, exposed soil in ochre, and the pools the mines leave in teal. */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font: 400 1rem/1.55 "IBM Plex Sans", system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+h1, h2 { font-family: Fraunces, Georgia, serif; font-weight: 600; line-height: 1.1; margin: 0; }
+h1 { font-size: clamp(2.1rem, 3.1vw, 3rem); letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.5rem, 2.2vw, 2rem); }
+h3 { font-size: 1.05rem; font-weight: 600; line-height: 1.3; margin: 0; }
+p { margin: 0; }
+a { color: inherit; text-decoration-color: var(--footprint-3); text-underline-offset: 3px; }
+a:hover { text-decoration-color: currentColor; }
+:focus-visible { outline: 2px solid var(--footprint-6); outline-offset: 2px; }
+
+/* Filters: one row, always within reach, because every chart depends on them */
+.controls {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  display: flex; align-items: flex-end; flex-wrap: wrap; gap: 0.5rem 1.25rem;
+  padding: 0.6rem 1.25rem;
+  background: var(--background);
+  border-bottom: 1px solid var(--grid);
+}
+.controls label { display: grid; gap: 0.15rem; font-size: 0.8rem; color: var(--text-muted); min-width: 0; }
+.controls select, .controls input[type="search"] {
+  height: 2.1rem; padding: 0 0.5rem; max-width: 100%;
+  background: var(--panel); color: var(--text);
+  border: 1px solid var(--grid); border-radius: 3px;
+  font: inherit; font-size: 0.92rem;
+}
+.controls output { color: var(--text); font-weight: 600; }
+.year-control { flex: 1 1 14rem; }
+.year-control input { width: 100%; height: 2.1rem; margin: 0; accent-color: var(--footprint-4); }
+.search { flex: 0 1 15rem; }
+.search input { width: 100%; }
+.search { position: relative; }
+.search-note { position: absolute; top: 100%; left: 0; right: 0; z-index: 25; background: var(--panel); color: var(--text); font-size: 0.8rem; line-height: 1.3; }
+.search-note:not(:empty) { padding: 0.35rem 0.5rem; border: 1px solid var(--grid); }
+.play, .zoom button { font: inherit; color: var(--text); cursor: pointer; }
+.play {
+  height: 2.1rem; min-width: 6.2rem; padding: 0 0.8rem;
+  background: var(--panel); border: 1px solid var(--footprint-2); border-radius: 3px;
+}
+.play:hover { background: var(--grid); }
+
+/* First screen: the map does the talking, the rail holds the figures */
+.hero {
+  display: grid; grid-template-columns: minmax(20rem, 26rem) 1fr; grid-template-rows: auto 1fr;
+  grid-template-areas: "intro map" "stats map";
+  min-height: calc(100vh - 3.9rem);
+}
+.intro { grid-area: intro; padding: 2rem 1.75rem 0 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+.stats { grid-area: stats; padding: 1rem 1.75rem 1.5rem 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+.byline { font-weight: 500; font-size: 0.95rem; }
+.question { font: 600 1.15rem/1.35 Fraunces, Georgia, serif; color: var(--footprint-6); }
+.lead { color: var(--text-muted); font-size: 0.95rem; }
+.scope { font: 600 0.95rem/1.3 "IBM Plex Sans", sans-serif; padding-top: 0.75rem; border-top: 1px solid var(--grid); }
+.kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; margin: 0; }
+.kpis div { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 0.15rem; }
+.kpis dt { color: var(--text-muted); font-size: 0.82rem; line-height: 1.3; }
+.kpis dd { margin: 0; font: 700 2.1rem/1.05 "IBM Plex Sans Condensed", sans-serif; }
+.kpis small { display: block; font: 400 0.8rem/1.3 "IBM Plex Sans", sans-serif; color: var(--text-muted); margin-top: 0.15rem; }
+.coverage { color: var(--text-muted); font-size: 0.82rem; margin-top: auto; }
+
+.map { grid-area: map; position: relative; min-height: 34rem; overflow: hidden; background: #0b1713; }
+.big-year {
+  position: absolute; left: 1.5rem; bottom: 1rem; z-index: 2; pointer-events: none;
+  font: 700 clamp(4rem, 8vw, 7.5rem)/0.9 Fraunces, Georgia, serif;
+  color: var(--text); letter-spacing: -0.03em;
+}
+.zoom { position: absolute; top: 1rem; left: 1rem; z-index: 3; display: grid; gap: 2px; }
+.zoom button { width: 2.4rem; height: 2.4rem; background: var(--panel); border: 1px solid var(--grid); font-size: 1.15rem; line-height: 1; }
+.zoom button:hover { background: var(--grid); }
+.legend {
+  position: absolute; left: 4.2rem; top: 1rem; z-index: 3; max-width: 21rem;
+  padding: 0.5rem 0.7rem; background: var(--background); border: 1px solid var(--grid); border-radius: 3px;
+  font-size: 0.8rem; line-height: 1.35; color: var(--text-muted);
+}
+.legend strong { display: block; color: var(--text); font-weight: 600; margin-bottom: 0.25rem; }
+.legend-row { display: flex; align-items: center; gap: 0.4rem; color: var(--text); }
+.legend-dot { width: 0.65rem; height: 0.65rem; border-radius: 50%; flex: none; }
+.legend-steps { display: flex; gap: 2px; margin: 0.25rem 0 0.1rem; }
+.legend-steps span { flex: 1; height: 0.6rem; min-width: 1.9rem; }
+.legend-ticks { position: relative; height: 1.15rem; color: var(--text); }
+.legend-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.legend p { margin-top: 0.3rem; }
+
+.card {
+  position: absolute; right: 1rem; top: 1rem; z-index: 4; width: min(19rem, calc(100% - 2rem));
+  padding: 0.9rem 1rem 1rem; background: var(--panel); border: 1px solid var(--grid); border-radius: 3px;
+}
+.card h3 { font: 600 1.3rem/1.15 Fraunces, Georgia, serif; padding-right: 1.6rem; }
+.card > p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.6rem; }
+.card dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 0.75rem; font-size: 0.88rem; }
+.card dt { color: var(--text-muted); }
+.card dd { margin: 0; text-align: right; font-weight: 500; }
+.card-close { position: absolute; right: 0.4rem; top: 0.4rem; width: 2rem; height: 2rem; background: none; border: 0; color: var(--text); cursor: pointer; font-size: 1.1rem; }
+
+main { padding: 0 1.25rem 3rem; }
+main > section { max-width: 86rem; margin: 0 auto; padding-top: 3.5rem; }
+.findings ol { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem 2.5rem; }
+.findings li { font: 600 1.25rem/1.32 Fraunces, Georgia, serif; }
+.findings li small { display: block; font: 400 0.88rem/1.45 "IBM Plex Sans", sans-serif; color: var(--text-muted); margin-top: 0.5rem; }
+
+figure { margin: 0; min-width: 0; }
+figcaption { margin-bottom: 0.75rem; }
+figcaption p { color: var(--text-muted); font-size: 0.86rem; max-width: 62ch; }
+.charts { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem 3.5rem; }
+.charts .wide { grid-column: 1 / -1; }
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font: 400 12px "IBM Plex Sans", sans-serif; fill: var(--text-muted); }
+.chart .direct { fill: var(--text); font-weight: 500; }
+.chart .domain { display: none; }
+.chart .tick line { stroke: var(--grid); }
+.chart-tip {
+  position: absolute; z-index: 5; pointer-events: none; min-width: 9rem;
+  padding: 0.4rem 0.6rem; font-size: 0.82rem; line-height: 1.4;
+  background: var(--panel); border: 1px solid var(--grid); border-radius: 3px;
+}
+.chart-tip b { font-weight: 600; }
+
+/* Horizontal rankings: each row is a real button, so they work with the keyboard */
+.bars { display: grid; gap: 0.1rem; }
+.bar {
+  display: grid; grid-template-columns: minmax(7rem, 11.5rem) 1fr 5.4rem; align-items: center; gap: 0.6rem;
+  width: 100%; min-height: 2.1rem; padding: 0.15rem 0.25rem;
+  background: none; border: 0; color: var(--text); font: inherit; font-size: 0.9rem; text-align: left; cursor: pointer;
+}
+.bar:hover, .bar[aria-pressed="true"] { background: var(--panel); }
+.bar small { display: block; color: var(--text-muted); font-size: 0.74rem; line-height: 1.2; }
+.bar-name { min-width: 0; overflow-wrap: anywhere; line-height: 1.25; }
+.bar-value { text-align: right; font-weight: 500; }
+.bar-track { position: relative; height: 0.9rem; }
+.bar-fill { position: absolute; left: 0; top: 0.2rem; height: 0.5rem; border-radius: 0 3px 3px 0; }
+.bar-whisker { position: absolute; top: 0.42rem; height: 2px; background: var(--text-muted); }
+.bar-link { position: absolute; top: 0.4rem; height: 2px; background: var(--footprint-2); }
+.bar-dot { position: absolute; top: 0.45rem; width: 0.7rem; height: 0.7rem; margin: -0.3rem 0 0 -0.35rem; border-radius: 50%; }
+.bar-dot.from { border: 2px solid var(--footprint-3); background: var(--background); }
+.bar-dot.to { background: var(--footprint-5); }
+.empty { color: var(--text-muted); font-size: 0.9rem; padding: 0.5rem 0; }
+
+.table-view { margin-top: 1rem; font-size: 0.9rem; }
+.table-view summary { cursor: pointer; }
+.table-scroll { max-height: 22rem; overflow: auto; margin-top: 0.5rem; }
+table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+th { position: sticky; top: 0; background: var(--background); text-align: right; font-weight: 600; }
+th:first-child, td:first-child { text-align: left; }
+th, td { padding: 0.25rem 0.5rem; border-bottom: 1px solid var(--grid); text-align: right; }
+.data-link { margin-top: 0.75rem; font-size: 0.9rem; }
+
+.contrast { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 2rem 3.5rem; align-items: start; }
+#contrast-text { margin-top: 1rem; display: grid; gap: 0.8rem; max-width: 62ch; }
+.notes { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 2.5rem 3rem; }
+.notes h2 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+.notes ol, .notes ul { margin: 0 0 0.9rem; padding-left: 1.15rem; display: grid; gap: 0.5rem; font-size: 0.92rem; }
+.notes p { font-size: 0.92rem; }
+.notes strong { font-weight: 600; }
+.load-error { position: fixed; left: 1rem; right: 1rem; bottom: 1rem; z-index: 30; padding: 0.75rem 1rem; background: var(--panel); border: 1px solid var(--poverty-4); }
+
+/* Fraunces uses old-style figures by default: lining ones keep years and areas on one line, and the big year still */
+h1, .question, .big-year, .findings li, .card h3 { font-variant-numeric: lining-nums tabular-nums; }
+
+@media (max-width: 62rem) {
+  .hero { grid-template-columns: 1fr; grid-template-rows: none; grid-template-areas: "intro" "map" "stats"; min-height: 0; }
+  .map { height: 80vh; }
+  .intro { padding: 1.25rem 1rem; }
+  .stats { padding: 1.25rem 1rem; }
+  .coverage { margin-top: 0; }
+  .findings ol, .charts, .contrast, .notes { grid-template-columns: 1fr; }
+  .charts .wide { grid-column: auto; }
+}
+@media (max-width: 36rem) {
+  .controls { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 0.75rem; padding: 0.6rem 1rem; }
+  .play { min-width: 0; width: 100%; }
+  .search { grid-column: 1 / -1; }
+  .controls select, .controls input[type="search"] { width: 100%; }
+  .legend p { display: none; }
+  main { padding: 0 1rem 2.5rem; }
+  .big-year { left: 0.75rem; bottom: 0.5rem; }
+  .legend { left: 3.8rem; max-width: calc(100% - 4.6rem); }
+  .card { top: auto; bottom: 0.75rem; right: 0.75rem; width: calc(100% - 1.5rem); }
+  .bar { grid-template-columns: minmax(6rem, 8.5rem) 1fr 4.6rem; gap: 0.4rem; }
+}
+</style>
+<form class="controls" id="controls" aria-label="Filtros del atlas">
+  <button type="button" id="play" class="play">Pausar</button>
+  <label class="year-control">
+    <span>Año <output id="year-output">2013</output></span>
+    <input type="range" id="year" min="2013" max="2025" step="1" value="2013">
+  </label>
+  <label>
+    <span>Departamento</span>
+    <select id="department"><option value="">Todo el Perú</option></select>
+  </label>
+  <label>
+    <span>Mostrar en el mapa</span>
+    <select id="indicator">
+      <option value="huella">Huella minera</option>
+      <option value="nueva">Huella nueva desde 2013</option>
+      <option value="luz">Luz nocturna por km²</option>
+      <option value="pobreza">Pobreza monetaria 2018 (INEI)</option>
+    </select>
+  </label>
+  <label class="search">
+    <span>Buscar distrito</span>
+    <input type="search" id="search" list="district-list" placeholder="Por ejemplo, Inambari" autocomplete="off">
+    <datalist id="district-list"></datalist>
+    <span class="search-note" id="search-note" role="status"></span>
+  </label>
+</form>
+
+<header class="hero">
+  <div class="intro">
+    <h1>La huella de la minería en el Perú, 2013–2025</h1>
+    <p class="byline">Por Rodrigo Norabuena · <a href="https://www.linkedin.com/in/rodnm/">LinkedIn</a> · <a href="https://github.com/rodnm">GitHub</a></p>
+    <p class="question">¿Dónde apareció y cuánto creció el suelo minero que se ve desde el satélite?</p>
+    <p class="lead">La minería deja suelo expuesto, y eso se ve desde el espacio. Este atlas suma, distrito por distrito y año por año, lo que MapBiomas clasifica como minería. Una segunda fuente independiente la contrasta donde hay datos, y aquí también se ve en qué discrepan.</p>
+  </div>
+  <div class="stats">
+    <h2 class="scope" id="scope-name">Todo el Perú</h2>
+    <dl class="kpis">
+      <div><dt id="kpi-area-label">Huella en 2013</dt><dd id="kpi-area">–</dd></div>
+      <div><dt>Frente a 2013</dt><dd id="kpi-change">–</dd></div>
+      <div><dt>Distritos con huella</dt><dd id="kpi-districts">–</dd></div>
+      <div><dt>Del aumento, en sus 10 distritos que más crecieron</dt><dd id="kpi-top">–</dd></div>
+    </dl>
+    <p class="coverage">Cubre 13 años y todos los distritos del país. Fuente: MapBiomas Perú, Colección 4, clase 30, con imágenes Landsat de 30 m.</p>
+  </div>
+  <div class="map" id="map" role="img" aria-label="Mapa del Perú por distrito. La tabla de distritos, más abajo, contiene los mismos datos.">
+    <div class="big-year" id="big-year" aria-hidden="true">2013</div>
+    <div class="zoom">
+      <button type="button" id="zoom-in" aria-label="Acercar el mapa">+</button>
+      <button type="button" id="zoom-out" aria-label="Alejar el mapa">−</button>
+    </div>
+    <div class="legend" id="legend"></div>
+    <aside class="card" id="card" hidden></aside>
+  </div>
+</header>
+
+<main>
+  <section class="findings" aria-labelledby="findings-title">
+    <h2 id="findings-title">Lo que muestran los datos</h2>
+    <ol id="findings"></ol>
+  </section>
+
+  <section class="charts" aria-label="Gráficos del atlas">
+    <figure class="wide">
+      <figcaption><h3 id="trend-title">Huella minera por año</h3><p>Kilómetros cuadrados clasificados como minería cada año. Fuente: MapBiomas Perú.</p></figcaption>
+      <div id="trend" class="chart"></div>
+    </figure>
+    <figure>
+      <figcaption><h3 id="rank-title">Distritos con mayor huella</h3><p id="rank-note"></p></figcaption>
+      <div id="rank" class="bars"></div>
+      <details class="table-view">
+        <summary>Ver todos los distritos en una tabla</summary>
+        <div class="table-scroll"><table id="table"></table></div>
+      </details>
+      <p class="data-link"><a href="https://github.com/rodnm/huella-minera-peru/blob/main/datos/procesados/panel_distrito_anio.csv">Descargar el panel por distrito y año en CSV, desde GitHub</a></p>
+    </figure>
+    <figure>
+      <figcaption><h3>Huella por departamento</h3><p>El círculo vacío marca 2013 y el lleno, el año elegido. Selecciona un departamento para filtrar el atlas.</p></figcaption>
+      <div id="departments" class="bars"></div>
+    </figure>
+  </section>
+
+  <section class="contrast" aria-labelledby="contrast-title">
+    <div>
+      <h2 id="contrast-title">¿Se puede confiar en esta tendencia?</h2>
+      <div id="contrast-text"></div>
+    </div>
+    <figure>
+      <figcaption><h3>Madre de Dios: las dos fuentes suben, con distinto nivel y calendario</h3><p>Kilómetros cuadrados, 2018 a 2024, último año con cicatrices confirmadas.</p></figcaption>
+      <div id="contrast" class="chart"></div>
+    </figure>
+  </section>
+
+  <section class="notes">
+    <div>
+      <h2>Cómo se hizo</h2>
+      <ol class="steps">
+        <li>Se descargan los 13 mapas anuales de MapBiomas Perú y se conservan sus huellas digitales para comprobar que son los mismos archivos.</li>
+        <li>Cada mapa de 30 m se promedia sobre una grilla de 500 m, y esa fracción se multiplica por el área real de cada celda.</li>
+        <li>La superficie se suma por distrito con los límites oficiales de GEOCATMIN.</li>
+        <li>Las sumas se comparan con la tabla oficial de MapBiomas y con Amazon Mining Watch.</li>
+      </ol>
+      <p id="method-check"></p>
+    </div>
+    <div>
+      <h2>Lo que estos datos no dicen</h2>
+      <ul class="limits">
+        <li><strong>No distinguen minería legal, informal o ilegal.</strong> La clase incluye además la extracción no metálica, como los fosfatos de Sechura.</li>
+        <li><strong>El área exacta está en discusión.</strong> En 2019, los polígonos de Maus y su equipo suman unas tres veces más que MapBiomas en el país, y el grupo de clases sin vegetación de MapBiomas, donde está la minería, tiene 74 % de exactitud de productor.</li>
+        <li><strong>Más de la mitad del aumento no tiene contraste.</strong> Amazon Mining Watch solo cubre la cuenca amazónica, y aquí se compara en Madre de Dios entre 2018 y 2024. El resto se apoya sobre todo en MapBiomas.</li>
+        <li><strong>Las fuentes no coinciden año a año.</strong> Tampoco coinciden fuera de Madre de Dios. Mejor no usar este atlas para fechar un salto.</li>
+        <li><strong>La luz y la pobreza son contexto.</strong> Verlas junto a la huella no significa que una cause la otra, y este atlas no lo afirma. La pobreza es la estimación del INEI para 2018, con su intervalo. La luz nacional tiene saltos que aún no están explicados.</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Fuentes</h2>
+      <ul class="sources">
+        <li><a href="https://peru.mapbiomas.org/descargas/mapas-de-las-colecciones/">MapBiomas Perú, Colección 4</a>: cobertura anual, CC BY 4.0.</li>
+        <li><a href="https://source.coop/earthgenome/amazon-mining-watch">Amazon Mining Watch</a>, de Earth Genome: cicatrices mineras a 10 m, CC BY 4.0.</li>
+        <li><a href="https://doi.org/10.1594/PANGAEA.942325">Maus y otros, polígonos mineros v2</a>: CC BY-SA.</li>
+        <li><a href="https://doi.org/10.5067/VIIRS/VNP46A4.002">NASA Black Marble, VNP46A4</a>: luz nocturna anual.</li>
+        <li><a href="https://www.gob.pe/institucion/inei/informes-publicaciones/3204872-mapa-de-pobreza-provincial-y-distrital-2018">INEI, Mapa de Pobreza 2018</a>: estimación distrital con intervalo de 95 %.</li>
+        <li><a href="https://geocatmin.ingemmet.gob.pe/geocatmin/">GEOCATMIN, INGEMMET</a>: límites distritales.</li>
+      </ul>
+      <p><a href="https://github.com/rodnm/huella-minera-peru">Código, datos y metodología completa en GitHub</a>.</p>
+    </div>
+  </section>
+</main>
+
+<div class="load-error" id="load-error" role="alert" hidden>No se pudieron cargar los datos del atlas. Revisa tu conexión y recarga la página.</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://unpkg.com/deck.gl@9.0.38/dist.min.js"></script>
+<script>
+/* Atlas of Peru's mining footprint. Every figure is computed in the browser from data/, published from datos/atlas,
+   so no number in the page is typed by hand. */
+document.documentElement.lang = "es";
+const $ = (id) => document.getElementById(id);
+const REDUCED_MOTION = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const PERU_BOUNDS = [[-81.4, -18.4], [-68.6, 0.1]];
+const MADRE_DE_DIOS = "MADRE DE DIOS";
+const VISIBLE_KM2 = 0.01;
+const PLAY_MS = 620;
+const FADE_MS = REDUCED_MOTION ? 0 : 420;
+
+const fmt0 = new Intl.NumberFormat("es-PE", { maximumFractionDigits: 0 });
+const fmt1 = new Intl.NumberFormat("es-PE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+const fmt2 = new Intl.NumberFormat("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const km2 = (value) => (value >= 100 ? fmt0.format(value) : value >= 1 ? fmt1.format(value) : fmt2.format(value));
+const pct = (share) => `${fmt0.format(share * 100)} %`;
+const rgb = (hex, alpha = 255) => { const c = d3.rgb(hex); return [c.r, c.g, c.b, alpha]; };
+
+const SMALL_WORDS = new Set(["de", "del", "la", "las", "los", "y", "el", "en"]);
+const titleCase = (text) => text.toLowerCase().split(" ")
+  .map((word, i) => (i && SMALL_WORDS.has(word) ? word : word.charAt(0).toUpperCase() + word.slice(1))).join(" ");
+
+const state = { year: 2013, department: "", indicator: "huella", district: null, playing: false };
+const data = {};
+let deckgl, viewState, timer, home, hovered = null, flights = 0;
+
+const INDICATORS = {
+  huella: {
+    label: "Huella minera", unit: "km²", title: (s) => `Distritos con mayor huella, ${s}`,
+    note: (y) => `Superficie clasificada como minería en ${y}.`,
+    value: (d, i) => d.m[i], format: km2,
+  },
+  nueva: {
+    label: "Huella nueva desde 2013", unit: "km²", title: (s) => `Distritos donde más creció la huella, ${s}`,
+    note: (y) => `Diferencia entre ${y} y 2013. Solo aparecen los distritos donde aumentó.`,
+    value: (d, i) => d.m[i] - d.m[0], format: km2,
+  },
+  luz: {
+    label: "Luz nocturna por km²", unit: "nW/cm²/sr", title: (s) => `Distritos con más luz por km², ${s}`,
+    note: (y) => `Radiancia sumada por km² en ${y}, NASA Black Marble. Es contexto: no mide minería.`,
+    value: (d, i) => d.l[i], format: (v) => fmt2.format(v),
+  },
+  pobreza: {
+    label: "Pobreza monetaria 2018", unit: "%", title: (s) => `Distritos con mayor pobreza estimada, ${s}`,
+    note: () => "Punto medio e intervalo de 95 % del Mapa de Pobreza 2018 del INEI. No cambia con el año elegido y es contexto: no prueba una relación con la minería.",
+    value: (d) => (d.pov ? d.pov[0] : null), format: (v) => `${fmt1.format(v)} %`,
+  },
+};
+
+const yearIndex = () => data.panel.years.indexOf(state.year);
+const inScope = (d) => !state.department || d.d === state.department;
+const scopeDistricts = () => data.panel.districts.filter(inScope);
+const scopeName = () => (state.department ? titleCase(state.department) : "todo el Perú");
+const sum = (rows, i) => d3.sum(rows, (d) => d.m[i] || 0);
+
+async function load() {
+  const json = (name) => fetch(`data/${name}.json`).then((r) => { if (!r.ok) throw new Error(name); return r.json(); });
+  const [panel, atlas, geo, outlines, meta, tokens, blob] = await Promise.all([
+    json("panel"), json("atlas"), json("distritos"), json("departamentos"), json("huella"), json("tokens"),
+    fetch("data/huella.txt").then((r) => { if (!r.ok) throw new Error("huella"); return r.text(); })
+      .then((text) => Uint8Array.from(atob(text), (c) => c.charCodeAt(0)).buffer),
+  ]);
+  Object.assign(data, { panel, atlas, geo, outlines, tokens });
+  data.byUbigeo = new Map(panel.districts.map((d) => [d.u, d]));
+  data.pixels = decodePixels(meta, blob);
+  data.pixelYears = meta.years;
+  data.scales = buildScales();
+}
+
+function decodePixels(meta, buffer) {
+  const n = meta.count, years = meta.years.length;
+  const rows = new Uint16Array(buffer, 0, n);
+  const cols = new Uint16Array(buffer.slice(2 * n, 4 * n));
+  const shares = new Uint8Array(buffer, 4 * n);
+  const [left, dx, top, dy] = meta.transform;
+  const firstYearMin = Math.ceil(meta.min_fraction * 255);
+  return Array.from({ length: n }, (_, p) => {
+    const lat = top + (rows[p] + 0.5) * dy;
+    return {
+      position: [left + (cols[p] + 0.5) * dx, lat],
+      shares: shares.subarray(p * years, (p + 1) * years),
+      area: dx * 111320 * Math.cos(lat * Math.PI / 180) * Math.abs(dy) * 110574,
+      existed: shares[p * years] >= firstYearMin,
+    };
+  });
+}
+
+function buildScales() {
+  const { footprint, light, poverty } = data.tokens.ramps;
+  const lightValues = data.panel.districts.flatMap((d) => d.l).filter((v) => v > 0);
+  const quantiles = [0.15, 0.3, 0.45, 0.6, 0.75, 0.9].map((q) => d3.quantile(lightValues.sort(d3.ascending), q));
+  return {
+    nueva: { thresholds: [0.1, 0.5, 1, 5, 20, 100], ramp: footprint, label: String, every: 1 },
+    luz: { thresholds: quantiles, ramp: light, label: (v) => fmt2.format(v), every: 2 },
+    pobreza: { thresholds: [10, 20, 30, 40, 50, 60], ramp: poverty, label: (v) => `${v} %`, every: 2 },
+  };
+}
+
+/* ---------- map ---------- */
+
+function districtFill(feature) {
+  const d = data.byUbigeo.get(feature.properties.ubigeo);
+  const { surface } = data.tokens;
+  if (!d) return rgb(surface.background, 0);
+  const alpha = inScope(d) ? 255 : 60;
+  if (state.indicator === "huella") return rgb(surface.panel, inScope(d) ? 255 : 90);
+  const value = INDICATORS[state.indicator].value(d, yearIndex());
+  if (value == null || (state.indicator === "nueva" && value < VISIBLE_KM2)) return rgb(surface.panel, inScope(d) ? 255 : 90);
+  const scale = data.scales[state.indicator];
+  return rgb(scale.ramp[d3.bisectRight(scale.thresholds, value)], alpha);
+}
+
+function layers() {
+  const i = yearIndex(), { footprint } = data.tokens.ramps, { surface } = data.tokens;
+  const line = rgb(surface.grid, 150);
+  const out = [
+    new deck.GeoJsonLayer({
+      id: "districts", data: data.geo, pickable: true, stroked: true, filled: true,
+      getFillColor: districtFill, getLineColor: line, lineWidthUnits: "pixels", getLineWidth: 0.4,
+      updateTriggers: { getFillColor: [state.indicator, state.year, state.department] },
+      transitions: { getFillColor: FADE_MS },
+    }),
+    new deck.GeoJsonLayer({
+      id: "departments", data: data.outlines, stroked: true, filled: false, pickable: false,
+      getLineColor: rgb(data.tokens.surface.text_muted, 120), lineWidthUnits: "pixels", getLineWidth: 0.8,
+    }),
+  ];
+  if (state.indicator === "huella") {
+    const pi = data.pixelYears.indexOf(state.year);
+    out.push(new deck.ScatterplotLayer({
+      id: "footprint", data: data.pixels, pickable: false, radiusUnits: "meters", radiusMinPixels: 0.8, radiusMaxPixels: 60,
+      getPosition: (p) => p.position,
+      getRadius: (p) => Math.sqrt((p.shares[pi] / 255) * p.area / Math.PI),
+      getFillColor: (p) => (p.shares[pi] === 0 ? [0, 0, 0, 0] : rgb(p.existed ? footprint[2] : footprint[6])),
+      updateTriggers: { getRadius: state.year, getFillColor: state.year },
+      transitions: { getRadius: FADE_MS, getFillColor: FADE_MS },
+    }));
+  }
+  if (hovered) {
+    const feature = data.geo.features.find((f) => f.properties.ubigeo === hovered);
+    if (feature) out.push(new deck.GeoJsonLayer({ id: "hovered", data: [feature], stroked: false, filled: true, getFillColor: [241, 233, 214, 50] }));
+  }
+  if (state.district) {
+    const feature = data.geo.features.find((f) => f.properties.ubigeo === state.district);
+    if (feature) out.push(new deck.GeoJsonLayer({
+      id: "selected", data: [feature], filled: false, stroked: true,
+      getLineColor: rgb(surface.text), lineWidthUnits: "pixels", getLineWidth: 2,
+    }));
+  }
+  return out;
+}
+
+function tooltip({ object }) {
+  if (!object) return null;
+  const d = data.byUbigeo.get(object.properties.ubigeo);
+  if (!d) return null;
+  const spec = INDICATORS[state.indicator], value = spec.value(d, yearIndex());
+  const shown = value == null ? "sin dato" : `${spec.format(value)}${spec.unit === "%" ? "" : ` ${spec.unit}`}`;
+  return {
+    html: `<b>${titleCase(d.n)}</b><br>${titleCase(d.d)}<br>${spec.label}: ${shown}`,
+    style: { background: data.tokens.surface.panel, color: data.tokens.surface.text, border: `1px solid ${data.tokens.surface.grid}`, borderRadius: "3px", font: '400 13px/1.4 "IBM Plex Sans", sans-serif', padding: "6px 9px" },
+  };
+}
+
+function fit(bounds, padding = 36) {
+  const el = $("map");
+  const width = el.clientWidth, height = el.clientHeight;
+  const safe = Math.min(padding, Math.floor(Math.min(width, height) / 4));
+  const top = width < 576 ? Math.max(safe, 96) : safe;  // on phones the legend sits over the top of the map
+  return new deck.WebMercatorViewport({ width, height }).fitBounds(bounds, { padding: { top, bottom: safe, left: safe, right: safe } });
+}
+
+/* The farthest view is the whole country, centered. Closer in, the map may move only inside that same frame. */
+function setHome() {
+  const view = fit(PERU_BOUNDS);
+  home = { longitude: view.longitude, latitude: view.latitude, zoom: view.zoom, minZoom: view.zoom };
+}
+
+function keepInFrame(view) {
+  const el = $("map"), mercatorY = (lat) => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
+  const scale = 512 * 2 ** home.zoom, zoom = Math.max(view.zoom, home.zoom);
+  const room = 1 - 2 ** (home.zoom - zoom);
+  const roomX = room * (el.clientWidth / 2 / scale) * 360, roomY = room * (el.clientHeight / 2 / scale) * 2 * Math.PI;
+  const y0 = mercatorY(home.latitude), y = Math.min(y0 + roomY, Math.max(y0 - roomY, mercatorY(view.latitude)));
+  return {
+    ...view, zoom, minZoom: home.zoom,
+    longitude: Math.min(home.longitude + roomX, Math.max(home.longitude - roomX, view.longitude)),
+    latitude: (2 * Math.atan(Math.exp(y)) - Math.PI / 2) * 180 / Math.PI,
+  };
+}
+
+function flyTo(bounds) {
+  const { longitude, latitude, zoom } = fit(bounds);
+  viewState = keepInFrame({ longitude, latitude, zoom, transitionDuration: REDUCED_MOTION ? 0 : 700, transitionInterpolator: new deck.LinearInterpolator(["longitude", "latitude", "zoom"]) });
+  // deck.gl ignores a view state equal to the last one it was given, even if the map has moved since
+  deckgl.setProps({ initialViewState: { ...viewState, flight: ++flights } });
+}
+
+function boundsOf(features) {
+  let west = Infinity, south = Infinity, east = -Infinity, north = -Infinity;
+  const walk = (c) => {
+    if (typeof c[0] === "number") { west = Math.min(west, c[0]); east = Math.max(east, c[0]); south = Math.min(south, c[1]); north = Math.max(north, c[1]); } else c.forEach(walk);
+  };
+  features.forEach((f) => walk(f.geometry.coordinates));
+  return [[west, south], [east, north]];
+}
+
+function initMap() {
+  setHome();
+  viewState = { ...home };
+  deckgl = new deck.Deck({
+    parent: $("map"),
+    initialViewState: viewState,
+    controller: { dragRotate: false, touchRotate: false, keyboard: false },
+    touchAction: "pan-y",  // one finger up or down moves the page, so the map never traps a phone's scroll
+    layers: layers(),
+    getTooltip: tooltip,
+    onHover: ({ object }) => {
+      const ubigeo = object ? object.properties.ubigeo : null;
+      if (ubigeo !== hovered) { hovered = ubigeo; deckgl.setProps({ layers: layers() }); }
+    },
+    onViewStateChange: ({ viewState: next }) => { viewState = keepInFrame(next); return viewState; },
+    onClick: ({ object }) => { if (object) selectDistrict(object.properties.ubigeo); },
+    getCursor: ({ isHovering, isDragging }) => (isDragging ? "grabbing" : isHovering ? "pointer" : "grab"),
+  });
+  const zoomBy = (delta) => {
+    const next = keepInFrame({ ...viewState, zoom: viewState.zoom + delta, transitionDuration: REDUCED_MOTION ? 0 : 200, transitionInterpolator: new deck.LinearInterpolator(["longitude", "latitude", "zoom"]) });
+    viewState = next;
+    deckgl.setProps({ initialViewState: next });
+  };
+  $("zoom-in").addEventListener("click", () => zoomBy(1));
+  $("zoom-out").addEventListener("click", () => zoomBy(-1));
+}
+
+function renderLegend() {
+  const { footprint } = data.tokens.ramps;
+  const el = $("legend");
+  if (state.indicator === "huella") {
+    el.innerHTML = `<strong>Suelo minero visto desde satélite</strong>
+      <div class="legend-row"><span class="legend-dot" style="background:${footprint[2]}"></span>Celda con huella en 2013</div>
+      <div class="legend-row"><span class="legend-dot" style="background:${footprint[6]}"></span>Celda con huella después de 2013</div>
+      <p>Cada círculo es una celda de 500 m y su área equivale a la superficie minera. De lejos, los más chicos se agrandan para que se vean.</p>`;
+    return;
+  }
+  const scale = data.scales[state.indicator], spec = INDICATORS[state.indicator];
+  el.innerHTML = `<strong>${spec.label} (${spec.unit})</strong>
+    <div class="legend-steps">${scale.ramp.map((c) => `<span style="background:${c}"></span>`).join("")}</div>
+    <div class="legend-ticks">${scale.thresholds.map((v, i) => (i % scale.every ? "" : `<span style="left:${((i + 1) / scale.ramp.length * 100).toFixed(1)}%">${scale.label(v)}</span>`)).join("")}</div>
+    ${state.indicator === "pobreza" ? "<p>Es de 2018: no cambia con el año elegido.</p>" : ""}
+    ${state.indicator === "luz" ? "<p>Es contexto: no mide minería.</p>" : ""}`;
+}
+
+function renderCard() {
+  const el = $("card"), d = state.district && data.byUbigeo.get(state.district);
+  el.hidden = !d;
+  if (!d) { el.textContent = ""; return; }
+  const i = yearIndex();
+  const pov = d.pov ? `${fmt1.format(d.pov[0])} % (${fmt1.format(d.pov[1])} a ${fmt1.format(d.pov[2])})` : "sin dato";
+  const rows = [
+    [`Huella en ${state.year}`, `${km2(d.m[i] || 0)} km²`],
+    ["Huella en 2013", `${km2(d.m[0] || 0)} km²`],
+    [`Luz por km² en ${state.year}`, d.l[i] == null ? "sin dato" : fmt2.format(d.l[i])],
+    ["Pobreza 2018 (INEI)", pov],
+    ["Población 2020", d.pop == null ? "sin dato" : fmt0.format(d.pop)],
+  ];
+  el.innerHTML = `<button type="button" class="card-close" aria-label="Cerrar la ficha del distrito">×</button>
+    <h3>${titleCase(d.n)}</h3><p>${titleCase(d.p)}, ${titleCase(d.d)}</p>
+    <dl>${rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>`;
+  el.querySelector("button").addEventListener("click", () => selectDistrict(null));
+}
+
+/* ---------- figures ---------- */
+
+function renderKpis() {
+  const rows = scopeDistricts(), i = yearIndex();
+  const area = sum(rows, i), base = sum(rows, 0);
+  const count = (idx) => rows.filter((d) => (d.m[idx] || 0) >= VISIBLE_KM2).length;
+  $("scope-name").textContent = state.department ? titleCase(state.department) : "Todo el Perú";
+  $("kpi-area-label").textContent = `Huella en ${state.year}`;
+  $("kpi-area").innerHTML = `${km2(area)} <small>km²</small>`;
+  const change = area - base;
+  $("kpi-change").innerHTML = i === 0 || base === 0
+    ? `– <small>${i === 0 ? "es el año de partida" : "sin huella en 2013"}</small>`
+    : `×${fmt1.format(area / base)} <small>${change >= 0 ? "+" : "−"}${km2(Math.abs(change))} km²</small>`;
+  $("kpi-districts").innerHTML = `${fmt0.format(count(i))} <small>${fmt0.format(count(0))} en 2013</small>`;
+  const gains = rows.map((d) => (d.m[i] || 0) - (d.m[0] || 0)).filter((g) => g > 0).sort(d3.descending);
+  const total = change, top = d3.sum(gains.slice(0, 10)), share = top / total;
+  $("kpi-top").innerHTML = i === 0 || total <= 0
+    ? "– <small>sin aumento que repartir</small>"
+    : gains.length <= 10
+    ? `– <small>solo ${fmt0.format(gains.length)} distritos con aumento</small>`
+    : share > 1
+    // Ten districts gained more than the net increase, because others lost footprint: no share of it can be stated
+    ? "– <small>hay distritos que perdieron huella</small>"
+    : `${share >= 0.995 ? "más de 99 %" : pct(share)} <small>de ${km2(total)} km²</small>`;
+}
+
+function renderFindings() {
+  const a = data.atlas, first = a.national_km2[a.first_year], last = a.national_km2[a.last_year];
+  const leader = a.top_districts[0], md = a.madre_de_dios, y0 = a.first_year, y1 = a.last_year;
+  const items = [
+    [`La superficie clasificada como minera pasó de ${fmt0.format(first)} a ${fmt0.format(last)} km²: se multiplicó por ${fmt1.format(a.ratio)} en ${y1 - y0} años.`,
+      `Según MapBiomas Perú, ${y0} a ${y1}. El área exacta está en discusión y gran parte del aumento se apoya en esta fuente.`],
+    [`Madre de Dios explica el ${pct(md.share_of_increase)} del aumento y ya reúne el ${pct(md.share_of_last)} de la huella del país.`,
+      `Pasó de ${fmt0.format(md.first_km2)} a ${fmt0.format(md.last_km2)} km². El tramo de 2018 a 2024 tiene una segunda fuente.`],
+    [`Diez distritos explican el ${pct(a.top_share_of_increase)} del aumento. ${titleCase(leader.district)} pasó de ${fmt0.format(leader.first_km2)} a ${fmt0.format(leader.last_km2)} km².`,
+      `Los distritos con huella visible pasaron de ${fmt0.format(a.districts_with_footprint[y0])} a ${fmt0.format(a.districts_with_footprint[y1])}: se concentra mucho y también se extiende.`],
+  ];
+  $("findings").innerHTML = items.map(([big, small]) => `<li>${big}<small>${small}</small></li>`).join("");
+}
+
+function renderContrastText() {
+  const contrast = data.atlas.contrast, c = contrast.madre_de_dios, y = c.last_confirmed_year, y0 = contrast.years[0];
+  const on = Object.values(c.mapbiomas_on_amw).filter((_, i) => contrast.years[i] <= y);
+  const { whole, first_half: a, second_half: b } = c.periods;
+  const covered = contrast.share_of_increase_contrasted;
+  const others = contrast.other_departments.map((d) => `${titleCase(d.name)} (×${fmt1.format(d.mapbiomas_ratio)} y ×${fmt1.format(d.amw_ratio)})`);
+  $("contrast-text").innerHTML = `
+    <p>Amazon Mining Watch usa otro satélite (Sentinel-2) y otro modelo, así que sirve como comprobación independiente. Solo cubre la cuenca amazónica. Aquí se compara en Madre de Dios entre ${y0} y ${y}, un tramo que equivale al <strong>${pct(covered)} del aumento nacional</strong>. El ${pct(1 - covered)} restante se apoya sobre todo en MapBiomas.</p>
+    <p><strong>Coinciden en la dirección y el lugar.</strong> Ambas se duplican en el periodo (×${fmt2.format(whole.mapbiomas)} y ×${fmt2.format(whole.amw)}). Además, entre ${pct(d3.min(on))} y ${pct(d3.max(on))} de la superficie de MapBiomas cae en celdas de 500 m con cicatrices, que son solo el ${fmt1.format(c.cells_with_scars_share * 100)} % de las celdas del departamento.</p>
+    <p><strong>No coinciden en el nivel ni en el calendario.</strong> En ${y} suman ${fmt0.format(c.amw_km2[y])} y ${fmt0.format(c.mapbiomas_km2[y])} km². De ${y0} a 2021, MapBiomas crece ×${fmt2.format(a.mapbiomas)} y la otra fuente ×${fmt2.format(a.amw)}; de 2021 a ${y}, ×${fmt2.format(b.mapbiomas)} y ×${fmt2.format(b.amw)}. La coincidencia del periodo completo no sirve para fechar los saltos. Amazon Mining Watch acumula cicatrices e indica que su máscara acumulada mide cerca de 1.7 veces lo anotado a mano; MapBiomas clasifica el suelo de cada año.</p>
+    <p><strong>Fuera de Madre de Dios discrepan más:</strong> ${others.join(", ")}, en ese orden, de ${y0} a ${y}. Amazon Mining Watch cubre solo la parte amazónica de varios de ellos y parte de áreas pequeñas, así que estas razones no se comparan directamente.</p>`;
+  $("method-check").textContent = `La suma nacional difiere de la tabla oficial de MapBiomas en ${fmt2.format(data.atlas.validation.max_national_gap * 100)} % como máximo. Eso muestra que la suma reproduce esa tabla, no que el satélite acierte: por eso existe el contraste.`;
+}
+
+function tip(host) {
+  let el = host.querySelector(".chart-tip");
+  if (!el) { el = document.createElement("div"); el.className = "chart-tip"; el.hidden = true; host.append(el); }
+  return el;
+}
+
+function lineChart(host, series, { years, marker, height = 300, right = 150 }) {
+  const width = Math.max(host.clientWidth, 280);
+  const compact = width < 520;
+  const m = { top: 12, right: compact ? 12 : right, bottom: compact ? 58 : 26, left: 46 };
+  const x = d3.scalePoint(years, [m.left, width - m.right]);
+  const top = d3.max(series, (s) => d3.max(s.values)) || 1;
+  const y = d3.scaleLinear([0, top], [height - m.bottom, m.top]).nice();
+  const svg = d3.create("svg").attr("viewBox", [0, 0, width, height]).attr("role", "img")
+    .attr("aria-label", series.map((s) => `${s.name}: de ${km2(s.values[0])} a ${km2(s.values[s.values.length - 1])} km²`).join(". "));
+  svg.append("g").attr("transform", `translate(${m.left},0)`)
+    .call(d3.axisLeft(y).ticks(5).tickSize(-(width - m.left - m.right)).tickFormat((v) => fmt0.format(v)))
+    .call((g) => g.selectAll("line").attr("stroke-width", 1));
+  const every = width < 640 ? 3 : 1;
+  svg.append("g").attr("transform", `translate(0,${height - m.bottom})`)
+    .call(d3.axisBottom(x).tickValues(years.filter((_, i) => i % every === 0)).tickSize(0).tickPadding(8).tickFormat(String));
+  if (marker != null && years.includes(marker)) {
+    svg.append("line").attr("x1", x(marker)).attr("x2", x(marker)).attr("y1", m.top).attr("y2", height - m.bottom)
+      .attr("stroke", data.tokens.surface.text_muted).attr("stroke-dasharray", "2 3");
+  }
+  const line = d3.line().x((_, i) => x(years[i])).y((v) => y(v));
+  series.forEach((s) => {
+    svg.append("path").attr("d", line(s.values)).attr("fill", "none").attr("stroke", s.color).attr("stroke-width", 2).attr("stroke-linejoin", "round");
+    const last = s.values.length - 1;
+    svg.append("circle").attr("cx", x(years[last])).attr("cy", y(s.values[last])).attr("r", 4).attr("fill", s.color).attr("stroke", data.tokens.surface.background).attr("stroke-width", 2);
+  });
+  const labelled = series.map((s) => ({ s, y: y(s.values[s.values.length - 1]) })).sort((a, b) => a.y - b.y);
+  labelled.forEach((row, i) => { if (i && row.y - labelled[i - 1].y < 16) row.y = labelled[i - 1].y + 16; });
+  if (compact) {
+    const legend = svg.append("g").attr("transform", `translate(${m.left},${height - 26})`);
+    let cursor = 0;
+    series.forEach((s) => {
+      legend.append("circle").attr("cx", cursor + 4).attr("cy", 0).attr("r", 4).attr("fill", s.color);
+      legend.append("text").attr("class", "direct").attr("x", cursor + 12).attr("y", 4).text(s.name);
+      cursor += 12 + s.name.length * 6.6 + 12;
+    });
+  } else {
+    labelled.forEach(({ s, y: ly }) => {
+      svg.append("text").attr("class", "direct").attr("x", width - m.right + 10).attr("y", ly + 4).text(s.name);
+    });
+  }
+  const guide = svg.append("line").attr("y1", m.top).attr("y2", height - m.bottom).attr("stroke", data.tokens.surface.text).attr("opacity", 0);
+  host.replaceChildren(svg.node());
+  const box = tip(host);
+  const ratio = () => host.clientWidth / width;
+  const show = (event) => {
+    const [px] = d3.pointer(event, svg.node());
+    const i = d3.bisectCenter(years.map((yr) => x(yr)), px), year = years[i];
+    guide.attr("x1", x(year)).attr("x2", x(year)).attr("opacity", 0.5);
+    box.hidden = false;
+    box.innerHTML = `<b>${year}</b>${series.map((s) => `<br>${s.name}: ${km2(s.values[i])} km²`).join("")}`;
+    const left = x(year) * ratio();
+    box.style.left = `${Math.min(left + 10, host.clientWidth - box.offsetWidth - 2)}px`;
+    box.style.top = "8px";
+  };
+  const hide = () => { guide.attr("opacity", 0); box.hidden = true; };
+  svg.append("rect").attr("x", m.left).attr("y", m.top).attr("width", width - m.left - m.right).attr("height", height - m.top - m.bottom)
+    .attr("fill", "transparent").on("pointermove", show).on("pointerleave", hide);
+}
+
+function renderTrend() {
+  const { mining } = data.tokens.series, { text, text_muted: muted } = data.tokens.surface;
+  const years = data.panel.years;
+  const total = (filter) => years.map((_, i) => d3.sum(data.panel.districts.filter(filter), (d) => d.m[i] || 0));
+  let series, title;
+  if (state.department) {
+    series = [{ name: titleCase(state.department), values: total(inScope), color: mining }];
+    const v = series[0].values;
+    title = `${series[0].name}: de ${km2(v[0])} a ${km2(v[v.length - 1])} km² entre ${years[0]} y ${years[years.length - 1]}`;
+  } else {
+    const md = total((d) => d.d === MADRE_DE_DIOS), rest = total((d) => d.d !== MADRE_DE_DIOS);
+    series = [{ name: "Madre de Dios", values: md, color: mining }, { name: "Resto del Perú", values: rest, color: muted }];
+    title = `Madre de Dios se multiplicó por ${fmt1.format(md[md.length - 1] / md[0])} y el resto del Perú, por ${fmt1.format(rest[rest.length - 1] / rest[0])}`;
+  }
+  const d = state.district && data.byUbigeo.get(state.district);
+  if (d) series.push({ name: titleCase(d.n), values: d.m.map((v) => v || 0), color: text });
+  $("trend-title").textContent = title;
+  lineChart($("trend"), series, { years, marker: state.year });
+}
+
+function renderContrastChart() {
+  const c = data.atlas.contrast.madre_de_dios, y = c.last_confirmed_year;
+  const years = data.atlas.contrast.years.filter((year) => year <= y);
+  const { mining, contrast } = data.tokens.series;
+  lineChart($("contrast"), [
+    { name: "MapBiomas", values: years.map((year) => c.mapbiomas_km2[year]), color: mining },
+    { name: "Amazon Mining Watch", values: years.map((year) => c.amw_km2[year]), color: contrast },
+  ], { years, height: 280, right: 165 });
+}
+
+function rankedRows() {
+  const spec = INDICATORS[state.indicator], i = yearIndex();
+  return scopeDistricts().map((d) => ({ d, value: spec.value(d, i) }))
+    .filter((row) => row.value != null && row.value > (state.indicator === "pobreza" ? -1 : 0))
+    .sort((a, b) => b.value - a.value);
+}
+
+function renderRank() {
+  const spec = INDICATORS[state.indicator], rows = rankedRows(), top = rows.slice(0, 10);
+  $("rank-title").textContent = spec.title(scopeName());
+  $("rank-note").textContent = spec.note(state.year);
+  const host = $("rank"), table = $("table"), i = yearIndex();
+  table.innerHTML = `<thead><tr><th scope="col">Distrito</th><th scope="col">Departamento</th><th scope="col">Huella ${state.year} (km²)</th><th scope="col">Huella 2013 (km²)</th></tr></thead>
+    <tbody>${scopeDistricts().filter((d) => (d.m[i] || 0) >= VISIBLE_KM2).sort((a, b) => b.m[i] - a.m[i])
+    .map((d) => `<tr><td>${titleCase(d.n)}</td><td style="text-align:left">${titleCase(d.d)}</td><td>${km2(d.m[i] || 0)}</td><td>${km2(d.m[0] || 0)}</td></tr>`).join("")}</tbody>`;
+  host.replaceChildren();
+  if (!top.length) { host.innerHTML = `<p class="empty">${scopeName()} no tiene distritos con este dato en ${state.year}. Prueba otro año o departamento.</p>`; return; }
+  const color = { huella: data.tokens.ramps.footprint[4], nueva: data.tokens.ramps.footprint[4], luz: data.tokens.ramps.light[3], pobreza: data.tokens.ramps.poverty[3] }[state.indicator];
+  const max = state.indicator === "pobreza" ? 100 : d3.max(top, (r) => r.value);
+  top.forEach(({ d, value }) => {
+    const whisker = state.indicator === "pobreza" && d.pov
+      ? `<span class="bar-whisker" style="left:${d.pov[1] / max * 100}%;width:${(d.pov[2] - d.pov[1]) / max * 100}%"></span>` : "";
+    const button = document.createElement("button");
+    button.type = "button"; button.className = "bar"; button.dataset.row = d.u;
+    button.setAttribute("aria-pressed", String(state.district === d.u));
+    button.innerHTML = `<span class="bar-name">${titleCase(d.n)}${state.department ? "" : `<small>${titleCase(d.d)}</small>`}</span>
+      <span class="bar-track"><span class="bar-fill" style="width:${value / max * 100}%;background:${color}"></span>${whisker}</span>
+      <span class="bar-value">${spec.format(value)}${spec.unit === "%" ? "" : ` ${state.indicator === "luz" ? "" : spec.unit}`}</span>`;
+    button.addEventListener("click", () => selectDistrict(d.u));
+    host.append(button);
+  });
+}
+
+function renderDepartments() {
+  const i = yearIndex(), host = $("departments");
+  const rows = d3.rollups(data.panel.districts, (v) => ({ now: sum(v, i), base: sum(v, 0) }), (d) => d.d)
+    .map(([name, v]) => ({ name, ...v })).filter((r) => r.now >= 1 || r.base >= 1)
+    .sort((a, b) => b.now - a.now).slice(0, 12);
+  const max = d3.max(rows, (r) => Math.max(r.now, r.base));
+  host.replaceChildren(...rows.map((r) => {
+    const button = document.createElement("button");
+    button.type = "button"; button.className = "bar"; button.dataset.row = r.name;
+    button.setAttribute("aria-pressed", String(state.department === r.name));
+    const a = r.base / max * 100, b = r.now / max * 100;
+    button.innerHTML = `<span class="bar-name">${titleCase(r.name)}</span>
+      <span class="bar-track"><span class="bar-link" style="left:${Math.min(a, b)}%;width:${Math.abs(b - a)}%"></span>
+      <span class="bar-dot from" style="left:${a}%"></span><span class="bar-dot to" style="left:${b}%"></span></span>
+      <span class="bar-value">${km2(r.now)} km²</span>`;
+    button.setAttribute("aria-label", `${titleCase(r.name)}: ${km2(r.base)} km² en 2013 y ${km2(r.now)} km² en ${state.year}`);
+    button.addEventListener("click", () => selectDepartment(state.department === r.name ? "" : r.name));
+    return button;
+  }));
+}
+
+/* ---------- state ---------- */
+
+function refresh() {
+  const focused = document.activeElement && document.activeElement.dataset.row;  // the rows are rebuilt below
+  $("year").value = state.year;
+  $("year-output").textContent = state.year;
+  $("big-year").textContent = state.year;
+  deckgl.setProps({ layers: layers() });
+  renderLegend(); renderCard(); renderKpis(); renderTrend(); renderRank(); renderDepartments();
+  if (focused) [...document.querySelectorAll("[data-row]")].find((row) => row.dataset.row === focused)?.focus({ preventScroll: true });
+}
+
+function stop() {
+  clearInterval(timer);
+  state.playing = false;
+  $("play").textContent = "Reproducir";
+}
+
+function play() {
+  const { years } = data.panel;
+  if (state.year === years[years.length - 1]) { state.year = years[0]; refresh(); }
+  state.playing = true;
+  $("play").textContent = "Pausar";
+  timer = setInterval(() => {
+    if (state.year >= years[years.length - 1]) { stop(); return; }
+    state.year += 1;
+    refresh();
+  }, PLAY_MS);
+}
+
+function selectDepartment(name) {
+  state.department = name;
+  $("department").value = name;
+  const current = state.district && data.byUbigeo.get(state.district);
+  if (current && name && current.d !== name) state.district = null;
+  const features = data.geo.features.filter((f) => { const d = data.byUbigeo.get(f.properties.ubigeo); return d && d.d === name; });
+  flyTo(name && features.length ? boundsOf(features) : PERU_BOUNDS);
+  refresh();
+}
+
+function selectDistrict(ubigeo) {
+  state.district = ubigeo;
+  if (ubigeo) {
+    const feature = data.geo.features.find((f) => f.properties.ubigeo === ubigeo);
+    if (feature) flyTo(boundsOf([feature]));
+  }
+  refresh();
+}
+
+function initControls() {
+  const names = [...new Set(data.panel.districts.map((d) => d.d))].sort();
+  $("department").append(...names.map((name) => new Option(titleCase(name), name)));
+  const label = (d) => `${titleCase(d.n)}, ${titleCase(d.p)}, ${titleCase(d.d)}`;
+  const plain = (text) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+  const byLabel = new Map(data.panel.districts.map((d) => [plain(label(d)), d.u]));
+  $("district-list").append(...data.panel.districts.map((d) => { const o = document.createElement("option"); o.value = label(d); return o; }));
+  const search = () => {
+    const typed = plain($("search").value), note = $("search-note");
+    note.textContent = "";
+    if (!typed) return;
+    const named = data.panel.districts.filter((d) => plain(d.n) === typed);
+    const ubigeo = byLabel.get(typed) || (named.length === 1 ? named[0].u : null);
+    if (ubigeo) { stop(); selectDistrict(ubigeo); return; }
+    note.textContent = named.length > 1
+      ? `Hay ${named.length} distritos con ese nombre. Elige uno de la lista.`
+      : "No se encontró ese distrito. Revisa el nombre o elígelo de la lista.";
+  };
+  $("controls").addEventListener("submit", (event) => { event.preventDefault(); search(); });
+  $("year").addEventListener("input", (event) => { stop(); state.year = Number(event.target.value); refresh(); });
+  $("department").addEventListener("change", (event) => { stop(); selectDepartment(event.target.value); });
+  $("indicator").addEventListener("change", (event) => { state.indicator = event.target.value; refresh(); });
+  $("search").addEventListener("change", search);
+  $("play").addEventListener("click", () => (state.playing ? stop() : play()));
+  // These are rebuilt on every year: stopping first means a press and its release land on the same element
+  for (const id of ["rank", "departments", "card"]) {
+    $(id).addEventListener("pointerdown", stop);
+    $(id).addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") stop(); });
+  }
+  let resize;
+  addEventListener("resize", () => {
+    clearTimeout(resize);
+    resize = setTimeout(() => {
+      const atHome = viewState.zoom <= home.zoom + 1e-6;
+      setHome();
+      viewState = atHome ? { ...home } : keepInFrame(viewState);
+      deckgl.setProps({ initialViewState: { ...viewState } });
+      renderTrend(); renderContrastChart();
+    }, 150);
+  });
+}
+
+load().then(() => {
+  initMap();
+  initControls();
+  renderFindings();
+  renderContrastText();
+  renderContrastChart();
+  if (REDUCED_MOTION) {
+    state.year = data.panel.years[data.panel.years.length - 1];
+    stop();
+    refresh();
+  } else {
+    refresh();
+    play();
+  }
+}).catch((error) => {
+  console.error(error);
+  $("load-error").hidden = false;
+});
+</script>

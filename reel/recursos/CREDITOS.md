@@ -21,11 +21,11 @@ La OFL permite usar las fuentes en videos e imágenes sin atribución obligatori
 
 ## Música
 
-La pista no se descarga ni se versiona: la elige el autor y la guarda en `recursos/musica/`, que git ignora, porque licencias como la de Pixabay no permiten redistribuir el archivo suelto. Antes de publicar, anoten aquí el título, el autor, el enlace y la licencia, y copien la misma línea en `creditos` del guion, por ejemplo `"Música: «Título» de Autor (Pixabay Content License)"`.
+La pista no se descarga ni se versiona: la elige el autor y la guarda en `recursos/musica/`, que git ignora, porque estas licencias no están pensadas para redistribuir el archivo suelto. Antes de publicar, anoten aquí el título, el autor, el enlace y la licencia, y copien la misma línea en `creditos` del guion, por ejemplo `"Música: «Título» de Autor (Pixabay Content License)"`.
 
 | Pista | Autor | Enlace | Licencia | Fecha de descarga |
 |---|---|---|---|---|
-| (pendiente, T8) | | | | |
+| «Secret Garden», primeros 30 s, repetidos bajo la voz en un editor de video | Eugenio Mininni | <https://mixkit.co/free-stock-music/> | [Mixkit Stock Music Free License](https://mixkit.co/license/#musicFree) | 2026-11-01 |
 
 ## Código base
 

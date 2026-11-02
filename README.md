@@ -2,11 +2,11 @@
 
 Un atlas interactivo, distrito por distrito, del suelo minero que se ve desde el satélite. Cada cifra sale de datos públicos que este repositorio descarga y limpia. Una segunda fuente independiente contrasta el 41 % del aumento, y el proyecto publica también dónde discrepan.
 
-**[Abrir el dashboard](https://huella-minera-peru.streamlit.app)** · **Publicación en LinkedIn:** se agrega al publicar
+**[Abrir el dashboard](https://claude.ai/artifact/TLWHpf4ZSXAAhyBEZTmKh7)** · **Publicación en LinkedIn:** se agrega al publicar
 
 | | |
 | :--- | :--- |
-| **Autor** | Rodrigo Andrés Norabuena Mascaraqui ([@rodnm](https://github.com/rodnm)) |
+| **Autor** | Rodrigo Andrés Norabuena Mascaraqui · [LinkedIn](https://www.linkedin.com/in/rodnm/) · [GitHub](https://github.com/rodnm) |
 
 ![Mapa del Perú en 2025 con las celdas de huella minera](docs/capturas/atlas_peru.png)
 
@@ -24,7 +24,7 @@ La minería deja suelo expuesto, y eso se ve desde el espacio. MapBiomas Perú c
 
 | Entrega | Dónde |
 |---|---|
-| Dashboard | [`dashboard/`](dashboard/), publicado en Streamlit Community Cloud |
+| Dashboard | [`web/atlas.html`](web/atlas.html), publicado como página pública; corre en el navegador y lee `datos/atlas/` |
 | Reel de 9:16 con voz clonada | [`reel/`](reel/) |
 | Datos procesados | [`datos/procesados/`](datos/procesados/) |
 | Metodología y todos los hallazgos | [`docs/metodologia_y_hallazgos.md`](docs/metodologia_y_hallazgos.md) |
@@ -47,7 +47,7 @@ La URL, la fecha de descarga y el SHA-256 de cada archivo están en [`datos/orig
 1. El mapa de 30 m de cada año se promedia sobre una grilla de 500 m. Esa fracción, multiplicada por el área real de cada celda, se suma por distrito.
 2. El resultado se compara con la tabla oficial de MapBiomas: la diferencia nacional es de 0.25 % como máximo.
 3. La tendencia en Madre de Dios, entre 2018 y 2024, se contrasta con Amazon Mining Watch, que usa otro satélite y otro modelo.
-4. Las pruebas de [`tests/test_atlas_publicado.py`](tests/test_atlas_publicado.py) y [`tests/test_app.py`](tests/test_app.py) corren en cada cambio y fallan si los archivos publicados no coinciden con el panel o si un control deja de funcionar.
+4. Las pruebas de [`tests/test_atlas_publicado.py`](tests/test_atlas_publicado.py) corren en cada cambio y fallan si los archivos publicados no coinciden con el panel. Los controles de la página se comprueban en un navegador, a mano, con [`scripts/probar_web.py`](scripts/probar_web.py).
 
 ## Tres hallazgos principales
 
@@ -76,7 +76,7 @@ Coinciden en la dirección y en el lugar: entre 96 % y 98 % de la superficie de 
 
 ## Enlaces
 
-- Dashboard: <https://huella-minera-peru.streamlit.app>
+- Dashboard: <https://claude.ai/artifact/TLWHpf4ZSXAAhyBEZTmKh7>
 - Publicación en LinkedIn: se agrega al publicar
 
 ## Cómo reproducir
@@ -87,10 +87,11 @@ Requiere [uv](https://docs.astral.sh/uv/) y un token gratuito de [NASA Earthdata
 uv sync
 uv run python -m scripts.run_all    # unos 9 GB de descargas; reconstruye los datos del atlas
 uv run pytest
-uv run streamlit run dashboard/app.py
+uv run python -m scripts.preparar_web
+uv run python -m http.server 8596 -d web    # abrir http://127.0.0.1:8596/
 ```
 
-Solo para abrir el dashboard no hace falta descargar nada, porque sus datos están en `datos/atlas/`: `pip install -r dashboard/requirements.txt`. Para todo el proceso sin uv: `pip install -r requirements.txt`. El reel tiene su propio entorno, explicado en [`reel/README.md`](reel/README.md).
+Solo para abrir el dashboard no hace falta el proceso completo, porque sus datos están en `datos/atlas/`: bastan las dos últimas líneas. La carpeta [`dashboard/`](dashboard/) conserva una versión anterior en Streamlit, que ya no es la oficial. Para todo el proceso sin uv: `pip install -r requirements.txt`. El reel tiene su propio entorno, explicado en [`reel/README.md`](reel/README.md).
 
 ## Uso de inteligencia artificial
 
