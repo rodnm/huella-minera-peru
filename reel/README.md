@@ -75,6 +75,8 @@ Salidas en `salidas/`, que git ignora:
 
 Al final, el script imprime la resolución y la duración del video, la sonoridad medida y avisos si el reel no cumple los 45 a 75 s o las 5 a 7 escenas que pide la tarea.
 
+El video publicado está en [`reel.mp4`](reel.mp4), con sus subtítulos en [`subtitulos.srt`](subtitulos.srt). Es el render de `salidas/` con la música mezclada en un editor de video, por eso no se regenera idéntico con este script.
+
 ## Escenas
 
 Los visuales de `guion.json` no se versionan: se generan desde los datos del proyecto, con el entorno de la raíz.
