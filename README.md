@@ -6,7 +6,7 @@ Un atlas interactivo, distrito por distrito, del suelo minero que se ve desde el
 
 | | |
 | :--- | :--- |
-| **Autor** | Rodrigo Andrés Norabuena Mascaraqui ([@rodnm](https://github.com/rodnm)) |
+| **Autor** | Rodrigo Andrés Norabuena Mascaraqui · [LinkedIn](https://www.linkedin.com/in/rodnm/) · [GitHub](https://github.com/rodnm) |
 
 ![Mapa del Perú en 2025 con las celdas de huella minera](docs/capturas/atlas_peru.png)
 

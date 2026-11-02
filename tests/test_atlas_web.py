@@ -62,4 +62,6 @@ def test_no_control_depends_on_a_download_the_frame_blocks():
 
 
 def test_the_author_is_named_under_the_title():
-    assert re.search(r'</h1>\s*<p class="byline">Por Rodrigo Norabuena</p>', PAGE)
+    byline = re.search(r'</h1>\s*<p class="byline">(.*?)</p>', PAGE).group(1)
+    assert byline.startswith("Por Rodrigo Norabuena")
+    assert 'href="https://www.linkedin.com/in/rodnm/"' in byline and 'href="https://github.com/rodnm"' in byline
